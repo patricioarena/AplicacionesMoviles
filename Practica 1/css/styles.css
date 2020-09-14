@@ -11,6 +11,7 @@ html, body {
 }
 
 .wrapper {
+  /* background: #000; */
   min-height: 100%;
   margin-bottom: 0px;
 }
@@ -46,17 +47,7 @@ header .logo a {
 
 nav {
   background:#190f75;
-  padding:20px;
-
-  /*FLEX*/
-  /*flex:1 1 30%;*/
-  /* flex:0 0 300px; */
-
-  display: flex;
-  /* flex-wrap:wrap; */
-  flex-direction:column;
-  justify-content: flex-start;
-  flex-basis: 20em;
+  /* padding-bottom: auto; */
 }
 
 nav .lateral-menu {
@@ -64,10 +55,12 @@ nav .lateral-menu {
   /* margin:10px; */
 
   /* Flexbox */
+  padding:20px;
   display:flex;
   flex-wrap:wrap;
   align-items: center;
   flex-direction: column;
+  /* justify-content: flex-end; */
 }
 
 nav .lateral-menu a{
@@ -88,7 +81,6 @@ nav .lateral-menu a:hover {
 }
 
 .footer {
-
 }
 
 footer {
