@@ -11,9 +11,8 @@ html, body {
 }
 
 .wrapper {
-  /* background: #000; */
   min-height: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 50px;
 }
 
 header {
@@ -46,24 +45,24 @@ header .logo a {
 }
 
 nav {
+  display: flex;
   background:#190f75;
-  /* padding-bottom: auto; */
+  width: 15%;
+  min-height: 100%;
+  position: absolute;
 }
 
-nav .lateral-menu {
-  /* background: #d35400; */
-  /* margin:10px; */
-
-  /* Flexbox */
+.lateral-menu {
+  background: #d35400;
+  width: 100%;
   padding:20px;
   display:flex;
   flex-wrap:wrap;
   align-items: center;
   flex-direction: column;
-  /* justify-content: flex-end; */
 }
 
-nav .lateral-menu a{
+.lateral-menu a{
   background:#c0392b;
   color:#fff;
   text-align: center;
@@ -72,11 +71,9 @@ nav .lateral-menu a{
   padding: 10px;
   margin-bottom: 0.5em;
   width: 100%;
-  /* Flexbox */
-  /* flex-grow: 1; */
 }
 
-nav .lateral-menu a:hover {
+.lateral-menu a:hover {
   background:#e74c3c;
 }
 
@@ -92,7 +89,7 @@ footer {
   display: flex;
   flex-wrap:wrap;
   justify-content:space-around;
-
+  position: absolute;
 }
 
 footer .links {
@@ -103,7 +100,6 @@ footer .links a{
   flex-grow:1;
   color:#fff;
   padding:10px;
-  /* text-align: center; */
   text-decoration:none;
   margin-right: 5px;
   margin-left: 5px;
@@ -114,37 +110,34 @@ footer .links a:hover {
 }
 
 .main {
-  background:rgb(223, 217, 217);
   padding:20px;
-  flex:1 1 70%;
-  /*flex:1;*/
+  width: 85%;
+  display : inline-flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  position: relative;
+  left: 15%;
 }
 
 .container {
-  background:#ccc;
-  width:100%;
-  /* max-width:1000px; */
-  margin:auto;
-
-  /* Flexbox */
-  display:flex;
-  flex-flow:row wrap;
+  width: 100%;
+  display: flex;
+  flex-direction:row;
+  flex-wrap: wrap;
 }
 
 .cuadricula{
   display : inline-flex;
   flex-flow: row wrap;
   justify-content: space-around;
-  /* border:1px dashed #777; */
 }
 
 .item {
-  /* padding:1em; */
   border: 1px solid #000;
   border-radius: 5px;
   background: #ffffff;
   width: 200px;
-  height: 300px;
+  height: 250px;
   margin: 10px;
   display : inline-flex;
   flex-direction:column;
@@ -162,7 +155,7 @@ footer .links a:hover {
   /* border:1px dashed #777; */
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  width: 80%;
+  width: 50%;
 }
 
 .item .precioProducto{
