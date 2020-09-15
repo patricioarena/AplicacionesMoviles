@@ -16,7 +16,7 @@ html, body {
 }
 
 header {
-  background: #008f39;
+  background: #9dbe49;
   width:100%;
   padding:20px;
 
@@ -34,14 +34,18 @@ header .logo {
 }
 
 header .logo img {
-  width:50px;
+  width:150px;
   vertical-align: top;
 }
 
 header .logo a {
   color:#fff;
   text-decoration: none;
-  line-height:50px;
+  line-height:100px;
+  font-family: "Work Sans",sans-serif;
+  vertical-align: middle;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 nav {
@@ -53,7 +57,7 @@ nav {
 }
 
 .lateral-menu {
-  background: #d35400;
+  background:	#b66e9f;
   width: 100%;
   padding:20px;
   display:flex;
@@ -63,7 +67,7 @@ nav {
 }
 
 .lateral-menu a{
-  background:#c0392b;
+  background:	#008745;
   color:#fff;
   text-align: center;
   text-decoration: none;
@@ -71,6 +75,7 @@ nav {
   padding: 10px;
   margin-bottom: 0.5em;
   width: 100%;
+  font-family: "Work Sans",sans-serif;
 }
 
 .lateral-menu a:hover {
@@ -81,7 +86,7 @@ nav {
 }
 
 footer {
-  background: #008f39;
+  background: #026128;
   width: 100%;
   padding:20px;
 
@@ -103,6 +108,7 @@ footer .links a{
   text-decoration:none;
   margin-right: 5px;
   margin-left: 5px;
+  font-family: "Work Sans",sans-serif;
 }
 
 footer .links a:hover {
@@ -156,6 +162,7 @@ footer .links a:hover {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   width: 50%;
+  height: 130px;
 }
 
 .item .precioProducto{
