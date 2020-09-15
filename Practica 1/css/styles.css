@@ -12,7 +12,7 @@ html, body {
 
 .wrapper {
   min-height: 100%;
-  margin-bottom: 50px;
+  margin-bottom: 0px;
 }
 
 header {
@@ -34,7 +34,7 @@ header .logo {
 }
 
 header .logo img {
-  width:150px;
+  width:10%;
   vertical-align: top;
 }
 
@@ -53,7 +53,7 @@ nav {
   background:#190f75;
   width: 15%;
   min-height: 100%;
-  position: absolute;
+  min-height: 860px;
 }
 
 .lateral-menu {
@@ -83,6 +83,7 @@ nav {
 }
 
 .footer {
+  /* background: #026128; */
 }
 
 footer {
@@ -94,14 +95,13 @@ footer {
   display: flex;
   flex-wrap:wrap;
   justify-content:space-around;
-  position: absolute;
 }
 
 footer .links {
 }
 
 footer .links a{
-  background:#c0392b;
+  background:#b66e9f;
   flex-grow:1;
   color:#fff;
   padding:10px;
@@ -117,11 +117,12 @@ footer .links a:hover {
 
 .main {
   padding:20px;
-  width: 85%;
+  /* width: 85%; */
+  width: 70%;
   display : inline-flex;
   flex-flow: row wrap;
   align-items: flex-start;
-  position: relative;
+  /* position: relative; */
   left: 15%;
 }
 
@@ -130,12 +131,6 @@ footer .links a:hover {
   display: flex;
   flex-direction:row;
   flex-wrap: wrap;
-}
-
-.cuadricula{
-  display : inline-flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
 }
 
 .item {
