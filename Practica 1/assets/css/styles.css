@@ -85,11 +85,9 @@ nav {
 
 .footer {
   /* background: #026128; */
-}
-
-footer {
+  display: flex;
   background: #026128;
-  width: 100%;
+  width: 90%;
   padding:20px;
 
   /* Flexbox */
@@ -98,7 +96,8 @@ footer {
   justify-content:space-around;
 }
 
-footer .links {
+footer {
+  display: flex;
 }
 
 footer .links a{
@@ -197,37 +196,10 @@ footer .links a:hover {
     max-height: 36px;
 }
 
-
-/* @media screen and (max-width: 800px) {
-  .contenedor {
-    flex-direction:column;
-  }
-
-  header {
-    flex-direction:column;
-    padding:0;
-  }
-
-  header .logo {
-    margin:20px 0;
-  }
-
-  nav {
-    flex-direction:row;
-    flex:0;
-  }
-
-  #cuadricula {
-    flex-grow:1;
-  }
+div.c {
+  width: 10%;
+  background: #026128;
+  text-align: right;
+  color: #e6f7ee;
+  padding: 10px;
 }
-
-@media screen and (max-width: 600px) {
-  nav {
-    flex-direction:column;
-  }
-
-  footer {
-    justify-content:space-around;
-  }
-} */
