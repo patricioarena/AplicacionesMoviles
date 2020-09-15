@@ -22,7 +22,7 @@ header {
 
   /* Flexbox */
   display: flex;
-  justify-content:space-between;
+  /* justify-content:space-between; */
   align-items:center;
   flex-direction:row;
   flex-wrap:wrap;
@@ -30,15 +30,16 @@ header {
 
 header .logo {
   color:#fff;
-  font-size:30px;
 }
 
 header .logo img {
-  width:10%;
+  width:15%;
   vertical-align: top;
 }
 
-header .logo a {
+header .title a {
+  margin-left: -35%;
+  font-size:30px;
   color:#fff;
   text-decoration: none;
   line-height:100px;
