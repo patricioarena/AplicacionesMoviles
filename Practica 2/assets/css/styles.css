@@ -30,15 +30,21 @@ header {
 
 header .logo {
   color:#fff;
+  width: 23%;
 }
 
 header .logo img {
-  width:15%;
+  width: 23%;
   vertical-align: top;
 }
 
+header .title{
+  width: 77%;
+  display: inline-flex;
+}
+
 header .title a {
-  margin-left: -35%;
+  /* margin-left: -35%; */
   /* font-size:30px; */
   /* color:#fff; */
   text-decoration: none;
@@ -117,7 +123,9 @@ nav {
   text-align: center;
   text-decoration: none;
   color:#3c2313;
-  font-family: "Work Sans",sans-serif;
+  font-weight: bold;
+  /* font-family: "Work Sans",sans-serif; */
+  font-family: "Grandstander";
   font-size: x-large;
 }
 
