@@ -163,7 +163,7 @@ footer {
 }
 
 footer .links a{
-  background:#b66e9f;
+  background: #d07c1c;
   flex-grow:1;
   color:#fff;
   padding:10px;
@@ -264,4 +264,112 @@ div.c {
   text-align: right;
   color: #e6f7ee;
   padding: 10px;
+}
+
+
+/*FORMULARIO*/
+
+.main-form{
+  padding:20px;
+  width: 100%;
+  margin: 10px;
+}
+
+.main-form p{
+  color:#3c2313;
+  font-family: "Grandstander";
+  font-size: x-large;
+  padding: 10px;
+}
+
+.radius-section p input{
+  padding: 10px;
+}
+
+form{
+  background-color: white;
+  background-image: url(/assets/img/perrito-encuesta.png);
+  background-repeat: no-repeat;
+  background-position: right;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 0 auto;
+  width: 1080px;
+  box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.4);
+}
+
+input, textarea{
+  border: 0;
+  outline: none;
+}
+
+.field{
+  border: solid 1px #ccc;
+  padding: 10px;
+  font-family: "Grandstander";
+  font-size: x-large;
+  width: 500px;
+}
+
+.field:focus{
+  border-color: #008745;
+}
+
+.button-section{
+  display: flex;
+  flex-direction:row;
+  margin: 20px;
+}
+
+.btn{
+  border-radius: 3px;
+  display: inline-block;
+  padding: 20px 15px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.3); 
+  font-family: "Grandstander";
+  font-size: x-large;
+}
+
+.btn-green{
+  color: white;
+  background-color: #3CC93F;
+  padding: 10px 0;
+  margin: 10px;
+  width: 250px;
+}
+.btn-green:hover{
+  background-color: #37B839;	
+}
+.btn-green:active{
+  background-color: #29962A;
+}
+
+.btn-red{
+  color: white;
+  background-color: #E34242;
+  padding: 10px 0;
+  margin: 10px;
+  width: 250px;
+}
+.btn-red:hover{
+  background-color: #C43535;	
+}
+.btn-red:active{
+  background-color: #A62828;
+}
+
+.btn-blue{
+  color: white;
+  background-color: #0955d1;
+  padding: 10px 0;
+  margin: 10px;
+  width: 250px;
+}
+.btn-blue:hover{
+  background-color: #0648b1;	
+}
+.btn-blue:active{
+  background-color: #09367e;
 }
