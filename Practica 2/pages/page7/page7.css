@@ -1,0 +1,30 @@
+.success {
+    border-color: #008745;
+}
+
+.error {
+    border-color: red;
+}
+
+
+.birthdate-box {
+    display        : flex;
+    flex-direction : row;
+    justify-content: space-evenly;
+    width          : 500px;
+}
+
+.field.birthdate.year {
+    width     : 80px;
+    text-align: center;
+}
+
+.field.birthdate.month {
+    width     : 60px;
+    text-align: center;
+}
+
+.field.birthdate.day {
+    width     : 60px;
+    text-align: center;
+}

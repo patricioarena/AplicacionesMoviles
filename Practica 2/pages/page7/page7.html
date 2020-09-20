@@ -9,7 +9,9 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="../../pages/page7/page7.css">
+    <script src="../page7/page7.js"></script>
     <title>Tienda</title>
 </head>
 
@@ -18,37 +20,41 @@
         <div class="container">
             <header>
                 <div class="logo">
-                    <img src="../assets/img/logo1.png" alt="logo">
+                    <img src="../../assets/img/logo1.png" alt="logo">
                 </div>
                 <div class="title">
-                    <a href="index.html">Tienda Online para tus Mascotas</a>
+                    <a href="../../index.html">Tienda Online para tus Mascotas</a>
                 </div>
             </header>
             <nav>
                 <div class="lateral-menu">
-                    <a href="../index.html" class="button">HOME</a>
-                    <a href="pages/page1.html" class="button">PERROS</a>
-                    <a href="pages/page2.html" class="button">GATOS</a>
-                    <a href="pages/page3.html" class="button">REPTILES</a>
-                    <a href="pages/page4.html" class="button">AVES</a>
-                    <a href="pages/page5.html" class="button">ROEDORES</a>
-                    <a href="pages/page6.html" class="button">PECES</a>
-                    <a href="pages/page7.html" class="button">ENCUESTA</a>
+                    <a href="../../index.html" class="button">HOME</a>
+                    <a href="../../pages/page1.html" class="button">PERROS</a>
+                    <a href="../../pages/page2.html" class="button">GATOS</a>
+                    <a href="../../pages/page3.html" class="button">REPTILES</a>
+                    <a href="../../pages/page4.html" class="button">AVES</a>
+                    <a href="../../pages/page5.html" class="button">ROEDORES</a>
+                    <a href="../../pages/page6.html" class="button">PECES</a>
+                    <a href="page7.html" class="button">ENCUESTA</a>
                 </div>
             </nav>
             <section class="main-form">
-                <form action="">
+                <form id="form1" action="">
                     <p>Nombre:</p>
-                    <input type="text" class="field">
+                    <input id="nom1" type="text" class="field text">
                     <br>
                     <p>Apellido:</p>
-                    <input type="text" class="field">
+                    <input id="ape1" type="text" class="field text">
                     <br>
                     <p>Fecha de Nacimiento:</p>
-                    <input type="text" class="field">
+                    <div class="birthdate-box">
+                        <p>Dia:</p><input id="day" type="text" class="field birthdate day">
+                        <p>Mes:</p><input id="month" type="text" class="field birthdate month">
+                        <p>Año:</p><input id="year" type="text" class="field birthdate year">
+                    </div>
                     <br>
                     <p>Sexo:</p>
-                    <input type="text" class="field">
+                    <input id="sex1" type="text" class="field text">
                     <br>
                     <div class="radius-section">
                         <p>¿Que te parecio la pagina?:
@@ -66,10 +72,10 @@
                         </p>
                     </div>
                     <p>Email:</p>
-                    <input type="text" class="field">
+                    <input id="email1" type="text" class="field text">
                     <br>
                     <p>Comentario:</p>
-                    <textarea class="field"></textarea>
+                    <textarea class="field text"></textarea>
                     <br>
                     <div class="button-section">
                         <p class="left-content">
