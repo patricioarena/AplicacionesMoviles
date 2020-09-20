@@ -28,3 +28,9 @@
     width     : 60px;
     text-align: center;
 }
+
+.field.comment{
+    resize: none;
+    font-size: medium;
+    height: 150px;
+}

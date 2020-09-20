@@ -18,10 +18,10 @@
 <body>
     <div class="wrapper">
         <div class="container">
+            <div class="logo">
+                <img src="../../assets/img/logo1.png" alt="logo">
+            </div>
             <header>
-                <div class="logo">
-                    <img src="../../assets/img/logo1.png" alt="logo">
-                </div>
                 <div class="title">
                     <a href="../../index.html">Tienda Online para tus Mascotas</a>
                 </div>
@@ -39,7 +39,7 @@
                 </div>
             </nav>
             <section class="main-form">
-                <form id="form1" action="">
+                <form id="form1">
                     <p>Nombre:</p>
                     <input id="nom1" type="text" class="field text">
                     <br>
@@ -56,7 +56,7 @@
                     <p>Sexo:</p>
                     <input id="sex1" type="text" class="field text">
                     <br>
-                    <div class="radius-section">
+                    <div class="radius-section" id="valoraciones">
                         <p>¿Que te parecio la pagina?:
                             <br>
                             <input type="radio" name="valoracion" value="1">&nbsp;Lamentable
@@ -75,17 +75,19 @@
                     <input id="email1" type="text" class="field text">
                     <br>
                     <p>Comentario:</p>
-                    <textarea class="field text"></textarea>
+                    <textarea id="comentario" class="field comment text"></textarea>
+                    <span id="restante" class="restante">350</span>
+                    <span class="txt">Caracteres restantes</span>
                     <br>
                     <div class="button-section">
                         <p class="left-content">
-                            <input type="button" class="btn btn-green" value="Enviar">
+                            <input id="enviar" type="button" class="btn btn-green" value="Enviar">
                         </p>
                         <p class="center-content">
-                            <input type="button" class="btn btn-red" value="Cancelar">
+                            <input id="cancelar" type="button" class="btn btn-red" value="Cancelar">
                         </p>
                         <p class="right-content">
-                            <input type="button" class="btn btn-blue" value="Restablecer valores">
+                            <input id="reset" type="button" class="btn btn-blue" value="Restablecer valores">
                         </p>
                     </div>
                 </form>

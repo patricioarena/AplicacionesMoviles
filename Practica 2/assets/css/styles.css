@@ -22,26 +22,33 @@ header {
   padding   : 20px;
 
   /* Flexbox */
-  display           : flex;
-  /* justify-content:space-between; */
-  align-items       : center;
-  flex-direction    : row;
-  flex-wrap         : wrap;
+  display              : flex;
+  /* justify-content   :space-between; */
+  /* align-items       : center; */
+  flex-direction       : row;
+  justify-content      : center;
+
+  /* flex-wrap         : wrap; */
 }
 
-header .logo {
+.logo {
   color: #fff;
-  width: 23%;
 }
 
-header .logo img {
-  width         : 23%;
-  vertical-align: top;
+.logo img {
+  /* vertical-align: top; */
+  display    : block;
+  position   : absolute;
+  width      : 130px;
+  margin-top : 10px;
+  margin-left: 10px;
 }
 
 header .title {
-  width  : 77%;
-  display: inline-flex;
+  /* width  : 77%; */
+  display    : flex;
+  align-items: center;
+
 }
 
 header .title a {
@@ -54,7 +61,7 @@ header .title a {
   vertical-align         : middle;
   /* font-weight         : 600; */
   text-transform         : uppercase;
-  font-size              : 60px;
+  font-size              : 40px;
   font-family            : 'Luckiest Guy';
   color                  : #fff;
   -webkit-font-smoothing : antialiased;
@@ -118,7 +125,7 @@ nav {
   justify-content : center;
   padding         : 10px 0;
   margin          : 20px;
-  width           : 167px;
+  width           : 100px;
   /* margin-bottom: auto; */
   border          : 2px solid rgba(83, 0, 0, 0.575);
   border-radius   : 10px;
@@ -128,7 +135,7 @@ nav {
   font-weight     : bold;
   /* font-family  : "Work Sans",sans-serif; */
   font-family     : "Grandstander";
-  font-size       : x-large;
+  font-size       : medium;
 }
 
 /* .lateral-menu a{
@@ -180,13 +187,12 @@ footer .links a:hover {
 }
 
 .main {
-  padding    : 20px;
-  width      : 100%;
-  display    : inline-flex;
-  flex-flow  : row wrap;
-  align-items: flex-start;
-  /* position: relative; */
-  left       : 15%;
+  padding        : 20px;
+  width          : 100%;
+  display        : inline-flex;
+  flex-flow      : row wrap;
+  justify-content: center;
+  align-items    : flex-start;
 }
 
 .container {
