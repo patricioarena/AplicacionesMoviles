@@ -1,10 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // setInterval(function () {
-    //     validarObligatorio();
-    //     // console.log(1);
-
-    // }, 1000);
+    setInterval(function () {
+        validarObligatorio();
+    }, 1000);
 
     document.getElementById("nom1").value = null;
     document.getElementById("ape1").value = null;
@@ -13,6 +11,12 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("year").value = null;
     document.getElementById("sex1").value = null;
     document.getElementById("email1").value = null;
+
+    document.querySelectorAll('input[name="valoracion"]').forEach(element => {
+        element.checked = false;
+    });
+
+    document.getElementById("comentario").value = null;
 
     document.getElementById("nom1").addEventListener('input', validarNombre);
     document.getElementById("ape1").addEventListener('input', validarApellido);
@@ -25,28 +29,23 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("comentario").addEventListener('input', procesarComentario)
 
     document.getElementById("enviar").addEventListener('click', enviar)
+    document.getElementById("cancelar").addEventListener('click', cancelar)
+    document.getElementById("reset").addEventListener('click', reset)
 
 });
 
 class Persona {
-    constructor(nombre, apellido, email, fechaDeNac, sexo, valoracion, comentario) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.fechaDeNac = fechaDeNac;
-        this.sexo = sexo;
-        this.valoracion = valoracion;
-        this.comentario = comentario;
-    }
-}
+    constructor() { }
 
-var nombre;
-var apellido;
-var email;
-var fechaDeNac;
-var sexo;
-var valoracion;
-var comentario;
+    nombre;
+    apellido;
+    email;
+    fechaDeNac;
+    sexo;
+    valoracion;
+    comentario;
+
+}
 
 var nombreValido = false;
 var apellidoValido = false;
@@ -55,6 +54,8 @@ var fechaValida = false;
 var sexoValido = false;
 var valoracionValida = false;
 
+var valoracion;
+var comentario;
 
 //Letras con acentos y ñ
 const reg1 = /^[a-zA-ZÀ-ÿ\u00f1\u00d1 ]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1 ]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1 ]+$/;
@@ -71,10 +72,11 @@ function validarNombre() {
     if (reg1.test(text)) {
         element.classList.remove("error");
         element.classList.add("success");
-        nombre = text;
+        nombreValido = true;
     } else {
         element.classList.remove("success");
         element.classList.add("error");
+        nombreValido = false;
     }
 }
 
@@ -85,10 +87,11 @@ function validarApellido() {
     if (reg1.test(text)) {
         element.classList.remove("error");
         element.classList.add("success");
-        apellido = text;
+        apellidoValido = true;
     } else {
         element.classList.remove("success");
         element.classList.add("error");
+        apellidoValido = false
     }
 }
 
@@ -99,31 +102,49 @@ function validarSexo() {
     if (reg1.test(text)) {
         element.classList.remove("error");
         element.classList.add("success");
-        sexo = text;
+        sexoValido = true;
     } else {
         element.classList.remove("success");
         element.classList.add("error");
+        sexoValido = false;
     }
 }
 
 function validarNacimiento() {
+
+    document.addEventListener('keydown', (event) => {
+
+        var key = window.event ? event.which : event.keyCode;
+        if(key==8)
+        {
+          return true;
+        }
+        if (key < 48 || key > 57) {
+            event.preventDefault();
+        }
+
+    });
+
     let day1 = document.getElementById('day');
     let month1 = document.getElementById('month');
     let year1 = document.getElementById('year');
+
+    day1.maxLength = 2;
+    month1.maxLength = 2;
+    year1.maxLength = 4;
 
     let day = day1.value;
     let month = month1.value;
     let year = year1.value;
 
-    if ((validarLogitud2(day)) && (validarLogitud2(month)) && (validarLogitud4(year))) {
-        let date = day + "/" + month + "/" + year;
+    if ((validarDia(day)) && (validarMes(month)) && (validarYear(year))) {
         day1.classList.remove("error");
         day1.classList.add("success");
         month1.classList.remove("error");
         month1.classList.add("success");
         year1.classList.remove("error");
         year1.classList.add("success");
-        fechaDeNac = date;
+        fechaValida = true;
     } else {
         day1.classList.remove("success");
         day1.classList.add("error");
@@ -131,25 +152,42 @@ function validarNacimiento() {
         month1.classList.add("error");
         year1.classList.remove("success");
         year1.classList.add("error");
+        fechaValida = false;
     }
 }
 
-function validarLogitud2(str) {
+function validarDia(str) {
     let reg2 = /^[0-9]{2}$/;
     if (reg2.test(str)) {
-        return true;
+        let aux = Number.parseInt(str);
+        if ((aux >= 1) && (aux <= 31)) {
+            return true;
+        }
     } else {
         return false;
     }
 }
 
-function validarLogitud4(str) {
+function validarMes(str) {
+    let reg2 = /^[0-9]{2}$/;
+    if (reg2.test(str)) {
+        let aux = Number.parseInt(str);
+        if ((aux >= 1) && (aux <= 12)) {
+            return true;
+        }
+    } else {
+        return false;
+    }
+}
+
+function validarYear(str) {
     let reg2 = /^[0-9]{4}$/;
     if (reg2.test(str)) {
-        console.log(true)
-        return true;
+        let aux = Number.parseInt(str);
+        if (aux >= 1900) {
+            return true;
+        }
     } else {
-        console.log(false)
         return false;
     }
 }
@@ -161,26 +199,28 @@ function validarEmail() {
     if (reg2.test(value) && reg3.test(value)) {
         element.classList.remove("error");
         element.classList.add("success");
-        email = value;
+        emailValido = true;
     } else if (reg2.test(value)) {
         element.classList.remove("error");
         element.classList.add("success");
-        email = value;
+        emailValido = true;
     } else {
         element.classList.remove("success");
         element.classList.add("error");
+        emailValido = false;
     }
 }
 
 function obtenerValoracion() {
     document.querySelectorAll('input[name="valoracion"]').forEach(element => {
-        if (element.checked)
+        if (element.checked) {
             valoracion = element.value;
+            valoracionValida = true;
+        }
     });
 }
 
 function procesarComentario() {
-
     let limite = 350
     let textarea = document.getElementById("comentario");
     textarea.maxLength = limite;
@@ -193,34 +233,50 @@ function procesarComentario() {
 }
 
 function validarObligatorio() {
-    let a = document.getElementById("nom1").value;
-    let b = document.getElementById("ape1").value;
-    let c = document.getElementById("day").value;
-    let d = document.getElementById("month").value;
-    let e = document.getElementById("year").value;
-    let f;
-
-    document.querySelectorAll('input[name="valoracion"]').forEach(valoracion => {
-        if (valoracion.checked)
-            f = valoracion.value;
-    });
-
-    let g = document.getElementById("sex1").value;
-    let i = document.getElementById("email1").value;
-
-    console.log(a, b, c, d, e, f, g, i);
+    let element = document.getElementById("enviar");
+    if ((nombreValido) && (apellidoValido) && (emailValido) && (fechaValida) && (sexoValido) && (valoracionValida)) {
+        element.classList.remove("disable");
+        element.classList.add("enable");
+    } else {
+        element.classList.remove("enable");
+        element.classList.add("disable");
+    }
 }
 
-
 function enviar() {
+    let day = document.getElementById('day').value;
+    let month = document.getElementById('month').value;
+    let year = document.getElementById('year').value;
+
     aPerson = new Persona();
-    aPerson.nombre = nombre;
-    aPerson.apellido = apellido;
-    aPerson.email = email;
-    aPerson.fechaDeNac = fechaDeNac;
-    aPerson.sexo = sexo;
+    aPerson.nombre = document.getElementById("nom1").value;
+    aPerson.apellido = document.getElementById("ape1").value;
+    aPerson.email = document.getElementById("email1").value;
+    aPerson.fechaDeNac = day + "/" + month + "/" + year;
+    aPerson.sexo = document.getElementById("sex1").value;
     aPerson.valoracion = valoracion;
     aPerson.comentario = comentario;
 
-    console.log(aPerson);
+    // console.log(aPerson);
+
+    alert(
+        "Nombre: " + aPerson.nombre + "\n" +
+        "Apellido: " + aPerson.apellido + "\n" +
+        "Fecha de Nacimiento: " + aPerson.fechaDeNac + "\n" +
+        "Sexo: " + aPerson.sexo + "\n" +
+        "Valoración: " + aPerson.valoracion + "\n" +
+        "Email: " + aPerson.email + "\n" +
+        "Comentario: " + aPerson.comentario + "\n"
+    );
+}
+
+function cancelar() {
+    let response = confirm("¿Desea volver a la página anterior?");
+    if (response) {
+        window.history.back();
+    }
+}
+
+function reset() {
+    window.location.reload();
 }

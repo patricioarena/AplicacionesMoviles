@@ -6,12 +6,23 @@
     border-color: red;
 }
 
+.disable {
+    cursor          : not-allowed;
+    pointer-events  : none;
+    color           : #c0c0c0;
+    background-color: grey;
+}
+
+.enable {
+    cursor: pointer;
+}
 
 .birthdate-box {
     display        : flex;
     flex-direction : row;
     justify-content: space-evenly;
     width          : 500px;
+
 }
 
 .field.birthdate.year {
@@ -29,8 +40,46 @@
     text-align: center;
 }
 
-.field.comment{
-    resize: none;
-    font-size: medium;
-    height: 150px;
+.field.comment {
+    resize   : none;
+    font-size: large;
+    height   : 150px;
+}
+
+.checkbox-title {
+    color      : #3c2313;
+    font-family: "Grandstander";
+    font-size  : x-large;
+    padding    : 10px;
+}
+
+.obligatorio {
+    color    : red;
+    font-size: xx-large;
+}
+
+.obligatorio.fix {
+    float     : right;
+    margin-top: 20px;
+}
+
+.cajita {
+    width: 525px;
+}
+
+.leyenda{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+    color     : red;
+}
+
+.gl{
+    font-size: large;
+    font-family: "Grandstander";
+}
+
+.restan{
+    margin-right: 25px;
+    float: right;
 }

@@ -284,7 +284,7 @@ footer {
   width: 210px;
   height: 100px;
   margin: 10px 0 0 70px;
-
+  margin-bottom: -35px;
 }
 
 .column1 label{
@@ -294,7 +294,7 @@ footer {
   font-family: "Grandstander";
   font-weight: bolder;
   background: #d07c1c;
-  padding: 10px 0;
+  padding: 20px 0px 10px;
   width: 200px;
   margin: 0px 70px;
   border: 2px solid rgba(83, 0, 0, 0.575);
@@ -420,6 +420,11 @@ div.c {
   padding    : 10px;
 }
 
+.radius-section{
+  /* border: solid 1px; */
+  width: 500px;
+}
+
 .radius-section p input {
   padding: 10px;
 }
@@ -517,4 +522,12 @@ textarea {
 
 .btn-blue:active {
   background-color: #09367e;
+}
+
+.manito{
+  cursor: pointer;
+}
+
+.manito label{
+  cursor: pointer;
 }

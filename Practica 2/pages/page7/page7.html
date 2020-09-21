@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="../../assets/css/styles.css">
     <link rel="stylesheet" href="../../pages/page7/page7.css">
     <script src="../page7/page7.js"></script>
+    <script src="../../assets/js/script.js"></script>
+
     <title>Tienda</title>
 </head>
 
@@ -19,7 +21,7 @@
     <div class="wrapper">
         <div class="container">
             <div class="logo">
-                <img src="../../assets/img/logo1.png" alt="logo">
+                <a href="../../index.html"><img src="../../assets/img/logo1.png" alt="logo"></a>
             </div>
             <header>
                 <div class="title">
@@ -39,14 +41,18 @@
                 </div>
             </nav>
             <section class="main-form">
+                <span class="leyenda gl">Todos los campos marcados con (*) son obligatorios</span>
                 <form id="form1">
                     <p>Nombre:</p>
-                    <input id="nom1" type="text" class="field text">
+                    <input id="nom1" type="text" class="field text"><span class="obligatorio">&nbsp;*</span>
                     <br>
                     <p>Apellido:</p>
-                    <input id="ape1" type="text" class="field text">
+                    <input id="ape1" type="text" class="field text"><span class="obligatorio">&nbsp;*</span>
                     <br>
-                    <p>Fecha de Nacimiento:</p>
+                    <br>
+                    <div class="cajita">
+                        <label class="checkbox-title">Fecha de Nacimiento:</label><span
+                            class="obligatorio fix">&nbsp;*</span></div>
                     <div class="birthdate-box">
                         <p>Dia:</p><input id="day" type="text" class="field birthdate day">
                         <p>Mes:</p><input id="month" type="text" class="field birthdate month">
@@ -54,11 +60,15 @@
                     </div>
                     <br>
                     <p>Sexo:</p>
-                    <input id="sex1" type="text" class="field text">
+                    <input id="sex1" type="text" class="field text"><span class="obligatorio">&nbsp;*</span>
                     <br>
+                    <br>
+                    <div class="cajita">
+                        <label class="checkbox-title">¿Que te parecio la pagina?:</label>
+                        <span class="obligatorio fix">&nbsp;*</span>
+                    </div>
                     <div class="radius-section" id="valoraciones">
-                        <p>¿Que te parecio la pagina?:
-                            <br>
+                        <p>
                             <input type="radio" name="valoracion" value="1">&nbsp;Lamentable
                             <br>
                             <input type="radio" name="valoracion" value="2">&nbsp;Mala
@@ -72,22 +82,25 @@
                         </p>
                     </div>
                     <p>Email:</p>
-                    <input id="email1" type="text" class="field text">
+                    <input id="email1" type="text" class="field text"><span class="obligatorio">&nbsp;*</span>
                     <br>
                     <p>Comentario:</p>
                     <textarea id="comentario" class="field comment text"></textarea>
-                    <span id="restante" class="restante">350</span>
-                    <span class="txt">Caracteres restantes</span>
+                    <div class="cajita">
+                        <span class="restan gl">
+                            <span id="restante">350</span>
+                            Caracteres restantes</span>
+                    </div>
                     <br>
                     <div class="button-section">
                         <p class="left-content">
-                            <input id="enviar" type="button" class="btn btn-green" value="Enviar">
+                            <input id="enviar" type="button" class="btn btn-green disable" value="Enviar">
                         </p>
                         <p class="center-content">
-                            <input id="cancelar" type="button" class="btn btn-red" value="Cancelar">
+                            <input id="cancelar" type="button" class="btn btn-red enable" value="Cancelar">
                         </p>
                         <p class="right-content">
-                            <input id="reset" type="button" class="btn btn-blue" value="Restablecer valores">
+                            <input id="reset" type="button" class="btn btn-blue enable" value="Restablecer valores">
                         </p>
                     </div>
                 </form>
@@ -98,53 +111,53 @@
         <div class="container-footer-all">
             <div class="container-body-footer">
                 <div class="column1">
-                <h1>Mas información del Proyecto</h1>
-                <p>Este Proyecto fue desarrollado para la materia Aplicaciones Moviles
-                    de la Universidad Nacional Arturo Jauretche.
-                </p>
-                <img src="/assets/img/perrito-information.png" alt="">
-                <label>Desarrollado por: 
-                    <br>
-                    Palmieri Ayelen
-                    <br>
-                    Arena Patricio</label>
+                    <h1>Mas información del Proyecto</h1>
+                    <p>Este Proyecto fue desarrollado para la materia Aplicaciones Moviles
+                        de la Universidad Nacional Arturo Jauretche.
+                    </p>
+                    <img src="/assets/img/perrito-information.png" alt="">
+                    <label>Desarrollado por:
+                        <br>
+                        Palmieri Ayelen
+                        <br>
+                        Arena Patricio</label>
                 </div>
                 <div class="column2">
-                <h1>Redes Sociales</h1>
-                <div class="row">
-                    <img src="/assets/img/facebook.png" alt="">
-                    <label>Seguinos en Facebook</label>
-                </div>
-                <div class="row">
-                    <img src="/assets/img/twitter.png" alt="">
-                    <label>Seguinos en Twitter</label>
-                </div>
-                <div class="row">
-                    <img src="/assets/img/instagram.png" alt="">
-                    <label>Seguinos en Instagram</label>
-                </div>
+                    <h1>Redes Sociales</h1>
+                    <div class="row manito">
+                        <img src="/assets/img/facebook.png" alt="">
+                        <label>Seguinos en Facebook</label>
+                    </div>
+                    <div class="row manito">
+                        <img src="/assets/img/twitter.png" alt="">
+                        <label>Seguinos en Twitter</label>
+                    </div>
+                    <div class="row manito">
+                        <img src="/assets/img/instagram.png" alt="">
+                        <label>Seguinos en Instagram</label>
+                    </div>
                 </div>
                 <div class="column3">
-                <h1>información Contacto</h1>
-                <div class="row2">
-                    <img src="/assets/img/house.png" alt="">
-                    <label>Fcio Varela,
-                        Buenos Aires,
-                        Argentina.
-                    </label>
-                </div>
-                <div class="row2">
-                    <img src="/assets/img/smartphone.png" alt="">
-                    <label>+054********</label>
-                </div>
-                <div class="row2">
-                    <img src="/assets/img/contact.png" alt="">
-                    <label>mypetshop2020@gmail.com</label>
-                </div>
+                    <h1>información Contacto</h1>
+                    <div class="row2">
+                        <img src="/assets/img/house.png" alt="">
+                        <label>Fcio Varela,
+                            Buenos Aires,
+                            Argentina.
+                        </label>
+                    </div>
+                    <div class="row2">
+                        <img src="/assets/img/smartphone.png" alt="">
+                        <label>+054********</label>
+                    </div>
+                    <div class="row2 manito" id="mailto">
+                        <img src="/assets/img/contact.png" alt="">
+                        <label>mypetshop2020@gmail.com</label>
+                    </div>
                 </div>
             </div>
-        
-        <!-- <div class="footer">
+
+            <!-- <div class="footer">
             <div class="links">
                 <a href="#">Facebook</a>
                 <a href="#">Instagram</a>
