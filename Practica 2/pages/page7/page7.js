@@ -16,13 +16,19 @@ document.addEventListener("DOMContentLoaded", function () {
         element.checked = false;
     });
 
+    // document.getElementById("day").addEventListener('focus', test);
+    // document.getElementById("month").addEventListener('focus', test);
+    // document.getElementById("year").addEventListener('focus', test);
+
     document.getElementById("comentario").value = null;
 
     document.getElementById("nom1").addEventListener('input', validarNombre);
     document.getElementById("ape1").addEventListener('input', validarApellido);
+
     document.getElementById("day").addEventListener('input', validarNacimiento);
     document.getElementById("month").addEventListener('input', validarNacimiento);
     document.getElementById("year").addEventListener('input', validarNacimiento);
+
     document.getElementById("valoraciones").addEventListener('click', obtenerValoracion);
     document.getElementById("sex1").addEventListener('input', validarSexo);
     document.getElementById("email1").addEventListener('input', validarEmail);
@@ -110,20 +116,21 @@ function validarSexo() {
     }
 }
 
-function validarNacimiento() {
-
+function test() {
     document.addEventListener('keydown', (event) => {
-
-        var key = window.event ? event.which : event.keyCode;
-        if(key==8)
-        {
-          return true;
-        }
-        if (key < 48 || key > 57) {
+        var key = window.event ? event.keyCode : event.which;
+        if (key === 8 || key === 46) {
+            return true;
+        } else if ( key < 48 || key > 57 ) {
             event.preventDefault();
+        } else {
+            return true;
         }
 
     });
+}
+
+function validarNacimiento() {
 
     let day1 = document.getElementById('day');
     let month1 = document.getElementById('month');
