@@ -183,6 +183,7 @@ nav {
   margin        : 10px;
   display       : inline-flex;
   flex-direction: column;
+  cursor: pointer;
 }
 
 .item .box {

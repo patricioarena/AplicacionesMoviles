@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("mailto").addEventListener('click', mailto);
     styloBox();
-    suma();
+    // suma();
 });
 
 
@@ -14,7 +14,7 @@ function mailto() {
 function styloBox() {
     $('.item').on('click', function() {
         var id = $(this).attr("id");
-        $(`#${id}`).toggleClass("seleccionado"); 
+        $(`#${id}`).toggleClass("seleccionado");
         $(this).children(".box").toggleClass("imgopacity");
         var op = $(this).attr("isSelected");
         if(op == "true"){
@@ -51,4 +51,4 @@ function suma(){
         // console.log(obtenerValor)
         })
     };
-    
+

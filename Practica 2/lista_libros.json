@@ -1,8 +1,4 @@
-[
-    {
-    "ulr": "http://www.json-generator.com/api/json/get/cfKnFzryuW?indent=2"
-    }
-]
+// http://www.json-generator.com/api/json/get/cfZgFvmeCq?indent=2
 
 [
     {
@@ -63,7 +59,7 @@
         "id": 10,
         "precio": "$3,360.81",
         "picture": "http://placehold.it/32x32",
-        "title": "Manual de Plantas Medicinales para Curar Animales Domesticos"
+        "title": "Manual de Plantas y Animales Domesticos"
     },
     {
         "id": 11,
