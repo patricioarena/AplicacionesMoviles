@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-  $.get("http://www.json-generator.com/api/json/get/cfZgFvmeCq?indent=2", function (data) {
+  $.get("http://www.json-generator.com/api/json/get/cgkBPoSHZu?indent=2", function (data) {
     $.each(data, function (key, value) {
       let item = `<div class="item" isSelected="false" id="${value.id}">
       <div class="box"><img src="${value.picture}" alt=""></div>
@@ -29,10 +29,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  suma();
 
 
 
-  
 });
 
 

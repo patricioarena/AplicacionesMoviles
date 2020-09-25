@@ -32,7 +32,7 @@ function suma(){
     if (storage != null){
         arrayAux = storage;
     }
-    $('.item').on('click', function() {
+    $(document).on('click', '.item', function () {
         var arrayProductos = [];
         $('.item').each(function() {
             var op = $(this).attr("isSelected");
