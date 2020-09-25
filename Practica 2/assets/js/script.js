@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("mailto").addEventListener('click', mailto);
     styloBox();
-    // suma();
+    suma();
 });
 
 
@@ -26,21 +26,39 @@ function styloBox() {
 }
 
 function suma(){
+    var storage = localStorage.getItem("productosAcumulados");
+    console.log(storage);
+    var arrayAux = [];
+    if (storage != null){
+        arrayAux = storage;
+    }
     $('.item').on('click', function() {
-        var array = [];
+        var arrayProductos = [];
         $('.item').each(function() {
             var op = $(this).attr("isSelected");
             if(op == "true"){
-                array.push(this);
-                console.log(array);
+                arrayProductos.push(this);
             }
         })
-        var array2 = []
-        $.each(array, function(index, elem) {
-            array2.push(elem.value($`{span}`));
-            console.log(array2);
+        var arrayPrecioProductos = []
+        $.each(arrayProductos, function(index, elem) {
+            var precioOriginal = $(elem).children('.precioProducto').text();
+            var precioRegular = precioOriginal.replace(/[$.]/g,'');
+            var precioSinEspacios = precioRegular.trim();
+            var precioParseInt = parseInt(precioSinEspacios);
+            arrayPrecioProductos.push(precioParseInt);
         })
-        var obtenerValor = $('.precioProducto').attr("span");
+
+        sum = 0;
+        $.each(arrayPrecioProductos, function (index, value) {
+            sum += value;
+        });
+
+        console.log(sum);
+
+        localStorage.setItem("productosAcumulados", arrayProductos);
+
+        //var obtenerValor = $('.precioProducto').attr("span");
         // $('.precioProducto').each(function(){
         //     sessionStorage.setItem("variableAcumuladora", variableAcumuladora + Number(obtenerValor));
         // });
