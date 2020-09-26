@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/bag.css">
     <script src="../assets/js/jquery.js"></script>
     <script src="../assets/js/script.js"></script>
     <title>Tienda</title>
@@ -37,9 +38,11 @@
                     <a href="page6.html" class="button">PECES</a>
                     <a href="../pages/page8/page8.html" class="button">LIBROS</a>
                     <a href="page7/page7.html" class="button">ENCUESTA</a>
+                    <a class="button carrito" id="bag"><i class="fa fa-shopping-bag"></i>carrito<sup id="bagCounter"
+                        class="bag">0</sup></a>
                 </div>
             </nav>
-            <section class="main">
+            <section class="main" id="main">
                 <!-- <div class="cuadricula"> -->
                 <div class="item" isSelected="false" id="producto9">
                     <div class="box"><img src="../assets/img/comedero-para-reptiles.jpg" alt=""></div>
@@ -64,6 +67,16 @@
                     </div>
                 </div>
                 <!-- </div> -->
+                <div id="Sidebar-bag" class="sidebar">
+                    <a class="closebtn">×</a>
+                    <table id="tabla">
+                    </table>
+                    <div id="price" class="price">
+                        <p>Total&nbsp;
+                        <span>$</span><span id="total">0</span></p>
+                        <button class="btnPrice" id="confirVenta">Confirmar</button>
+                    </div>
+                </div>
             </section>
         </div>
     </div>

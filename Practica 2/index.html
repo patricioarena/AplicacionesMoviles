@@ -9,13 +9,16 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@300&display=swap" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/bag.css">
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/script.js"></script>
     <title>Tienda</title>
 </head>
 
 <body>
+
     <div class="wrapper">
         <div class="container">
             <div class="logo">
@@ -37,9 +40,11 @@
                     <a href="pages/page6.html" class="button">PECES</a>
                     <a href="pages/page8/page8.html" class="button">LIBROS</a>
                     <a href="pages/page7/page7.html" class="button">ENCUESTA</a>
+                    <a class="button carrito" id="bag"><i class="fa fa-shopping-bag"></i>carrito<sup id="bagCounter"
+                            class="bag">0</sup></a>
                 </div>
             </nav>
-            <section class="main">
+            <section class="main" id="main">
                 <div class="item" isSelected="false" id="producto1">
                     <div class="box"><img src="../assets/img/alimento-peces-shulet.jpg" alt=""></div>
                     <div class="precioProducto">
@@ -856,9 +861,23 @@
                     </div>
                 </div>
 
+
+                <div id="Sidebar-bag" class="sidebar">
+                    <a class="closebtn">×</a>
+                    <table id="tabla">
+                    </table>
+                    <div id="price" class="price">
+                        <p>Total&nbsp;
+                        <span>$</span><span id="total">0</span></p>
+                        <button class="btnPrice" id="confirVenta">Confirmar</button>
+                    </div>
+                </div>
+
             </section>
         </div>
     </div>
+
+
     <footer>
         <div class="container-footer-all">
             <div class="container-body-footer">
@@ -908,21 +927,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="footer">
-            <div class="links">
-                <a href="#">Facebook</a>
-                <a href="#">Instagram</a>
-                <a href="#">Twitter</a>
-                <a href="#">Otra red social xD</a>
-            </div>
-
-        </div>
-        <div class="c">
-            <h3>Alumnos</h3>
-            <p>Ayelen Palmieri</p>
-            <p>Patricio Arena</p>
-        </div> -->
         </div>
         <div class="container-footer">
             <div class="footer">
@@ -933,40 +937,6 @@
         </div>
     </footer>
 
-    <script>
-        // $(document).ready(() => {
-        //     $('.item').click(function() {
-        //         $(this).css('background-color', '#d07c1c');
-        //     });
-        // });
-
-        // $(document).ready(function() {
-            // $(".item").on('click', function() {
-            //     $(".box").on('click', function() {
-            //         $(".item").toggleClass("seleccionado");
-            //         $(this).toggleClass('imgopacity');
-            //     });
-            // });
-
-        // });
-
-        // $(document).ready(function() {
-        //     $(".box").on('click', function() {
-        //         $(this).toggleClass('imgopacity');
-        //     });
-        // });
-
-        // function suma(){
-        //     var variableAcumuladora = 0;
-        //     $('.precioProducto').each(function(){
-        //         var valor = $(this).attr("span");
-        //         variableAcumuladora += Number(valor) ;
-        // });
-        // $("#valor").text(variableAcumuladora);
-
-
-
-    </script>
 </body>
 
 </html>

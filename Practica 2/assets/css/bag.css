@@ -1,0 +1,125 @@
+  .sidebar {
+    height          : 60%;
+    width           : 0;
+    position        : fixed;
+    z-index         : 1;
+    top             : 23.5%;
+    right           : 0;
+    background-color: rgb(230, 215, 215);
+    overflow-x      : hidden;
+    transition      : 0.5s;
+    padding-top     : 60px;
+  }
+
+  .sidebar a {
+    padding        : 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size      : 25px;
+    color          : #818181;
+    display        : block;
+    transition     : 0.3s;
+  }
+
+  .sidebar a:hover {
+    color: #f1f1f1;
+  }
+
+  .sidebar .closebtn {
+    position   : absolute;
+    top        : 0;
+    right      : 25px;
+    font-size  : 36px;
+    margin-left: 50px;
+  }
+
+  .openbtn {
+    font-size       : 20px;
+    cursor          : pointer;
+    background-color: #111;
+    color           : white;
+    padding         : 10px 15px;
+    border          : none;
+  }
+
+  .openbtn:hover {
+    background-color: #444;
+  }
+
+  .main {
+    transition: margin-left .5s;
+  }
+
+  sub {
+    vertical-align: sub;
+    font-size     : large;
+  }
+
+  .carrito {
+    width: 140px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .bag{
+    margin-left: 2px;
+    border: 3px wheat solid;
+    background: wheat;
+    border-radius: 50%;
+    padding-top: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .price {
+    background-color: rgb(241, 226, 226);
+    width: 0px;
+    height: 50px;
+    position        : fixed;
+    z-index         : 1;
+    top             : 80%;
+    right           : 0;
+    transition      : 0.5s;
+  }
+
+  .btnPrice {
+    border-radius  : 3px;
+    display        : inline-block;
+    padding        : 5px 15px;
+    /* text-decoration: none; */
+    text-shadow    : 0 1px 0 rgba(255, 255, 255, 0.3);
+    box-shadow     : 0 1px 1px rgba(0, 0, 0, 0.3);
+    font-family    : "Grandstander";
+    font-size      : x-large;
+}
+
+  @media (max-width: 1368px) {
+
+    .sidebar {
+      top             : 30%;
+    }
+
+    .price {
+      background-color: rgb(241, 226, 226);
+      width: 0px;
+      height: 50px;
+      position        : fixed;
+      z-index         : 1;
+      top             : 90%;
+      right           : 0;
+      transition      : 0.5s;
+    }
+
+    .btnPrice {
+      border-radius  : 3px;
+      display        : inline-block;
+      padding        : 5px 15px;
+      /* text-decoration: none; */
+      text-shadow    : 0 1px 0 rgba(255, 255, 255, 0.3);
+      box-shadow     : 0 1px 1px rgba(0, 0, 0, 0.3);
+      font-family    : "Grandstander";
+      font-size      : x-large;
+  }
+
+
+
+}

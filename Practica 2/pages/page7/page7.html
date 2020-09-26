@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="../../assets/css/bag.css">
     <link rel="stylesheet" href="../../pages/page7/page7.css">
     <script src="../../assets/js/jquery.js"></script>
     <script src="../../assets/js/script.js"></script>
@@ -39,9 +40,11 @@
                     <a href="../../pages/page6.html" class="button">PECES</a>
                     <a href="../page8/page8.html" class="button">LIBROS</a>
                     <a href="page7.html" class="button here">ENCUESTA</a>
+                    <a class="button carrito" id="bag"><i class="fa fa-shopping-bag"></i>carrito<sup id="bagCounter"
+                        class="bag">0</sup></a>
                 </div>
             </nav>
-            <section class="main-form">
+            <section class="main-form" id="main">
                 <span class="leyenda gl">Todos los campos marcados con (*) son obligatorios</span>
                 <form id="form1">
                     <p>Nombre:</p>
@@ -105,6 +108,18 @@
                         </p>
                     </div>
                 </form>
+
+                <div id="Sidebar-bag" class="sidebar">
+                    <a class="closebtn">×</a>
+                    <table id="tabla">
+                    </table>
+                    <div id="price" class="price">
+                        <p>Total&nbsp;
+                        <span>$</span><span id="total">0</span></p>
+                        <button class="btnPrice" id="confirVenta">Confirmar</button>
+                    </div>
+                </div>
+                
             </section>
         </div>
     </div>
@@ -157,21 +172,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="footer">
-            <div class="links">
-                <a href="#">Facebook</a>
-                <a href="#">Instagram</a>
-                <a href="#">Twitter</a>
-                <a href="#">Otra red social xD</a>
-            </div>
-
-        </div>
-        <div class="c">
-            <h3>Alumnos</h3>
-            <p>Ayelen Palmieri</p>
-            <p>Patricio Arena</p>
-        </div> -->
         </div>
         <div class="container-footer">
             <div class="footer">
