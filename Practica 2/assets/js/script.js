@@ -10,8 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-hayProductos = 0;
-
 function mailto() {
     document.location.href = "mailto:mypetshop2020@gmail.com?subject="
         + encodeURIComponent("Asunto")
@@ -51,10 +49,11 @@ function suma() {
         })
 
         $('#tabla').empty()
-        
+
         let temp = $('#tabla').text().trim();
         if (temp == "") {
             document.getElementById("total").innerText = 0;
+            document.getElementById("bagCounter").innerText = 0;
         }
 
         var arrayPrecioProductos = []
