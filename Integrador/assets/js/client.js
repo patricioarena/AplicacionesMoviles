@@ -1,3 +1,10 @@
+document.addEventListener("DOMContentLoaded", function () {
+
+   getAllProducts();
+
+});
+
+
 function getAllProducts() {
   $.get("http://www.json-generator.com/api/json/get/cgkBPoSHZu?indent=2", function (data) {
     $.each(data, function (key, value) {

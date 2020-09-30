@@ -7,8 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     hideMenu();
     collapseMenu();
-    getAllProducts();
-
 
 
 });
@@ -45,3 +43,5 @@ function search() {
     var str = $("#inputSearch").val();
     console.log(str);
 }
+
+
