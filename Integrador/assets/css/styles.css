@@ -1,0 +1,29 @@
+* {
+  margin    : 0;
+  padding   : 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --blur        : 10px;
+  --primary     : #0076c6;
+  --secondary   : #333333;
+  --error       : #ce0606;
+  --success     : #009070;
+  --grey-white  : #e9e9e9;
+  --white       : #fff;
+  --black       : #000;
+  --orange      : #d07c1c;
+  --orange-hover: #e74c3c;
+  --green-nav   : #008745;
+  --green-header: #9dbe49;
+  --width-480   : 480px;
+}
+
+html,
+body {
+  background: var(--grey-white);
+  height    : 100%;
+  margin    : 0;
+}
+
