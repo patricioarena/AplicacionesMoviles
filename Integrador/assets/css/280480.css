@@ -254,7 +254,7 @@
   .subfooter {
     display        : flex;
     justify-content: center;
-    text-align: center;
+    text-align     : center;
     max-width      : 1200px;
     margin         : auto;
     padding        : 20px;
@@ -290,12 +290,12 @@
   }
 
   .column1 img {
-    display: flex;
-    align-self: center;
+    display      : flex;
+    align-self   : center;
     width        : 210px;
     height       : 100px;
     margin-bottom: -35px;
-    z-index: 1;
+    z-index      : 1;
   }
 
   .column1 label {
@@ -309,7 +309,7 @@
     border       : 2px solid rgba(83, 0, 0, 0.575);
     border-radius: 10px;
     color        : #3c2313;
-    align-self: center;
+    align-self   : center;
   }
 
   .column1 p {
