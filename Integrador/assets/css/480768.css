@@ -1,4 +1,4 @@
-@media (min-width: 280px) and (max-width: 480px) {
+@media (min-height: 480px) and (max-width: 768px) {
 
   /* header */
   .header {
@@ -151,7 +151,7 @@
     display        : flex;
     justify-content: center;
     padding        : 10px 0;
-    width          : var(--width-480);
+    width          : var(--width-768);
     border         : 2px solid rgba(83, 0, 0, 0.575);
     text-decoration: none;
     color          : #3c2313;
@@ -168,7 +168,7 @@
 
   /* main */
   .main {
-    padding        : 19px;
+    padding        : 20px;
     width          : 100%;
     display        : inline-flex;
     flex-flow      : row wrap;
@@ -253,8 +253,7 @@
 
   .subfooter {
     display        : flex;
-    justify-content: center;
-    text-align: center;
+    justify-content: space-between;
     max-width      : 1200px;
     margin         : auto;
     padding        : 20px;
@@ -269,7 +268,7 @@
 
   .container-body-footer {
     display        : flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction : column;
     align-items    : center;
     text-align     : center;
