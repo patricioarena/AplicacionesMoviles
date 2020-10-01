@@ -276,8 +276,12 @@
   }
 
   .column1 {
-    max-width: 100%;
-    padding  : 20px 25px 20px 25px;
+    display        : flex;
+    max-width      : 100%;
+    padding        : 20px 25px 20px 25px;
+    flex-direction : column;
+    justify-content: center;
+    text-align     : center;
   }
 
   .column1 h1 {
@@ -319,8 +323,12 @@
   }
 
   .column2 {
-    max-width: 100%;
-    padding  : 20px 0px 20px 0px;
+    display        : flex;
+    max-width      : 100%;
+    padding        : 20px 25px 20px 25px;
+    flex-direction : column;
+    justify-content: center;
+    text-align     : center;
   }
 
   .column2 h1 {
@@ -347,12 +355,12 @@
   }
 
   .column3 {
-    max-width      : 100%;
-    padding        : 20px 0px 20px 0px;
     display        : flex;
-    flex-direction : row;
-    flex-wrap      : wrap;
+    max-width      : 100%;
+    padding        : 20px 25px 20px 25px;
+    flex-direction : column;
     justify-content: center;
+    text-align     : center;
   }
 
 

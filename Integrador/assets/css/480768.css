@@ -1,4 +1,4 @@
-@media (min-height: 480px) and (max-width: 768px) {
+@media (min-width: 481px) and (max-width: 768px) {
 
   /* header */
   .header {
@@ -253,7 +253,7 @@
 
   .subfooter {
     display        : flex;
-    justify-content: space-between;
+    justify-content: center;
     max-width      : 1200px;
     margin         : auto;
     padding        : 20px;
@@ -275,8 +275,12 @@
   }
 
   .column1 {
-    max-width: 100%;
-    padding  : 20px 25px 20px 25px;
+    display        : flex;
+    max-width      : 100%;
+    padding        : 20px 25px 20px 25px;
+    flex-direction : column;
+    justify-content: center;
+    text-align     : center;
   }
 
   .column1 h1 {
@@ -318,8 +322,12 @@
   }
 
   .column2 {
-    max-width: 100%;
-    padding  : 20px 0px 20px 0px;
+    display        : flex;
+    max-width      : 100%;
+    padding        : 20px 25px 20px 25px;
+    flex-direction : column;
+    justify-content: center;
+    text-align     : center;
   }
 
   .column2 h1 {
@@ -346,12 +354,12 @@
   }
 
   .column3 {
-    max-width      : 100%;
-    padding        : 20px 0px 20px 0px;
     display        : flex;
-    flex-direction : row;
-    flex-wrap      : wrap;
+    max-width      : 100%;
+    padding        : 20px 25px 20px 25px;
+    flex-direction : column;
     justify-content: center;
+    text-align     : center;
   }
 
 
