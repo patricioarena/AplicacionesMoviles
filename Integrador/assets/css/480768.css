@@ -178,6 +178,11 @@
 
   .container {}
 
+  #map{
+    height: 400px;
+    width: 100%;
+  }
+
   .item {
     border        : 1px solid var(--black);
     border-radius : 5px;
