@@ -21,7 +21,7 @@ function mailto() {
 function hideMenu() {
     var collapsed = $("#menuBox").attr("collapsed");
     if (collapsed === "true") {
-        $("#menuBox").hide();
+        $("#menuBox").css("display","none");
     }
 }
 

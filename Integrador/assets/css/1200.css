@@ -1,4 +1,4 @@
-@media (min-width: 481px) and (max-width: 768px) {
+@media (min-width: 1200px) {
 
   /* header */
   .header {
@@ -24,9 +24,9 @@
   }
 
   .logo img {
-    display    : none;
+    display    : block;
     position   : absolute;
-    width      : 130px;
+    width      : 100px;
     margin-top : 10px;
     margin-left: 10px;
   }
@@ -70,9 +70,9 @@
   }
 
   .hidden {
-    display: none;
-    height : 0 !important;
-    opacity: 0 !important;
+    /* display: none; */
+    /* height : 0 !important; */
+    /* opacity: 0 !important; */
   }
 
   .title a {
@@ -114,7 +114,7 @@
   /* menu */
   .btn-Menu {
     width          : 10%;
-    display        : flex;
+    display        : none;
     justify-content: center;
     align-self     : center;
     padding-left   : 10px;
@@ -134,13 +134,13 @@
     align-items    : center;
     justify-content: center;
     flex-wrap      : nowrap;
-    flex-direction : column;
+    flex-direction : row;
     position       : static;
   }
 
   .menu {
     display       : flex;
-    flex-direction: column;
+    flex-direction: row;
   }
 
   .menu a:hover {
@@ -148,10 +148,12 @@
   }
 
   .btn {
+    margin-left    : 1%;
+    margin-right   : 1%;
     display        : flex;
     justify-content: center;
     padding        : 10px 0;
-    width          : var(--width-768);
+    width          : 100px;
     border         : 2px solid rgba(83, 0, 0, 0.575);
     text-decoration: none;
     color          : #3c2313;
@@ -164,6 +166,9 @@
     background: var(--orange);
   }
 
+  #menuBox{
+    display: flex !important;
+  }
   /* menu */
 
   /* main */
@@ -273,8 +278,8 @@
 
   .container-body-footer {
     display        : flex;
-    justify-content: center;
-    flex-direction : column;
+    justify-content: space-between;
+    flex-direction : row;
     align-items    : center;
     text-align     : center;
   }
