@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
   // getAllProducts();
-  getPokemones();
+  getPokemones(100,0);
 
 
 });
@@ -78,9 +78,9 @@ function getAmiibo(name) {
   return arr;
 }
 
-function getPokemones() {
+function getPokemones(limit,offset) {
   var arr = [];
-  $.get(`https://pokeapi.co/api/v2/pokemon/?limit=10&offset=0`, function (data) {
+  $.get(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`, function (data) {
     $.each(data.results, function (key, value) {
       $.get(`https://pokeapi.co/api/v2/pokemon/${value.name}`, function () {
       }).done(function (data) {
