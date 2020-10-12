@@ -1,10 +1,56 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-  // getAllProducts();
-  getPokemones(100,0);
+  document.getElementById('search1').addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+      let temp = document.getElementById('inputSearch').value;
+      getPokemon(temp);
+    }
+  })
+
+  document.getElementById('search-Btn').addEventListener('click', function () {
+    let temp = document.getElementById('inputSearch').value;
+    getPokemon(temp);
+  });
+
+
+  document.getElementById('previousPage').addEventListener('click', function () {
+    previousPage()
+  });
+
+  document.getElementById('nextPage').addEventListener('click', function () {
+    nextPage();
+  });
+
+
+
+  //limite de 10 y comienza en 0
+  getPokemones(10, offset);
+
+
 
 
 });
+
+numPage = 1;
+offset = 0;
+
+function nextPage() {
+  numPage = numPage + 1;
+  offset = offset + 10;
+  getPokemones(10, offset);
+  $('#numPage').html(numPage);
+}
+
+function previousPage() {
+  numPage = numPage - 1;
+  offset = offset - 10;
+  if (numPage === 0) {
+    numPage = 1;
+    offset = 0;
+  }
+  getPokemones(10, offset);
+  $('#numPage').html(numPage);
+}
 
 class Pokemon {
   constructor(name) {
@@ -42,7 +88,7 @@ function getStats(data) {
   return arr;
 }
 
-function printPokemon(aPokemon) {
+function printPokemon(aPokemon, id) {
   let item = `<article class="item" id="${aPokemon.id}">
       <div class="box-header">
           <img class="pokebolita" src="../assets/img/clipart2495981.png" alt="">
@@ -61,7 +107,7 @@ function printPokemon(aPokemon) {
           <label class="${aPokemon.types[1]} type tf">${aPokemon.types[1]}</label>
       </div>
     </article>`
-  $("#main").append($(item));
+  $(`#${id}`).append($(item));
 }
 
 // https://www.amiiboapi.com/api/amiibo/?character=zelda
@@ -78,8 +124,40 @@ function getAmiibo(name) {
   return arr;
 }
 
-function getPokemones(limit,offset) {
+function getPokemon(name) {
+
+  localStorage.removeItem('aPokemon');
+  $('#searchResult').html('');
   var arr = [];
+  name = name.toLowerCase();
+
+  $.get(`https://pokeapi.co/api/v2/pokemon/${name}`, function () {
+  }).done(function (data) {
+    let aPokemon = new Pokemon(data.name);
+    aPokemon.id = data.id;
+    aPokemon.height = data.height;
+    aPokemon.weight = data.weight;
+    aPokemon.types = getTypes(data);
+    aPokemon.abilities = getAbilities(data);
+    aPokemon.stats = getStats(data);
+    aPokemon.picture = data.sprites.other['official-artwork'].front_default;
+    aPokemon.amiibo = [];
+    arr.push(aPokemon);
+    localStorage.setItem('aPokemon', JSON.stringify(arr));
+  }).done(function () {
+    let ap = localStorage.getItem('aPokemon');
+    printPokemon(JSON.parse(ap)[0], 'searchResult');
+    $("#main").css("display", "none");
+    $("#pageNavigation").css("display", "none");
+  });
+
+}
+
+function getPokemones(limit, offset) {
+
+  $('#main').html('');
+  var arr = [];
+
   $.get(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`, function (data) {
     $.each(data.results, function (key, value) {
       $.get(`https://pokeapi.co/api/v2/pokemon/${value.name}`, function () {
@@ -92,24 +170,24 @@ function getPokemones(limit,offset) {
         aPokemon.abilities = getAbilities(data);
         aPokemon.stats = getStats(data);
         aPokemon.picture = data.sprites.other['official-artwork'].front_default;
-        // pokemon.amiibo = getAmiibo(pokemon);
         aPokemon.amiibo = [];
-        // console.log(aPokemon);
         arr.push(aPokemon);
         localStorage.setItem('list', JSON.stringify(arr));
       });
     });
+  }).done(function () {
+    setTimeout(()=>{
+    let arr = localStorage.getItem('list');
+      let arrOrdened = JSON.parse(arr).sort((a, b) => a.id - b.id);
+      $.each(arrOrdened, function (index) {
+        printPokemon(arrOrdened[index], 'main');
+      })
+    },100);
   });
-  superPrint()
+  
 }
 
-function superPrint() {
-  let arr = localStorage.getItem('list');
-  let arrOrdened = JSON.parse(arr).sort((a,b)=> a.id - b.id);
-  $.each(arrOrdened, function(index){
-    printPokemon(arrOrdened[index]);
-  })
-}
+
 
 
 // Nota: altura y peso agregar de atras para adelante . y interpretarlos como mtr y kg
