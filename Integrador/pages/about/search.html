@@ -3,68 +3,58 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Pokepedia</title>
+    <title>Tienda Online</title>
     <meta name="description" content="">
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@300&display=swap" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin="" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
 
     <!-- Para estilos y cosas muy generales -->
-    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
 
     <!-- Hasta 480px – para móviles en orientación vertical -->
-    <link rel="stylesheet" media="(min-width: 280px) and (max-width: 480px)" href="../../assets/css/280480.css">
+    <link rel="stylesheet" media="(min-width: 280px) and (max-width: 480px)" href="../assets/css/280480.css">
 
     <!-- Hasta 768px – para móviles en orientación horizontal -->
-    <link rel="stylesheet" media="(min-width: 481px) and (max-width: 768px)" href="../../assets/css/480768.css">
+    <link rel="stylesheet" media="(min-width: 481px) and (max-width: 768px)" href="../assets/css/480768.css">
 
     <!-- Hasta 1024px – para tablets en orientación horizontal -->
-    <link rel="stylesheet" media="(min-width: 769px) and (max-width: 1024px)" href="../../assets/css/7681024.css">
+    <link rel="stylesheet" media="(min-width: 769px) and (max-width: 1024px)" href="../assets/css/7681024.css">
 
     <!-- Hasta 1025px hasta 1199px para union entre 1024 y 1200px -->
-    <link rel="stylesheet" media="(min-width: 1025px) and (max-width: 1199px)" href="../../assets/css/10241200.css">
+    <link rel="stylesheet" media="(min-width: 1025px) and (max-width: 1199px)" href="../assets/css/10241200.css">
 
     <!-- Desde 1200px para escritorios muy anchos -->
-    <link rel="stylesheet" media="(min-width: 1200px)" href="../../assets/css/1200.css">
+    <link rel="stylesheet" media="(min-width: 1200px)" href="../assets/css/1200.css">
 
-    <script src="../../assets/js/jquery.js"></script>
-    <script src="../../assets/js/script.js"></script>
-    <script src="about.js"></script>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
-    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
-    <!-- <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&key=AIzaSyAcFTBipkDP94_HMV0YlzShfH1dMNQPMjU&callback=initMap"></script> -->
-    <title>Pokepedia</title>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/client.js"></script>
+    <title>Tienda</title>
 </head>
 
 <body>
     <div class="wrapper">
         <div class="container">
             <div class="logo">
-                <a href="../../index.html"><img src="../../assets/img/logo1.png" alt="logo"></a>
+                <a href="index.html"><img src="../assets/img/logo-pokepedia.png" alt="logo"></a>
             </div>
             <header>
                 <div class="header">
                     <div class="btn-Menu">
-                        <div id="backPage">
-                            <button><i class="fa fa-arrow-left"></i></button>
+                        <div id="menutoggle">
+                            <button><i class="fa fa-bars"></i></button>
                         </div>
                     </div>
                     <div class="contaner-header" id="ch1">
-                        <div class="title " id="title1">
-                            <a href="../../index.html">Pokepedia</a>
+                        <div class="title hidden" id="title1">
+                            <a href="index.html">Todo para tus Mascotas</a>
                         </div>
-                        <div class="search hidden" id="search1">
-                            <input id="inputSearch" type="text" placeholder="Buscar..."><i class="fa fa-search" id="search-Btn"></i>
+                        <div class="search " id="search1">
+                            <input id="inputSearch" type="text" placeholder="Buscar..."><i class="fa fa-search"
+                                id="search-Btn"></i>
                         </div>
                     </div>
                 </div>
@@ -72,25 +62,18 @@
             <nav>
                 <div class="nav" id="menuNav">
                     <div class="menu" id="menuBox" collapsed="true">
-                        <a href="../../index.html" class="btn orange">HOME</a>
+                        <a href="../index.html" class="btn orange">HOME</a>
                         <a href="pages/page1.html" class="btn orange">PERROS</a>
                         <a href="pages/page2.html" class="btn orange">GATOS</a>
                         <a href="pages/page3.html" class="btn orange">REPTILES</a>
                         <a href="pages/page7/page7.html" class="btn orange">ENCUESTA</a>
-                        <a href="../about/about.html" class="btn orange">ABOUT</a>
+                        <a href="pages/about/about.html" class="btn orange">ABOUT</a>
+
                     </div>
                 </div>
             </nav>
 
             <section class="main" id="main">
-                <select name="select-location" id="select-location">
-                    <option value="-1">Seleccione una Ubicacion...</option>
-                    <option value="myPosition">Mi ubicacion</option>
-                    <option value="markerPosition">La Tienda</option>
-                </select>
-                <div class="divMapa" id="map" >
-
-                </div>
             </section>
         </div>
     </div>
@@ -98,9 +81,6 @@
         <div class="footer">
             <div class="container-footer-all">
                 <div class="container-body-footer">
-                    <div class="column">
-                        <img src="/assets/img/qr-encontranos.png" alt="">
-                    </div>
                     <div class="column1">
                         <h1>Más información del Proyecto</h1>
                         <p>Este Proyecto fue desarrollado para
@@ -144,7 +124,7 @@
                         </div>
                         <div class="row2 manito" id="mailto">
                             <img src="/assets/img/contact.png" alt="">
-                            <label>pokepedia@gmail.com</label>
+                            <label>mypetshop2020@gmail.com</label>
                         </div>
                     </div>
                 </div>
