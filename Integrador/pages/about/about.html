@@ -21,10 +21,16 @@
     <link rel="stylesheet" media="(min-width: 280px) and (max-width: 480px)" href="../../assets/css/280480.css">
 
     <!-- Hasta 768px – para móviles en orientación horizontal -->
-    <link rel="stylesheet" media="(min-height: 480px) and (max-width: 768px)" href="../../assets/css/480768.css">
+    <link rel="stylesheet" media="(min-width: 481px) and (max-width: 768px)" href="../assets/css/480768.css">
 
     <!-- Hasta 1024px – para tablets en orientación horizontal -->
-    <link rel="stylesheet" media="(min-height: 768px) and (max-width: 1024px)" href="../../assets/css/7681024.css">
+    <link rel="stylesheet" media="(min-width: 769px) and (max-width: 1024px)" href="../assets/css/7681024.css">
+
+    <!-- Hasta 1025px hasta 1199px para union entre 1024 y 1200px -->
+    <link rel="stylesheet" media="(min-width: 1025px) and (max-width: 1199px)" href="../assets/css/10241200.css">
+
+    <!-- Desde 1200px para escritorios muy anchos -->
+    <link rel="stylesheet" media="(min-width: 1200px)" href="../assets/css/1200.css">
 
     <script src="../../assets/js/jquery.js"></script>
     <script src="../../assets/js/script.js"></script>
@@ -74,12 +80,18 @@
             </nav>
 
             <section class="main" id="main">
+<<<<<<< HEAD
                 <select name="select-location" id="select-location">
                     <option value="-1">Seleccione una Ubicacion...</option>
                     <option value="myPosition">Mi ubicacion</option>
                     <option value="markerPosition">La Tienda</option>
                 </select>
                 <div class="divMapa" id="map" >
+=======
+                <div class="divMapa" id="map" >
+
+
+>>>>>>> ec7a64554a0d1d4aad23c120ed151a4131e473ad
 
                 </div>
             </section>
