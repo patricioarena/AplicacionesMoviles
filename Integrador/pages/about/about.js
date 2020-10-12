@@ -10,7 +10,7 @@ function back() {
     window.history.back();
 }
 
-function initMap(){
+async function initMap(){
     navigator.geolocation.getCurrentPosition(function_ok, function_error);
 }
 
@@ -21,14 +21,20 @@ function initMap(){
 // }
 
 function function_ok(respuesta){
-    var titlesProvider = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var titlesProvider = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
     var latitud = respuesta.coords.latitude;
     var longitud = respuesta.coords.longitude;
 
-    var gLatLon = L.map('map').setView([latitud, longitud], 10);
+    var gLatLon = L.map('map').setView([latitud, longitud], 9);
 
     L.tileLayer(titlesProvider, {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' + 
+        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        id : 'mapbox/streets-v11',
         maxZoom: 18,
+        tileSize: 512,
+        zoomOffset: -1     
     }).addTo(gLatLon)
 
 
@@ -38,18 +44,39 @@ function function_ok(respuesta){
     //     center : gLatLon
     // }
 
-    var gMarker = L.marker([latitud, longitud]);
+    var pointMarker = L.icon({
+        iconUrl : '../../assets/img/mypoint.png',
+        iconSize : [30, 50],
+        iconAnchor : [15, 02]
+    })
+
+    var gMarker = L.marker([latitud, longitud], {icon: pointMarker});
     gMarker.addTo(gLatLon);
+    gMarker.bindPopup("<b>Tu Estas Aquí!</b>").openPopup();
 
     var iconMarker = L.icon({
         iconUrl : '../../assets/img/tienda.png',
         iconSize : [60, 60],
-        iconAnchor : [30, 60]
+        iconAnchor : [30, 10]
     })
 
-    var positionMarket = [-34.9251137, -57.9540854];
+    var positionMarket = [-34.9227784, -57.9563658];
     var gMarker2 = L.marker(positionMarket, {icon: iconMarker});
     gMarker2.addTo(gLatLon);
+    gMarker2.bindPopup("<b>La Tienda se encuentra Aquí!</b><br>Calle 51 e/14 y 15, B1900 La Plata, Provincia de Buenos Aires.").openPopup();
+
+    
+    L.Routing.control({
+        waypoints: [
+            L.latLng(latitud, longitud),
+            L.latLng(-34.9227784, -57.9563658)
+        ],
+        language: 'es',
+        createMarker: function (){
+            return null;
+        }
+    }).addTo(gLatLon);
+
 
     document.getElementById('select-location').addEventListener('change', function(e){
         let value = e.target.value;
