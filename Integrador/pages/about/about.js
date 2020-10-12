@@ -25,7 +25,7 @@ function function_ok(respuesta){
     var latitud = respuesta.coords.latitude;
     var longitud = respuesta.coords.longitude;
 
-    var gLatLon = L.map('map').setView([latitud, longitud], 9);
+    var gLatLon = L.map('map').setView([latitud, longitud], 5);
 
     L.tileLayer(titlesProvider, {
         attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' + 
@@ -76,6 +76,18 @@ function function_ok(respuesta){
             return null;
         }
     }).addTo(gLatLon);
+
+   
+    L.easyButton('fa-compass',
+      function (){
+        $('.leaflet-routing-container').is(':visible') ? route.removeFrom(gLatLon) : route.addTo(gLatLon)
+      },
+      'Routing'
+    );
+
+
+
+
 
 
     document.getElementById('select-location').addEventListener('change', function(e){
