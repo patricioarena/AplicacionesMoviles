@@ -1,46 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
 
   // getAllProducts();
-  // getPokemones(5);
+  getPokemones();
 
 
 });
-
-
-function getAllProducts() {
-  $.get("http://www.json-generator.com/api/json/get/cgkBPoSHZu?indent=2", function (data) {
-    $.each(data, function (key, value) {
-      let item = `<div class="item" isSelected="false" id="${value.id}">
-      <div class="box"><img src="${value.picture}" alt=""></div>
-        <div class="..name-box">
-          <span>$</span>
-          <span>${value.precio}</span>
-        </div>
-        <div class="envioProducto"><span>Envio Gratis</span> </div>
-        <div class="tituloProducto">
-          <h2>${value.title}</h2>
-        </div>
-      </div>`
-      $("#main").append($(item));
-    });
-  });
-}
 
 class Pokemon {
   constructor(name) {
     this.nombre = name;
   }
-}
-
-function getPokemones() {
-  $.get(`https://pokeapi.co/api/v2/pokemon/?limit=10&offset=0`, function (data) {
-    $.each(data.results, function (key, value) {
-      let aPokemon = new Pokemon(value.name);
-      setData(aPokemon);
-      console.log(aPokemon);
-    });
-    // console.log(data.results);
-  });
 }
 
 function getTypes(data) {
@@ -73,10 +42,32 @@ function getStats(data) {
   return arr;
 }
 
+function printPokemon(aPokemon) {
+  let item = `<article class="item" id="${aPokemon.id}">
+      <div class="box-header">
+          <img class="pokebolita" src="../assets/img/clipart2495981.png" alt="">
+          <span class="np tf">Nº ${aPokemon.id}</span>
+      </div>
+      <div class="box"><img src="${aPokemon.picture}" alt="">
+      </div>
+      <div>
+          <div class="name-box">
+              <span class="tf">${aPokemon.nombre}</span>
+          </div>
+      </div>
+
+      <div class="type-box">
+          <label class="${aPokemon.types[0]} type tf">${aPokemon.types[0]}</label>
+          <label class="${aPokemon.types[1]} type tf">${aPokemon.types[1]}</label>
+      </div>
+    </article>`
+  $("#main").append($(item));
+}
+
 // https://www.amiiboapi.com/api/amiibo/?character=zelda
-function getAmiibo(pokemon) {
+function getAmiibo(name) {
   var arr = [];
-  $.get(`https://www.amiiboapi.com/api/amiibo/?name=${pokemon.nombre}`, function (data) {
+  $.get(`https://www.amiiboapi.com/api/amiibo/?name=${name}`, function (data) {
     var amiibo = { amiiboSeries: '', character: '', image: '' };
     amiibo.amiiboSeries = data.amiibo[0].amiiboSeries;
     amiibo.character = data.amiibo[0].character;
@@ -87,19 +78,39 @@ function getAmiibo(pokemon) {
   return arr;
 }
 
-function setData(pokemon) {
-  $.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.nombre}`, function (data) {
-    pokemon.id = data.id;
-    pokemon.height = data.height;
-    pokemon.weight = data.weight;
-    pokemon.types = getTypes(data);
-    pokemon.abilities = getAbilities(data);
-    pokemon.stats = getStats(data);
-    pokemon.picture = data.sprites.other['official-artwork'].front_default;
-    pokemon.amiibo = getAmiibo(pokemon);
-    // console.log(data);
+function getPokemones() {
+  var arr = [];
+  $.get(`https://pokeapi.co/api/v2/pokemon/?limit=10&offset=0`, function (data) {
+    $.each(data.results, function (key, value) {
+      $.get(`https://pokeapi.co/api/v2/pokemon/${value.name}`, function () {
+      }).done(function (data) {
+        let aPokemon = new Pokemon(value.name);
+        aPokemon.id = data.id;
+        aPokemon.height = data.height;
+        aPokemon.weight = data.weight;
+        aPokemon.types = getTypes(data);
+        aPokemon.abilities = getAbilities(data);
+        aPokemon.stats = getStats(data);
+        aPokemon.picture = data.sprites.other['official-artwork'].front_default;
+        // pokemon.amiibo = getAmiibo(pokemon);
+        aPokemon.amiibo = [];
+        // console.log(aPokemon);
+        arr.push(aPokemon);
+        localStorage.setItem('list', JSON.stringify(arr));
+      });
+    });
   });
+  superPrint()
 }
+
+function superPrint() {
+  let arr = localStorage.getItem('list');
+  let arrOrdened = JSON.parse(arr).sort((a,b)=> a.id - b.id);
+  $.each(arrOrdened, function(index){
+    printPokemon(arrOrdened[index]);
+  })
+}
+
 
 // Nota: altura y peso agregar de atras para adelante . y interpretarlos como mtr y kg
 // https://pokeapi.api-docs.io/v2.0/pokemon/75poNABkA3Nf5Px9M

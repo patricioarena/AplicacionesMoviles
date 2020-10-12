@@ -24,24 +24,38 @@
   --width-768       : 768px;
 }
 
-.veneno {
+.undefined {
+  display: none;
+}
+
+
+.poison {
   background: #b97fc9;
 }
 
-.planta {
+.bug {
+  background: #729f3f;
+}
+
+.water {
+  background: #4592c4;
+}
+
+.grass {
   background: #9bcc50;
 }
 
-.fuego {
+.fire {
   background: #fd7d24;
 }
 
-.volador {
+.flying {
   background: linear-gradient(to bottom, #3d84ef, #3d84ef 50%, #3d84ef 75%, #333 75%);
 }
 
 .tf {
-  font-family: 'Proxima Nova', '-apple-system', 'Helvetica Neue', Helvetica, 'Roboto', Arial, sans-serif;
+  font-family   : 'Proxima Nova', '-apple-system', 'Helvetica Neue', Helvetica, 'Roboto', Arial, sans-serif;
+  text-transform: capitalize;
 }
 
 .np {
@@ -51,10 +65,10 @@
 
 html,
 body {
-  background: url(../img/2cc4a9e33ba1deeec113ec5bf570e5b3.jpg);
-  height    : 100%;
-  margin    : 0;
-  background-repeat: no-repeat;
+  background           : url(../img/2cc4a9e33ba1deeec113ec5bf570e5b3.jpg);
+  height               : 100%;
+  margin               : 0;
+  background-repeat    : no-repeat;
   background-attachment: fixed;
-  background-position: center;
+  background-position  : center;
 }
