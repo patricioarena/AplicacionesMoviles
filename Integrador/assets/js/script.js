@@ -41,7 +41,7 @@ function collapseMenu() {
 
 function search() {
     var str = $("#inputSearch").val();
-    console.log(str);
+    // console.log(str);
 }
 
 
