@@ -5,25 +5,56 @@
 }
 
 :root {
-  --blur        : 10px;
-  --primary     : #0076c6;
-  --secondary   : #333333;
-  --error       : #ce0606;
-  --success     : #009070;
-  --grey-white  : #e9e9e9;
-  --white       : #fff;
-  --black       : #000;
-  --orange      : #d07c1c;
-  --orange-hover: #e74c3c;
-  --green-nav   : #008745;
-  --green-header: #9dbe49;
-  --width-480   : 480px;
-  --width-768   : 768px;
+  --blur            : 10px;
+  --primary         : #0076c6;
+  --secondary       : #333333;
+  --error           : #ce0606;
+  --success         : #009070;
+  --light-blue      : #e3f2fd;
+  --white           : #fff;
+  --black           : #000;
+  --font-color-black: #212121;
+  --font-menu-search: #7B7B7B;
+  --orange          : #d07c1c;
+  --orange-hover    : #e74c3c;
+  --color-nav       : #008745;
+  --color-header    : #2196f3;
+  --color-box-header: #d6d6d6;
+  --width-480       : 480px;
+  --width-768       : 768px;
+}
+
+.veneno {
+  background: #b97fc9;
+}
+
+.planta {
+  background: #9bcc50;
+}
+
+.fuego {
+  background: #fd7d24;
+}
+
+.volador {
+  background: linear-gradient(to bottom, #3d84ef, #3d84ef 50%, #3d84ef 75%, #333 75%);
+}
+
+.tf {
+  font-family: 'Proxima Nova', '-apple-system', 'Helvetica Neue', Helvetica, 'Roboto', Arial, sans-serif;
+}
+
+.np {
+  font-size  : 14px;
+  font-weight: bolder;
 }
 
 html,
 body {
-  background: var(--grey-white);
+  background: url(../img/2cc4a9e33ba1deeec113ec5bf570e5b3.jpg);
   height    : 100%;
   margin    : 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }

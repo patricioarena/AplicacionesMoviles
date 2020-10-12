@@ -1,0 +1,102 @@
+{
+    "nombre": "charmeleon",
+    "id": 5,
+    "height": 11,
+    "weight": 190,
+    "types": [
+        "fire"
+    ],
+    "abilities": [
+        {
+            "name": "blaze",
+            "is_hidden": false
+        },
+        {
+            "name": "solar-power",
+            "is_hidden": true
+        }
+    ],
+    "stats": [
+        {
+            "name": "hp",
+            "base_stat": 58
+        },
+        {
+            "name": "attack",
+            "base_stat": 64
+        },
+        {
+            "name": "defense",
+            "base_stat": 58
+        },
+        {
+            "name": "special-attack",
+            "base_stat": 80
+        },
+        {
+            "name": "special-defense",
+            "base_stat": 65
+        },
+        {
+            "name": "speed",
+            "base_stat": 80
+        }
+    ],
+    "picture": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png",
+    "amiibo": []
+}
+
+{
+    "nombre": "charizard",
+    "id": 6,
+    "height": 17,
+    "weight": 905,
+    "types": [
+        "fire",
+        "flying"
+    ],
+    "abilities": [
+        {
+            "name": "blaze",
+            "is_hidden": false
+        },
+        {
+            "name": "solar-power",
+            "is_hidden": true
+        }
+    ],
+    "stats": [
+        {
+            "name": "hp",
+            "base_stat": 78
+        },
+        {
+            "name": "attack",
+            "base_stat": 84
+        },
+        {
+            "name": "defense",
+            "base_stat": 78
+        },
+        {
+            "name": "special-attack",
+            "base_stat": 109
+        },
+        {
+            "name": "special-defense",
+            "base_stat": 85
+        },
+        {
+            "name": "speed",
+            "base_stat": 100
+        }
+    ],
+    "picture": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
+    "amiibo": [
+        {
+            "amiiboSeries": "Super Smash Bros.",
+            "character": "Charizard",
+            "image": "https://raw.githubusercontent.com/N3evin/AmiiboAPI/master/images/icon_19060000-00240002.png"
+        }
+    ]
+}

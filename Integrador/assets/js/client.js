@@ -12,7 +12,7 @@ function getAllProducts() {
     $.each(data, function (key, value) {
       let item = `<div class="item" isSelected="false" id="${value.id}">
       <div class="box"><img src="${value.picture}" alt=""></div>
-        <div class="precioProducto">
+        <div class="..name-box">
           <span>$</span>
           <span>${value.precio}</span>
         </div>
@@ -77,12 +77,12 @@ function getStats(data) {
 function getAmiibo(pokemon) {
   var arr = [];
   $.get(`https://www.amiiboapi.com/api/amiibo/?name=${pokemon.nombre}`, function (data) {
-      var amiibo = { amiiboSeries: '', character: '', image: '' };
-      amiibo.amiiboSeries = data.amiibo[0].amiiboSeries;
-      amiibo.character = data.amiibo[0].character;
-      amiibo.image = data.amiibo[0].image;
-      arr.push(amiibo);
-      // console.log(data.amiibo)
+    var amiibo = { amiiboSeries: '', character: '', image: '' };
+    amiibo.amiiboSeries = data.amiibo[0].amiiboSeries;
+    amiibo.character = data.amiibo[0].character;
+    amiibo.image = data.amiibo[0].image;
+    arr.push(amiibo);
+    // console.log(data.amiibo)
   });
   return arr;
 }
