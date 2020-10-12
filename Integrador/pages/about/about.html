@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@300&display=swap" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" rel="stylesheet"/>
 
     <!-- Para estilos y cosas muy generales -->
     <link rel="stylesheet" href="../../assets/css/styles.css">
@@ -32,6 +35,10 @@
     <script src="../../assets/js/jquery.js"></script>
     <script src="../../assets/js/script.js"></script>
     <script src="about.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&key=AIzaSyAcFTBipkDP94_HMV0YlzShfH1dMNQPMjU&callback=initMap"></script> -->
     <title>Tienda</title>
 </head>
 
@@ -73,9 +80,12 @@
             </nav>
 
             <section class="main" id="main">
+                <select name="select-location" id="select-location">
+                    <option value="-1">Seleccione una Ubicacion...</option>
+                    <option value="myPosition">Mi ubicacion</option>
+                    <option value="markerPosition">La Tienda</option>
+                </select>
                 <div class="divMapa" id="map" >
-
-
 
                 </div>
             </section>
