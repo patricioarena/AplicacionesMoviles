@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
   // getAllProducts();
-  getPokemones(5);
+  // getPokemones(5);
 
 
 });
