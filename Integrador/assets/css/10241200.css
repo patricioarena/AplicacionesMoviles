@@ -183,7 +183,7 @@
   }
 
   #map {
-    height: 400px;
+    height: 600px;
     width : 100%;
   }
 
@@ -291,9 +291,26 @@
     text-align     : center;
   }
 
+  .column {
+    display        : flex;
+    max-width      : 30%;
+    padding        : 20px 25px 20px 25px;
+    flex-direction : column;
+    justify-content: center;
+    text-align     : center;
+  } 
+
+  .column img {
+    display: flex;
+    align-self: center;
+    width: 200px;
+    height: 200px;
+    z-index: 1;
+  }
+  
   .column1 {
     display        : flex;
-    max-width      : 100%;
+    max-width      : 25%;
     padding        : 20px 25px 20px 25px;
     flex-direction : column;
     justify-content: center;
@@ -340,7 +357,7 @@
 
   .column2 {
     display        : flex;
-    max-width      : 100%;
+    max-width      : 30%;
     padding        : 20px 25px 20px 25px;
     flex-direction : column;
     justify-content: center;
@@ -372,7 +389,7 @@
 
   .column3 {
     display        : flex;
-    max-width      : 100%;
+    max-width      : 30%;
     padding        : 20px 25px 20px 25px;
     flex-direction : column;
     justify-content: center;
