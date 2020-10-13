@@ -65,6 +65,12 @@ document.addEventListener("DOMContentLoaded", function () {
 numPage = 1;
 offset = 0;
 
+class Pokemon {
+  constructor(name) {
+    this.nombre = name;
+  }
+}
+
 function nextPage() {
   numPage = numPage + 1;
   offset = offset + 10;
@@ -83,11 +89,6 @@ function previousPage() {
   $('#numPage').html(numPage);
 }
 
-class Pokemon {
-  constructor(name) {
-    this.nombre = name;
-  }
-}
 
 function getTypes(data) {
   var arr = [];
@@ -154,20 +155,6 @@ function setPicture(data) {
     console.log(op);
     return '../assets/img/404.png"';
   } return op;
-}
-
-// https://www.amiiboapi.com/api/amiibo/?character=zelda
-function getAmiibo(name) {
-  var arr = [];
-  $.get(`https://www.amiiboapi.com/api/amiibo/?name=${name}`, function (data) {
-    var amiibo = { amiiboSeries: '', character: '', image: '' };
-    amiibo.amiiboSeries = data.amiibo[0].amiiboSeries;
-    amiibo.character = data.amiibo[0].character;
-    amiibo.image = data.amiibo[0].image;
-    arr.push(amiibo);
-    // console.log(data.amiibo)
-  });
-  return arr;
 }
 
 function getPokemon(name) {
@@ -323,6 +310,21 @@ function getDescription(data) {
 function redirecToMore() {
   window.location.href = 'pages/more.html';
 }
+
+// https://www.amiiboapi.com/api/amiibo/?character=zelda
+function getAmiibo(name) {
+  var arr = [];
+  $.get(`https://www.amiiboapi.com/api/amiibo/?name=${name}`, function (data) {
+    var amiibo = { amiiboSeries: '', character: '', image: '' };
+    amiibo.amiiboSeries = data.amiibo[0].amiiboSeries;
+    amiibo.character = data.amiibo[0].character;
+    amiibo.image = data.amiibo[0].image;
+    arr.push(amiibo);
+    // console.log(data.amiibo)
+  });
+  return arr;
+}
+
 // Nota: altura y peso agregar de atras para adelante . y interpretarlos como mtr y kg
 // https://pokeapi.api-docs.io/v2.0/pokemon/75poNABkA3Nf5Px9M
 
