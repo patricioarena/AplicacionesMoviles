@@ -295,7 +295,13 @@
     flex-direction : column;
     justify-content: center;
     text-align     : center;
-  } 
+  }
+  
+  .column h1 {
+    font-size  : 170%;
+    font-family: "Grandstander";
+    margin-top: 10px;
+  }
 
   .column img {
     display: flex;
@@ -326,6 +332,11 @@
     height       : 120px;
     margin-bottom: -15px;
     z-index      : 1;
+  }
+
+  #flecha-qr {
+    width        : 130px;
+    height       : 100px;
   }
 
   .column1 label {

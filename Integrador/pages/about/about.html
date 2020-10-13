@@ -14,6 +14,7 @@
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin="" rel="stylesheet"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
 
     <!-- Para estilos y cosas muy generales -->
@@ -42,6 +43,7 @@
     crossorigin=""></script>
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
     <!-- <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&key=AIzaSyAcFTBipkDP94_HMV0YlzShfH1dMNQPMjU&callback=initMap"></script> -->
     <title>Pokepedia</title>
 </head>
@@ -83,7 +85,7 @@
                 <select name="select-location" id="select-location">
                     <option value="-1">Seleccione una Ubicacion...</option>
                     <option value="myPosition">Mi ubicacion</option>
-                    <option value="markerPosition">La Tienda</option>
+                    <option value="markerPosition">La Oficina del Equipo de Desarrollo</option>
                 </select>
                 <div class="divMapa" id="map" >
 
@@ -96,7 +98,9 @@
             <div class="container-footer-all">
                 <div class="container-body-footer">
                     <div class="column">
+                        <img src="/assets/img/flecha-qr2.png" id="flecha-qr" alt="">
                         <img src="/assets/img/qr-encontranos.png" alt="">
+                        <h1>Nuestra Oficina</h1>
                     </div>
                     <div class="column1">
                         <h1>Más información del Proyecto</h1>
@@ -130,7 +134,7 @@
                         <h1>Información Contacto</h1>
                         <div class="row2">
                             <img src="/assets/img/house.png" alt="">
-                            <label>Fcio Varela,
+                            <label>La Plata,
                                 Buenos Aires,
                                 Argentina.
                             </label>
