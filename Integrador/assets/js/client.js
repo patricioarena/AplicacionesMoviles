@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
     getPokemon(temp);
   });
 
-
   document.getElementById('previousPage').addEventListener('click', function () {
     previousPage()
   });
@@ -21,13 +20,29 @@ document.addEventListener("DOMContentLoaded", function () {
     nextPage();
   });
 
+  document.getElementById('fire').addEventListener('click', function () {
+    getPokemonType('fire');
+  });
+
+  document.getElementById('water').addEventListener('click', function () {
+    getPokemonType('water');
+  });
+
+  document.getElementById('bug').addEventListener('click', function () {
+    getPokemonType('bug');
+  });
+
+  document.getElementById('poison').addEventListener('click', function () {
+    getPokemonType('poison');
+  });
+
+  document.getElementById('dragon').addEventListener('click', function () {
+    getPokemonType('dragon');
+  });
 
 
   //limite de 10 y comienza en 0
   getPokemones(10, offset);
-
-
-
 
 });
 
@@ -110,6 +125,14 @@ function printPokemon(aPokemon, id) {
   $(`#${id}`).append($(item));
 }
 
+function setPicture(data) {
+  let op = data.sprites.other['official-artwork'].front_default;
+  if (op === null) {
+    console.log(op);
+    return '../assets/img/404.png"';
+  }return op;
+}
+
 // https://www.amiiboapi.com/api/amiibo/?character=zelda
 function getAmiibo(name) {
   var arr = [];
@@ -140,7 +163,7 @@ function getPokemon(name) {
     aPokemon.types = getTypes(data);
     aPokemon.abilities = getAbilities(data);
     aPokemon.stats = getStats(data);
-    aPokemon.picture = data.sprites.other['official-artwork'].front_default;
+    aPokemon.picture = setPicture(data);
     aPokemon.amiibo = [];
     arr.push(aPokemon);
     localStorage.setItem('aPokemon', JSON.stringify(arr));
@@ -169,7 +192,7 @@ function getPokemones(limit, offset) {
         aPokemon.types = getTypes(data);
         aPokemon.abilities = getAbilities(data);
         aPokemon.stats = getStats(data);
-        aPokemon.picture = data.sprites.other['official-artwork'].front_default;
+        aPokemon.picture = setPicture(data);
         aPokemon.amiibo = [];
         arr.push(aPokemon);
         localStorage.setItem('list', JSON.stringify(arr));
@@ -184,10 +207,42 @@ function getPokemones(limit, offset) {
       })
     },100);
   });
-  
+
 }
 
+function getPokemonType(typePokemon) {
+  $('#main').html('');
+  var arr = [];
 
+  var urlType = `https://pokeapi.co/api/v2/type/${typePokemon}`;
+  $.get(urlType, function (data) {
+    $.each(data.pokemon, function (key, value) {
+      $.get(`https://pokeapi.co/api/v2/pokemon/${value.pokemon.name}`, function () {
+      }).done(function (data) {
+        let aPokemon = new Pokemon(data.name);
+        aPokemon.id = data.id;
+        aPokemon.height = data.height;
+        aPokemon.weight = data.weight;
+        aPokemon.types = getTypes(data);
+        aPokemon.abilities = getAbilities(data);
+        aPokemon.stats = getStats(data);
+        aPokemon.picture = setPicture(data);
+        aPokemon.amiibo = [];
+        arr.push(aPokemon);
+        localStorage.setItem('list', JSON.stringify(arr));
+      });
+    });
+  }).done(function () {
+    $("#pageNavigation").css("display", "none");
+    setTimeout(()=>{
+    let arr = localStorage.getItem('list');
+      let arrOrdened = JSON.parse(arr).sort((a, b) => a.id - b.id);
+      $.each(arrOrdened, function (index) {
+        printPokemon(arrOrdened[index], 'main');
+      })
+    },100);
+  });
+}
 
 
 // Nota: altura y peso agregar de atras para adelante . y interpretarlos como mtr y kg
