@@ -8,9 +8,12 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("backPage").addEventListener('click', back);
   }
 
+  if (document.getElementById('share') != null) {
+    document.getElementById("share").addEventListener('click', redirecToShare);
+  }
+
     hideMenu();
     collapseMenu();
-
 
 });
 
@@ -44,10 +47,12 @@ function collapseMenu() {
 
 function search() {
     var str = $("#inputSearch").val();
-    // console.log(str);
 }
 
 function back() {
     window.history.back();
 }
 
+function redirecToShare() {
+    window.location.href = '../pages/share.html';
+  }
