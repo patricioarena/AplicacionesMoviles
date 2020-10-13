@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("inputSearch").addEventListener('keydown', search);
     document.getElementById("search-Btn").addEventListener('click', search);
 
+  if (document.getElementById('backPage') != null) {
+    document.getElementById("backPage").addEventListener('click', back);
+  }
 
     hideMenu();
     collapseMenu();
@@ -44,4 +47,7 @@ function search() {
     // console.log(str);
 }
 
+function back() {
+    window.history.back();
+}
 

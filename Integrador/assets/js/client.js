@@ -271,8 +271,6 @@ function printPokemonMore() {
   let ap = localStorage.getItem('aPokemon');
   let aPokemon = JSON.parse(ap)[0];
 
-  console.log(aPokemon);
-
   $('#idPokemon').text(aPokemon.id);
   $('#namePokemon').text(aPokemon.nombre);
   $('#imgPokemon').attr('src', aPokemon.picture);
@@ -280,6 +278,10 @@ function printPokemonMore() {
   $('#metro').text(aPokemon.height/10);
   $('#type0').text(aPokemon.types[0]);
   $('#type1').text(aPokemon.types[1]);
+
+  $('#type0').addClass(`${aPokemon.types[0]} type tf`);
+  $('#type1').addClass(`${aPokemon.types[1]} type tf`);
+
   $('#hp').val(aPokemon.stats[0].base_stat);
   $('#def').val(aPokemon.stats[1].base_stat);
   $('#atk').val(aPokemon.stats[2].base_stat);
@@ -287,29 +289,34 @@ function printPokemonMore() {
   $('#spdef').val(aPokemon.stats[4].base_stat);
   $('#spd').val(aPokemon.stats[5].base_stat);
   $('#habilidadUnlock').text(aPokemon.abilities[0].name);
-  $('#habilidadLock').text(aPokemon.abilities[1].name);
+  $('#habilidadLock').text(hidenHb(aPokemon));
 
   $.get(`https://pokeapi.co/api/v2/pokemon-species/${aPokemon.id}`, function () {
   }).done(function (data) {
     var description = getDescription(data)
     $('#description').text(description)
   });
-  // $('#description').append(description);
 }
 
-
+function hidenHb(data) {
+  if (data.abilities.length == 1) {
+    $('#hb-lock-box').css('display','none')
+    return ''
+  }else{
+    $('#hb-lock-box').css('display','flex')
+    return data.abilities[1].name;
+  }
+}
 
 function getDescription(data) {
   let arr = data.flavor_text_entries;
   let string = '';
-
   for (let index = 0; index < arr.length; index++) {
     if (data.flavor_text_entries[index].language.name == 'es') {
         let temp = data.flavor_text_entries[index].flavor_text;
         string = string + "" + temp;
     }
   }
-  console.log(string);
   return string;
 }
 
