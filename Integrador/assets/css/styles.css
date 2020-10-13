@@ -28,7 +28,7 @@
   display: none;
 }
 
-.normal{
+.normal {
   background: #a4acaf;
 }
 
@@ -48,7 +48,7 @@
   background: #d56723;
 }
 
-.psychic{
+.psychic {
   background: #f366b9;
 }
 
@@ -108,6 +108,18 @@
 .np {
   font-size  : 14px;
   font-weight: bolder;
+  color      : var(--font-color-black);
+}
+
+.hb {
+  font-size  : 24px;
+  font-weight: bolder;
+  color      : var(--font-color-black);
+}
+
+.lfrt{
+  margin-left : 5px;
+  margin-right: 5px;
 }
 
 html,

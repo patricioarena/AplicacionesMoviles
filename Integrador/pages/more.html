@@ -69,48 +69,119 @@
             </nav>
 
             <section class="main2" id="main2">
-                <article class="item2" id="9999">
+                <article class="item2">
 
-                    <div class="row">
+                    <div class="row-header">
                         <div class="num-box-header">
 
                             <img class="pokebolita2" src="../assets/img/clipart2495981.png" alt="">
-                            <span class="np tf">9999</span>
+                            <span class="np tf" id="idPokemon"></span>
 
                         </div>
 
                         <div class="name-box-header">
-                            <span class="tf">Snorlax</span>
+                            <span class="tf" id="namePokemon" >Snorlax</span>
                         </div>
                     </div>
 
                     <div class="t">
                         <div class="borde">
-                            <div class="box2"><img src="../assets/img/404.png" alt="">
+                            <div class="box2">
+                                <img id="imgPokemon" src="" alt="">
                             </div>
-
+                            <div class="row description t">
+                                <span><span id="kg"></span>&nbsp;Kg</span>
+                                <span><span id="metro"></span>&nbsp;m</span>
+                            </div>
 
                             <div class="type-box">
-                                <label class="fire type tf">Fire</label>
-                                <label class="dragon type tf">Dragon</label>
+                                <label class="fire type tf" id="type0"></label>
+                                <label class="dragon type tf" id="type1"></label>
                             </div>
                         </div>
 
-                        <div class="borde">
-                            <label>HP:</label>
-                            <progress id="HP" value="109" max="300"></progress><br>
-                            <label>DEF:</label>
-                            <progress id="DEF" value="109" max="300"></progress><br>
-                            <label>ATK:</label>
-                            <progress id="ATK" value="109" max="300"></progress><br>
-                            <label>SP ATK:</label>
-                            <progress id="SP ATK" value="109" max="300"></progress><br>
-                            <label>SP DEF:</label>
-                            <progress id="SP DEF" value="109" max="300"></progress><br>
-                            <label>SPD:</label>
-                            <progress id="SPD" value="109" max="300"></progress><br>
+                        <div class="borde tf">
+                            <div class="col-progress">
+
+                                <div class="miniRow">
+                                    <label class="label">HP:</label>
+                                    <progress id="hp" value="" max="300"></progress>
+                                </div>
+
+                                <div class="miniRow">
+                                    <label class="label">DEF:</label>
+                                    <progress id="def" value="" max="300"></progress>
+                                </div>
+
+                                <div class="miniRow">
+                                    <label class="label">ATK:</label>
+                                    <progress id="atk" value="" max="300"></progress>
+                                </div>
+
+                                <div class="miniRow">
+                                    <label class="label">SP ATK:</label>
+                                    <progress id="spatk" value="" max="300"></progress>
+                                </div>
+
+                                <div class="miniRow">
+                                    <label class="label">SP DEF:</label>
+                                    <progress id="spdef" value="" max="300"></progress>
+                                </div>
+
+                                <div class="miniRow">
+                                    <label class="label">SPD:</label>
+                                    <progress id="spd" value="" max="300"></progress>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
+
+                    <div class="num-box-header">
+                        <span class="lfrt hb tf">Habilidades</span>
+                    </div>
+
+                    <div class="t">
+                        <div class="borde tf">
+                            <div class="box-img"><img src="../assets/img/Habilidad-unlock.png" alt="">
+                                <label id="habilidadUnlock"></label>
+                            </div>
+                        </div>
+                        <div class="borde tf">
+                            <div class="box-img"><img src="../assets/img/Habilidad-lock.png" alt="">
+                                <label id="habilidadLock"></label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="num-box-header">
+                        <span class="lfrt hb tf">Descripción</span>
+                    </div>
+
+                    <div class="t">
+                        <div class="borde description" id="description">
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 </article>
             </section>
         </div>

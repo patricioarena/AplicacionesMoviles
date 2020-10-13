@@ -12,37 +12,53 @@ document.addEventListener("DOMContentLoaded", function () {
     getPokemon(temp);
   });
 
-  document.getElementById('previousPage').addEventListener('click', function () {
-    previousPage()
-  });
+  if (document.getElementById('previousPage') != null) {
+    document.getElementById('previousPage')
+      .addEventListener('click', function () {
+        previousPage()
+      });
+  }
 
-  document.getElementById('nextPage').addEventListener('click', function () {
-    nextPage();
-  });
+  if (document.getElementById('nextPage') != null) {
+    document.getElementById('nextPage')
+      .addEventListener('click', function () {
+        nextPage();
+      });
+  }
 
-  document.getElementById('fire').addEventListener('click', function () {
-    getPokemonType('fire');
-  });
+  if (document.getElementById('fire') != null) {
+    document.getElementById('fire').addEventListener('click', function () {
+      getPokemonType('fire');
+    });
+  }
 
-  document.getElementById('water').addEventListener('click', function () {
-    getPokemonType('water');
-  });
+  if (document.getElementById('water') != null) {
+    document.getElementById('water').addEventListener('click', function () {
+      getPokemonType('water');
+    });
+  }
 
-  document.getElementById('bug').addEventListener('click', function () {
-    getPokemonType('bug');
-  });
+  if (document.getElementById('bug') != null) {
+    document.getElementById('bug').addEventListener('click', function () {
+      getPokemonType('bug');
+    });
+  }
 
-  document.getElementById('poison').addEventListener('click', function () {
-    getPokemonType('poison');
-  });
+  if (document.getElementById('poison') != null) {
+    document.getElementById('poison').addEventListener('click', function () {
+      getPokemonType('poison');
+    });
+  }
 
-  document.getElementById('dragon').addEventListener('click', function () {
-    getPokemonType('dragon');
-  });
-
+  if (document.getElementById('dragon') != null) {
+    document.getElementById('dragon').addEventListener('click', function () {
+      getPokemonType('dragon');
+    });
+  }
 
   //limite de 10 y comienza en 0
   getPokemones(10, offset);
+  printPokemonMore();
 
 });
 
@@ -123,6 +139,13 @@ function printPokemon(aPokemon, id) {
       </div>
     </article>`
   $(`#${id}`).append($(item));
+  $(`#${aPokemon.id}`).click(function () {
+    var arr = [];
+    arr.push(aPokemon);
+    localStorage.setItem('aPokemon', JSON.stringify(arr));
+    printPokemonMore();
+    redirecToMore();
+  });
 }
 
 function setPicture(data) {
@@ -130,7 +153,7 @@ function setPicture(data) {
   if (op === null) {
     console.log(op);
     return '../assets/img/404.png"';
-  }return op;
+  } return op;
 }
 
 // https://www.amiiboapi.com/api/amiibo/?character=zelda
@@ -199,13 +222,13 @@ function getPokemones(limit, offset) {
       });
     });
   }).done(function () {
-    setTimeout(()=>{
-    let arr = localStorage.getItem('list');
+    setTimeout(() => {
+      let arr = localStorage.getItem('list');
       let arrOrdened = JSON.parse(arr).sort((a, b) => a.id - b.id);
       $.each(arrOrdened, function (index) {
         printPokemon(arrOrdened[index], 'main');
       })
-    },100);
+    }, 100);
   });
 
 }
@@ -234,17 +257,65 @@ function getPokemonType(typePokemon) {
     });
   }).done(function () {
     $("#pageNavigation").css("display", "none");
-    setTimeout(()=>{
-    let arr = localStorage.getItem('list');
+    setTimeout(() => {
+      let arr = localStorage.getItem('list');
       let arrOrdened = JSON.parse(arr).sort((a, b) => a.id - b.id);
       $.each(arrOrdened, function (index) {
         printPokemon(arrOrdened[index], 'main');
       })
-    },100);
+    }, 100);
   });
 }
 
+function printPokemonMore() {
+  let ap = localStorage.getItem('aPokemon');
+  let aPokemon = JSON.parse(ap)[0];
 
+  console.log(aPokemon);
+
+  $('#idPokemon').text(aPokemon.id);
+  $('#namePokemon').text(aPokemon.nombre);
+  $('#imgPokemon').attr('src', aPokemon.picture);
+  $('#kg').text(aPokemon.weight/10);
+  $('#metro').text(aPokemon.height/10);
+  $('#type0').text(aPokemon.types[0]);
+  $('#type1').text(aPokemon.types[1]);
+  $('#hp').val(aPokemon.stats[0].base_stat);
+  $('#def').val(aPokemon.stats[1].base_stat);
+  $('#atk').val(aPokemon.stats[2].base_stat);
+  $('#spatk').val(aPokemon.stats[3].base_stat);
+  $('#spdef').val(aPokemon.stats[4].base_stat);
+  $('#spd').val(aPokemon.stats[5].base_stat);
+  $('#habilidadUnlock').text(aPokemon.abilities[0].name);
+  $('#habilidadLock').text(aPokemon.abilities[1].name);
+
+  $.get(`https://pokeapi.co/api/v2/pokemon-species/${aPokemon.id}`, function () {
+  }).done(function (data) {
+    var description = getDescription(data)
+    $('#description').text(description)
+  });
+  // $('#description').append(description);
+}
+
+
+
+function getDescription(data) {
+  let arr = data.flavor_text_entries;
+  let string = '';
+
+  for (let index = 0; index < arr.length; index++) {
+    if (data.flavor_text_entries[index].language.name == 'es') {
+        let temp = data.flavor_text_entries[index].flavor_text;
+        string = string + "" + temp;
+    }
+  }
+  console.log(string);
+  return string;
+}
+
+function redirecToMore() {
+  window.location.href = 'pages/more.html';
+}
 // Nota: altura y peso agregar de atras para adelante . y interpretarlos como mtr y kg
 // https://pokeapi.api-docs.io/v2.0/pokemon/75poNABkA3Nf5Px9M
 
