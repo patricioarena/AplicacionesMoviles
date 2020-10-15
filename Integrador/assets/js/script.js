@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   hideMenu();
   collapseMenu();
+  tomarImagenPorSeccion('item2');
 
 });
 
@@ -75,4 +76,14 @@ function printHistory() {
 
 function redirecToShare() {
   window.location.href = '../pages/share/share.html';
+}
+
+function tomarImagenPorSeccion(article){
+  html2canvas(document.querySelector("#" + article)).then(canvas => {
+      var img = canvas.toDataURL();
+      //console.log(img);
+      $('#downlaod').click(function () {
+        console.log('lalalla')
+      })
+  })
 }

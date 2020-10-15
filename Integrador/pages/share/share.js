@@ -10,11 +10,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("email1").addEventListener('input', validarEmail);
     document.getElementById("email2").addEventListener('input', validarEmail);
-    document.getElementById("comentario").addEventListener('input', procesarComentario)
+    document.getElementById("comentario").addEventListener('input', procesarComentario);
 
-    document.getElementById("sendEmail").addEventListener('click', sendEmail)
-    document.getElementById("cancelar").addEventListener('click', cancelar)
-
+    document.getElementById("sendEmail").addEventListener('click', sendEmail);
+    document.getElementById("cancelar").addEventListener('click', cancelar);
 });
 
 class Mensaje {
@@ -124,6 +123,7 @@ function mailto2() {
         + encodeURIComponent("Conoce mas Sobre Esta App")
         + "&body=" + encodeURIComponent(document.getElementById('item2'));
 }
+
 
 function cancelar() {
     let response = confirm("¿Desea volver a la página anterior?");
