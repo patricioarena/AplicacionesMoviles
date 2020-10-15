@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function mailto() {
-    document.location.href = "mailto:mypetshop2020@gmail.com?subject="
+    document.location.href = "mailto:pokepedia@gmail.com?subject="
         + encodeURIComponent("Asunto")
         + "&body=" + encodeURIComponent("Razon de contacto");
 }
@@ -54,5 +54,5 @@ function back() {
 }
 
 function redirecToShare() {
-    window.location.href = '../pages/share.html';
+    window.location.href = '../pages/share/share.html';
   }

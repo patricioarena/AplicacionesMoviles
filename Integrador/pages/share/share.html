@@ -12,26 +12,27 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Para estilos y cosas muy generales -->
-    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
 
     <!-- Hasta 480px – para móviles en orientación vertical -->
-    <link rel="stylesheet" media="(min-width: 280px) and (max-width: 480px)" href="../assets/css/280480.css">
+    <link rel="stylesheet" media="(min-width: 280px) and (max-width: 480px)" href="../../assets/css/280480.css">
 
     <!-- Hasta 768px – para móviles en orientación horizontal -->
-    <link rel="stylesheet" media="(min-width: 481px) and (max-width: 768px)" href="../assets/css/480768.css">
+    <link rel="stylesheet" media="(min-width: 481px) and (max-width: 768px)" href="../../assets/css/480768.css">
 
     <!-- Hasta 1024px – para tablets en orientación horizontal -->
-    <link rel="stylesheet" media="(min-width: 769px) and (max-width: 1024px)" href="../assets/css/7681024.css">
+    <link rel="stylesheet" media="(min-width: 769px) and (max-width: 1024px)" href="../../assets/css/7681024.css">
 
     <!-- Hasta 1025px hasta 1199px para union entre 1024 y 1200px -->
-    <link rel="stylesheet" media="(min-width: 1025px) and (max-width: 1199px)" href="../assets/css/10241200.css">
+    <link rel="stylesheet" media="(min-width: 1025px) and (max-width: 1199px)" href="../../assets/css/10241200.css">
 
     <!-- Desde 1200px para escritorios muy anchos -->
-    <link rel="stylesheet" media="(min-width: 1200px)" href="../assets/css/1200.css">
+    <link rel="stylesheet" media="(min-width: 1200px)" href="../../assets/css/1200.css">
 
-    <script src="../assets/js/jquery.js"></script>
-    <script src="../assets/js/script.js"></script>
-    <script src="../assets/js/client.js"></script>
+    <script src="../../assets/js/jquery.js"></script>
+    <script src="../../assets/js/script.js"></script>
+    <script src="../../assets/js/client.js"></script>
+    <script src="../share/share.js"></script>
     <title>Pokepedia</title>
 </head>
 
@@ -39,7 +40,7 @@
     <div class="wrapper">
         <div class="container">
             <div class="logo">
-                <a href="../index.html"><img src="../assets/img/logo-pokepedia.png" alt="logo"></a>
+                <a href="../../index.html"><img src="../../assets/img/logo-pokepedia.png" alt="logo"></a>
             </div>
             <header>
                 <div class="header">
@@ -57,7 +58,7 @@
 
                     <div class="contaner-header" id="ch1">
                         <div class="title hidden" id="title1">
-                            <a href="../index.html">Pokepedia</a>
+                            <a href="../../index.html">Pokepedia</a>
                         </div>
                         <div class="search " id="search1">
                             <input id="inputSearch" type="text" placeholder="Buscar..."><i class="fa fa-search"
@@ -69,19 +70,19 @@
             <nav>
                 <div class="nav" id="menuNav">
                     <div class="menu" id="menuBox" collapsed="true">
-                        <a href="../index.html" class="btn orange">HOME</a>
-                        <a href="../pages/about/about.html" class="btn orange">ABOUT</a>
+                        <a href="../../index.html" class="btn orange">HOME</a>
+                        <a href="../../pages/about/about.html" class="btn orange">ABOUT</a>
                     </div>
                 </div>
             </nav>
 
             <section class="main2" id="main2">
-                <article class="item2">
+                <article class="item2" id="item2">
 
                     <div class="row-header">
                         <div class="num-box-header">
 
-                            <img class="pokebolita2" src="../assets/img/clipart2495981.png" alt="">
+                            <img class="pokebolita2" src="../../assets/img/clipart2495981.png" alt="">
                             <span class="np tf" id="idPokemon"></span>
 
                         </div>
@@ -150,12 +151,12 @@
 
                     <div class="t">
                         <div class="borde tf" id="hb-unlock-box">
-                            <div class="box-img"><img src="../assets/img/Habilidad-unlock.png" alt="">
+                            <div class="box-img"><img src="../../assets/img/Habilidad-unlock.png" alt="">
                                 <label id="habilidadUnlock"></label>
                             </div>
                         </div>
                         <div class="borde tf" id="hb-lock-box">
-                            <div class="box-img"><img src="../assets/img/Habilidad-lock.png" alt="">
+                            <div class="box-img"><img src="../../assets/img/Habilidad-lock.png" alt="">
                                 <label id="habilidadLock"></label>
                             </div>
                         </div>
@@ -173,13 +174,50 @@
 
                 </article>
 
+                <div class="item2">
+                    <div class="num-box-header">
+                        <span class="lfrt hb tf">Complete los Campos</span>
+                    </div>
+                    <div class="t">
+                        <div class="borde description" id="description">
+                            <form id="form1">
+                                <span class="leyenda gl">Todos los campos marcados con (*) son obligatorios</span>
+                                <p>Correo Emisor:</p>
+                                <input id="email1" type="text" class="field text"><span class="obligatorio">&nbsp;*</span>
+                                <br>
+                                <br>
+                                <p>Correo Destinatario:</p>
+                                <input id="email2" type="text" class="field text"><span class="obligatorio">&nbsp;*</span>
+                                <br>
+                                <br>
+                                <p>Comentario:</p>
+                                <br>
+                                <textarea id="comentario" class="field comment text"></textarea>
+                                <div class="cajita">
+                                    <span class="restan gl">
+                                    <span id="restante">350</span>
+                                    Caracteres restantes</span>
+                                </div>
+                            <br>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="item3">
-                    <div class="button-box-header" id="sendEmail">
+                    <div class="button-box-header disable" id="sendEmail">
                         <span class="lfrt hb">Enviar por email</span>
                     </div>
                 </div>
 
+                <div class="item3">
+                    <div class="button-box-header enable" id="cancelar">
+                        <span class="lfrt hb">Cancelar</span>
+                    </div>
+                </div> 
+
             </section>
+
         </div>
     </div>
     <footer>
@@ -187,8 +225,8 @@
             <div class="container-footer-all">
                 <div class="container-body-footer">
                     <div class="column">
-                        <img src="/assets/img/flecha-qr2.png" id="flecha-qr" alt="">
-                        <img src="/assets/img/qr-encontranos.png" alt="">
+                        <img src="../../assets/img/flecha-qr2.png" id="flecha-qr" alt="">
+                        <img src="../../assets/img/qr-encontranos.png" alt="">
                         <h1>Nuestra Oficina</h1>
                     </div>
                     <div class="column1">
@@ -197,7 +235,7 @@
                             la materia Aplicaciones Moviles
                             de la Universidad Nacional Arturo Jauretche.
                         </p>
-                        <img src="/assets/img/pikapika.png" alt="">
+                        <img src="../../assets/img/pikapika.png" alt="">
                         <label>Desarrollado por:
                             <br>
                             Palmieri Ayelen
@@ -207,33 +245,33 @@
                     <div class="column2">
                         <h1>Redes Sociales</h1>
                         <div class="row manito">
-                            <img src="/assets/img/facebook.png" alt="">
+                            <img src="../../assets/img/facebook.png" alt="">
                             <label>Seguinos en Facebook</label>
                         </div>
                         <div class="row manito">
-                            <img src="/assets/img/twitter.png" alt="">
+                            <img src="../../assets/img/twitter.png" alt="">
                             <label>Seguinos en Twitter</label>
                         </div>
                         <div class="row manito">
-                            <img src="/assets/img/instagram.png" alt="">
+                            <img src="../../assets/img/instagram.png" alt="">
                             <label>Seguinos en Instagram</label>
                         </div>
                     </div>
                     <div class="column3">
                         <h1>Información Contacto</h1>
                         <div class="row2">
-                            <img src="/assets/img/house.png" alt="">
+                            <img src="../../assets/img/house.png" alt="">
                             <label>Fcio Varela,
                                 Buenos Aires,
                                 Argentina.
                             </label>
                         </div>
                         <div class="row2">
-                            <img src="/assets/img/smartphone.png" alt="">
+                            <img src="../../assets/img/smartphone.png" alt="">
                             <label>+054********</label>
                         </div>
                         <div class="row2 manito" id="mailto">
-                            <img src="/assets/img/contact.png" alt="">
+                            <img src="../../assets/img/contact.png" alt="">
                             <label>pokepedia@gmail.com</label>
                         </div>
                     </div>
