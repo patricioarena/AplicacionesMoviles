@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  if (window.location.pathname =='/pages/more.html') {
+  if (window.location.pathname =='/pages/more.html' || window.location.pathname == '/pages/share/share.html') {
     printPokemonMore();
   }
 
@@ -127,7 +127,7 @@ function getStats(data) {
 function printPokemon(aPokemon, id) {
   let urlImgPokebolita = '../assets/img/clipart2495981.png';
 
-  if (window.location.pathname ===  '/pages/about/about.html') {
+  if (window.location.pathname ===  '/pages/about/about.html' || window.location.pathname ===  '/pages/share/share.html') {
     urlImgPokebolita = '../../assets/img/clipart2495981.png';
   }
 
