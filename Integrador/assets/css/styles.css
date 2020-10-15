@@ -139,3 +139,60 @@ body {
 .backButton{
   font-size: 3.5em;
 }  */
+
+/*SHARED*/
+
+.success {
+  border-color: #008745;
+}
+
+.error {
+  border-color: red;
+}
+
+.disable {
+  cursor          : not-allowed;
+  pointer-events  : none;
+  color           : #c0c0c0;
+  background-color: grey;
+}
+
+.enable {
+  cursor: pointer;
+}
+
+.field.comment {
+  resize   : none;
+  font-size: large;
+  height   : 150px;
+}
+
+
+.obligatorio {
+  color    : red;
+  font-size: xx-large;
+}
+
+
+.obligatorio.fix {
+  float     : right;
+  margin-top: 20px;
+}
+
+
+.leyenda{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+  color     : red;
+}
+
+.gl{
+  font-size: large;
+  font-family: "Grandstander";
+}
+
+.restan{
+  margin-right: 25px;
+  float: right;
+}
