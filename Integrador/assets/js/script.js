@@ -47,10 +47,6 @@ function collapseMenu() {
   });
 }
 
-function search() {
-  var str = $("#inputSearch").val();
-}
-
 function back() {
   window.history.back();
 }

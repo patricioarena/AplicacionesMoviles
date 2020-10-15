@@ -1,0 +1,662 @@
+@font-face {
+    font-family: "Pokemon Solid";
+    src: url("./assets/Pokemon Solid.ttf");
+}
+body {
+    background-image: url(./assets/pokemon.png);
+    background-size: cover;
+}
+
+form {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+ #pkdname {
+     background-color: #a50a13;
+     color: snow;
+ }
+
+.btn {
+    height: 25px;
+    width: 56px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.btn1 {
+    background-color: white;
+    color: black;
+    border: 2px solid #000000;
+}
+
+.btn:hover {
+    background-color: #ff0b1c;
+}
+.pokedex {
+margin-left: 32%;
+margin-top: 6%
+
+}
+.pokedexright {
+    width: 350px;
+    height: 475px;
+    float: left;
+    background-color: #a50a13;
+    border-radius: 10px;
+    box-shadow: -0px 9px 9px #5e0000;
+    margin-top: 100px;
+    position: absolute;
+    margin-left: 400px;
+}
+
+.pokedexleft {
+    width: 400px;
+    height: 575px;
+    float: left;
+    background-color: #a50a13;
+    z-index: 3;
+    border-radius: 10px;
+    box-shadow: -0px 9px 9px #5e0000;
+}
+
+.pokedex-top-left {
+    background-color: #6a0005;
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    border-radius: 10px 0px 0px 0px;
+    box-shadow: 10px 10px 10px #000000;
+}
+
+.pokedex-top-right  {
+    background-color: #6a0005;
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    box-shadow: 10px 10px 10px #000000;
+    margin-left: 200px;
+    z-index: 1;
+}
+
+.pokedex-top-curve {
+    background-color: #6a0005;
+    position: absolute;
+    height: 50px;
+    width: 80px;
+    margin-left: 175px;
+    margin-top: 30px;
+    transform: rotate(-40deg);
+    z-index: 2;
+}
+
+.pokedex-top-curve-shadow {
+    height: 10px;
+    width: 69px;
+    transform: rotate(-42deg);
+    box-shadow: 10px 10px 10px #000000;
+    position: absolute;
+    z-index: 5;
+    margin-top: 72px;
+    margin-left: 187px;
+}
+
+.middle-border {
+    border: 10px;
+    border-radius: 10px;
+    border-color: black;
+    background: -webkit-linear-gradient(left, #7e0202 0%, #9c0b0b 50%, #660000 100%);
+    height: 575px;
+    border-style: solid;
+    border-width: 3px;
+    width: 50px;
+    margin-left: 370px;
+    margin-bottom: -10px;
+    z-index: 1;
+    position: absolute;
+}
+
+.bars{
+    margin: 50px auto;
+    width: 100%;
+    height: 3px;
+    background-color: #f90;
+    border: none;
+}
+
+.bars2{
+    margin: 50px auto;
+    width: 100%;
+    height: 3px;
+    background-color: #f90;
+    border: none;
+}
+.circleblue {
+    height: 55px;
+    width: 55px;
+    background-color: #0EE5F4;
+    border-radius: 100000px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: white;
+    margin-left: 10px;
+    margin-top: 22px;
+    position: absolute;
+}
+
+.red-dot {
+    border-radius: 100000000000px;
+    background-color: #DC143C;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    height: 20px;
+    width: 20px;
+    margin-left: 100px;
+    margin-top: 30px;
+    position: absolute;
+}
+
+.yellow-dot {
+    border-radius: 100000000000px;
+    background-color: yellow;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    height: 20px;
+    width: 20px;
+    margin-left: 130px;
+    margin-top: 30px;
+    position: absolute;
+}
+
+.green-dot {
+    border-radius: 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000px;
+    background-color: greenyellow;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    height: 20px;
+    width: 20px;
+    margin-left: 160px;
+    margin-top: 30px;
+    position: absolute;
+
+}
+.below-the-screen {
+    height: 285px;
+    width: 275px;
+    background-color: #D2D6CB;
+    position: absolute;
+    margin-left: 60px;
+    margin-top: 130px;
+    border-style: solid;
+    border-radius: 5px 5px 5px 50px;
+
+}
+
+.little-black-dot {
+    border-radius: 10000000000000000000000000000000000000000000000000000000000000000000000000000000px;
+    background-color: black;
+    height: 15px;
+    width: 15px;
+    margin-left: 150px;
+    margin-top: 145px;
+    position: absolute;
+}
+
+.little-black-dot2 {
+    border-radius: 10000000000000000000000000000000000000000000000000000000000000000000000000000000px;
+    background-color: black;
+    height: 15px;
+    width: 15px;
+    margin-left: 230px;
+    margin-top: 145px;
+    position: absolute;
+}
+
+.below-the-screen-bars {
+    background-color: black;
+    width: 45px;
+    position: absolute;
+    margin-top: 380px;
+    margin-left: 260px;
+}
+.below-the-screen-bars2 {
+    background-color: black;
+    width: 45px;
+    position: absolute;
+    margin-top: 390px;
+    margin-left: 260px;
+}
+.below-the-screen-bars3 {
+    background-color: black;
+    width: 45px;
+    position: absolute;
+    margin-top: 400px;
+    margin-left: 260px;
+}
+
+.red-dot-below-the-screen {
+    border-radius: 10000000000000000000000000000000000000000000000000000000000000000000000000000000px;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #ba170d;
+    border-style: solid;
+    border-color: #600a00;
+    border-width: 2px;
+    margin-top: 380px;
+    margin-left: 110px;
+}
+
+.screen {
+    background-color: #A6AD97;
+    height: 200px;
+    width: 205px;
+    margin-top: 170px;
+    margin-left: 104px;
+    position: absolute;
+    border-radius: 10px;
+    box-shadow: inset 0.3em 0.3em 1.5em black;
+}
+
+#img {
+    display: none;
+    margin-left: 50px;
+    margin-top: 50px;
+    max-width: 100px;
+    max-height: 100px;
+    width: 100%;
+    height: 100%;
+}
+
+#form-errors {
+    font-size: 18px;
+    color: red;
+    text-align: center;
+    margin-top: 35%;
+
+}
+.little-green-button {
+    width: 50px;
+    height: 8px;
+    position: absolute;
+    background-color: #3cac47;
+    margin-top: 440px;
+    margin-left: 100px;
+    border-radius: 20px;
+    box-shadow: -2px 2px #5e0000;
+}
+
+.little-blue-button {
+    width: 50px;
+    height: 8px;
+    position: absolute;
+    background-color: #2d95ac;
+    margin-top: 440px;
+    margin-left: 158px;
+    border-radius: 20px;
+    box-shadow: -2px 2px #5e0000;
+}
+
+.cross{
+    position: absolute;
+    margin-top: 460px;
+    margin-left: 280px;
+}
+
+.cross-top {
+    width: 30px;
+    height: 30px;
+    background-color: #222;
+    position: absolute;
+    border-style: solid;
+    border-width: 1px 1px 0px 1px;
+    border-color: black;
+    box-shadow: -4px 4px #5e0000;
+}
+
+.triangle-top {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #111;
+    position: absolute;
+    top: 5px;
+    left: 4px;
+}
+
+.cross-mid {
+    width: 30px;
+    height: 30px;
+    background-color: #222;
+    position: absolute;
+    margin-top: 30px;
+
+}
+
+.circle-mid {
+    border-radius: 100000000000000000000000000000000000000000000000000000000000000000000000000000000px;
+    background-color: #111;
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    top: 4px;
+    left: 5px;
+}
+
+.cross-bot {
+    width: 30px;
+    height: 30px;
+    background-color: #222;
+    position: absolute;
+    margin-top: 60px;
+    border-style: solid;
+    border-width: 0px 1px 1px 1px;
+    border-color: black;
+}
+
+.triangle-bot {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #111;
+    position: absolute;
+    bottom: 5px;
+    left: 4px;
+}
+
+.cross-left {
+    width: 30px;
+    height: 30px;
+    background-color: #222;
+    position: absolute;
+    margin-top: 30px;
+    margin-left: -30px;
+    border-style: solid;
+    border-width: 1px 0px 1px 1px;
+    border-color: black;
+
+}
+
+.triangle-left {
+    width: 0;
+    height: 0;
+    top: 5px;
+    left: 4px;
+    border-top: 10px solid transparent;
+    border-right: 10px solid #111;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+
+}
+
+.cross-right {
+    width: 30px;
+    height: 30px;
+    background-color: #222;
+    position: absolute;
+    margin-top: 30px;
+    margin-left: 30px;
+    border-style: solid;
+    border-width: 1px 1px 1px 0px;
+    border-color: black;
+}
+
+.triangle-right {
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-left: 10px solid #111;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.big-black-dot {
+    background-color: black;
+    height: 35px;
+    width: 35px;
+    position: absolute;
+    margin-left: 50px;
+    margin-top: 460px;
+    border-radius: 10000000000000000000000000000000000000000000000000000000000000000px;
+}
+
+.big-green-dot {
+    height: 40px;
+    width: 100px;
+    background-color: #58cc68;
+    position: absolute;
+    margin-top: 500px;
+    margin-left: 120px;
+    border-radius: 5px;
+    box-shadow: -5px 5px #5e0000;
+}
+
+.pokedex-top-left2 {
+    background-color: #a50a13;
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    margin-left: 400px;
+    margin-top: 50px;
+    border-radius: 1px 3px;
+}
+
+.pokedex-top-curve2 {
+    background-color: #a50a13;
+    position: absolute;
+    height: 50px;
+    width: 80px;
+    margin-left: 525px;
+    margin-top: 70px;
+    transform: rotate(40deg);
+    z-index: 2;
+}
+
+.screen2 {
+    background-color: #A6AD97;
+    height: 200px;
+    width: 280px;
+    margin-top: 50px;
+    margin-left: 45px;
+    position: absolute;
+    border-radius: 10px;
+    box-shadow: inset 0.3em 0.3em 1.5em black;
+}
+
+.pokemonname {
+    font-family: "Pokemon Solid";
+    margin-left: 10px;
+}
+
+.pokemontype {
+    font-family: "Pokemon Solid";
+    margin-left: 10px;
+}
+
+.button1 {
+    height: 50px;
+    width: 60px;
+    position: absolute;
+    background-color: #ffe834;
+    border-radius: 7px;
+    margin-top: 260px;
+    margin-left: 45px;
+    box-shadow: -4px 4px #5e0000;
+}
+
+.button2 {
+    height: 50px;
+    width: 60px;
+    position: absolute;
+    background-color: #98beff;
+    border-radius: 7px;
+    margin-top: 260px;
+    margin-left: 120px;
+    box-shadow: -4px 4px #5e0000;
+}
+
+.button3 {
+    height: 50px;
+    width: 60px;
+     position: absolute;
+     background-color: #ffe834;
+     border-radius: 7px;
+     margin-top: 260px;
+     margin-left: 190px;
+    box-shadow: -4px 4px #5e0000;
+ }
+
+.button4 {
+    height: 50px;
+    width: 60px;
+    position: absolute;
+    background-color: #98beff;
+    border-radius: 7px;
+    margin-top: 260px;
+    margin-left: 265px;
+    box-shadow: -4px 4px #5e0000;
+}
+
+.button5 {
+    height: 50px;
+    width: 60px;
+    position: absolute;
+    background-color: #98beff;
+    border-radius: 7px;
+    margin-top: 325px;
+    margin-left: 45px;
+    box-shadow: -4px 4px #5e0000;
+}
+
+.button6 {
+    height: 50px;
+    width: 60px;
+    position: absolute;
+    background-color: #ffe834;
+    border-radius: 7px;
+    margin-top: 325px;
+    margin-left: 120px;
+    box-shadow: -4px 4px #5e0000;
+}
+
+.button7 {
+    height: 50px;
+    width: 60px;
+    position: absolute;
+    background-color: #98beff;
+    border-radius: 7px;
+    margin-top: 325px;
+    margin-left: 190px;
+    box-shadow: -4px 4px #5e0000;
+}
+
+.button8 {
+    height: 50px;
+    width: 60px;
+    position: absolute;
+    background-color: #ffe834;
+    border-radius: 7px;
+    margin-top: 325px;
+    margin-left: 265px;
+    box-shadow: -4px 4px #5e0000;
+}
+
+.white-button {
+    height: 40px;
+    width: 50px;
+    position: absolute;
+    background-color: #c0c1c7;
+    margin-top: 386px;
+    margin-left: 45px;
+    border-radius: 10px;
+    box-shadow: -4px 4px #5e0000;
+}
+
+.white-button2 {
+    height: 40px;
+    width: 50px;
+    position: absolute;
+    background-color: #c0c1c7;
+    margin-top: 386px;
+    margin-left: 105px;
+    border-radius: 10px;
+    box-shadow: -4px 4px #5e0000;
+}
+
+.little-green-button2 {
+    width: 50px;
+    height: 8px;
+    position: absolute;
+    background-color: #3cac47;
+    margin-top: 400px;
+    margin-left: 215px;
+    border-radius: 20px;
+    box-shadow: -2px 2px #5e0000;
+}
+
+.little-blue-button2 {
+    width: 50px;
+    height: 8px;
+    position: absolute;
+    background-color: #2d95ac;
+    margin-top: 400px;
+    margin-left: 275px;
+    border-radius: 20px;
+    box-shadow: -2px 2px #5e0000;
+}
+
+.orange-button {
+    position: absolute;
+    background-color: #ff8821;
+    border-radius: 5000000000000000000000000000000000000000000000000px;
+    margin-left: 290px;
+    margin-top: 420px;
+    height: 30px;
+    width: 30px;
+}
+h1 {
+    display: none;
+    position: absolute;
+}
+
+
+
+@media (min-width: 1200px) {
+    .asaide{
+        display: inline-flex;
+        position: absolute;
+        top: 138px;
+        width: 30%;
+        height: 50%;
+        float: left;
+    }
+}
+
+@media (max-width: 1199px) {
+    .asaide{
+        display: none;
+        position: absolute;
+        top: 138px;
+        width: 30%;
+        height: 50%;
+        float: left;
+    }
+}

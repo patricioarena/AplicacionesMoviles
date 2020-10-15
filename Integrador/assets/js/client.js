@@ -15,7 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
   if (document.getElementById('previousPage') != null) {
     document.getElementById('previousPage')
       .addEventListener('click', function () {
-        previousPage()
+        previousPage();
+        searchYoutube();
       });
   }
 
@@ -23,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('nextPage')
       .addEventListener('click', function () {
         nextPage();
+        searchYoutube();
       });
   }
 
@@ -56,9 +58,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  if (window.location.pathname =='/pages/more.html') {
+    printPokemonMore();
+  }
+
   //limite de 10 y comienza en 0
   getPokemones(10, offset);
-  printPokemonMore();
 
 });
 
@@ -199,7 +204,7 @@ function searchPokemon(name) {
   }
 
   if (window.location.pathname ===  '/pages/about/about.html') {
-    window.location.href = '/pages/more.html';
+    window.location.href = '/index.html';
   }
 }
 

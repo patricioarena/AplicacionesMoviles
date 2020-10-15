@@ -152,6 +152,7 @@
     justify-content: center;
     padding        : 10px 0;
     width          : var(--width-768);
+    height         : 30px;
     border         : 2px solid rgba(83, 0, 0, 0.575);
     text-decoration: none;
     color          : #3c2313;
