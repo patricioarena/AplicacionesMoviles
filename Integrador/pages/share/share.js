@@ -44,7 +44,7 @@ function test() {
         var key = window.event ? event.keyCode : event.which;
         if (key === 8 || key === 46) {
             return true;
-        } else if ( key < 48 || key > 57 ) {
+        } else if (key < 48 || key > 57) {
             event.preventDefault();
         } else {
             return true;
@@ -70,7 +70,7 @@ function validarEmailEmisor() {
     } else {
         element.classList.remove("success");
         element.classList.add("error");
-        emailEmisorValido = true;
+        emailEmisorValido = false;
     }
 }
 
@@ -89,7 +89,7 @@ function validarEmailRceptor() {
     } else {
         element2.classList.remove("success");
         element2.classList.add("error");
-        emailReceptorValido = true;
+        emailReceptorValido = false;
     }
 }
 
@@ -127,10 +127,50 @@ function sendEmail() {
 }
 
 function mailto2() {
-    var email2 = document.getElementById("email2").value;
+
+    let idPokemon = $('#idPokemon').text();
+    let namePokemon = $('#namePokemon').text();
+    // let imgPokemon = $('#imgPokemon').attr();
+    let kg = $('#kg').text();
+    let metro = $('#metro').text();
+    let type0 = $('#type0').text();
+    let type1 = $('#type1').text();
+
+    let hp = $('#hp').val();
+    let def = $('#def').val();
+    let atkv = $('#atk').val();
+    let spatk = $('#spatk').val();
+    let spdef = $('#spdef').val();
+    let spd = $('#spd').val();
+    let habilidadUnlock = $('#habilidadUnlock').text();
+    let habilidadLock = $('#habilidadLock').text();
+    let description = $('#description').text();
+
+
+
+    console.log(idPokemon);
+    console.log(namePokemon);
+    console.log(imgPokemon.src);
+    console.log(kg);
+    console.log(metro);
+    console.log(type0);
+    console.log(type1);
+    console.log(hp);
+    console.log(def);
+    console.log(atkv);
+    console.log(spatk);
+    console.log(spdef);
+    console.log(spd);
+    console.log(habilidadUnlock);
+    console.log(habilidadLock);
+    console.log(description);
+
+        var email2 = document.getElementById("email2").value;
     document.location.href = "mailto:"+`${email2}`+"?subject="
         + encodeURIComponent("Conoce mas Sobre Esta App")
         + "&body=" + encodeURIComponent(document.getElementById("comentario").value);
+
+
 }
 
 

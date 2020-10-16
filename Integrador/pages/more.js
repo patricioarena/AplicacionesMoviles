@@ -1,21 +1,21 @@
 $(document).ready(function () {
-    if (window.location.pathname == '/pages/more.html') {
-        setTimeout(() => {
-            tomarImagenPorSeccion();
-        }, 300);
+    // if (window.location.pathname == '/pages/more.html' || window.location.pathname == '/pages/share/share.html') {
+    //     setTimeout(() => {
+    //         tomarImagenPorSeccion();
+    //     }, 300);
 
-        setTimeout(() => {
-            console.log('yolooo!');
-        }, 3000);
+    //     setTimeout(() => {
+    //         console.log('yolooo!');
+    //     }, 3000);
 
-    }
+    // }
 });
 
 
 
 function tomarImagenPorSeccion() {
     let temp = document.querySelector(`#itemx`);
-    let img = temp.querySelector('#imgPokemonHide');
+    let img = temp.querySelector('#imgPokemon');
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
     var fondo = new Image();

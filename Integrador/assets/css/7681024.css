@@ -619,10 +619,6 @@
     cursor          : pointer;
   }
 
-  #imgPokemonHide{
-    display: none;
-  }
-
   /*SHARED*/
 
   .formCompartir {
@@ -631,7 +627,7 @@
     text-align : justify;
     font-style : italic;
     margin-top : -8px;
-    width      : 100% !important;
+    width      : 600px !important;
     padding    : 4px;
     display: flex;
   }

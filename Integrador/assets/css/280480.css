@@ -633,15 +633,6 @@
     cursor          : pointer;
   }
 
-  #imgPokemonHide{
-    display: none;
-  }
-
-  #canvas{
-    width: 110%;
-  }
-
-
    /*SHARED*/
 
    .formCompartir {
