@@ -618,6 +618,13 @@
     cursor          : pointer;
   }
 
-  /* more-information */
+  #imgPokemonHide{
+    display: none;
+  }
 
+  #canvas{
+    width: 100%;
+  }
+
+  /* more-information */
 }

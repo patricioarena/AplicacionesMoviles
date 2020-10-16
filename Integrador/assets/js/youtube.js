@@ -18,7 +18,7 @@ function searchYoutube() {
                 let idRandom = Math.floor(Math.random() * arr.length);
                 console.log(data.items[idRandom].id.videoId);
                 idVideo = data.items[idRandom].id.videoId;
-                var iframe = `<iframe width="350" height="200" src="https://www.youtube.com/embed/${idVideo}?modestbranding=1&color=red&iv_load_policy=3"
+                var iframe = `<iframe width="210" height="200" src="https://www.youtube.com/embed/${idVideo}?modestbranding=1&color=red&iv_load_policy=3"
                 frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
                 $('#test').html(iframe);
             });

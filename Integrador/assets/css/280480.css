@@ -586,7 +586,7 @@
     display       : flex;
     flex-direction: row;
     align-content : center;
-    width         : 200px;
+    width         : 180px;
   }
 
   .miniRow progress {
@@ -633,6 +633,41 @@
     cursor          : pointer;
   }
 
-  /* more-information */
+  #imgPokemonHide{
+    display: none;
+  }
 
+  #canvas{
+    width: 110%;
+  }
+
+  /* more-information */
+}
+
+@media (min-width: 440px) and (max-width: 460px) {
+
+  .miniRow progress {
+    width: 70%;
+  }
+}
+
+@media (min-width: 400px) and (max-width: 440px) {
+
+  .miniRow progress {
+    width: 65%;
+  }
+}
+
+@media (min-width: 350px) and (max-width: 400px) {
+
+  .miniRow progress {
+    width: 50%;
+  }
+}
+
+@media (min-width: 280px) and (max-width: 350px) {
+
+  .miniRow progress {
+    width: 20%;
+  }
 }

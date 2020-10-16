@@ -282,7 +282,7 @@ function printPokemonMore() {
 
   $('#idPokemon').text(aPokemon.id);
   $('#namePokemon').text(aPokemon.nombre);
-  $('#imgPokemon').attr('src', aPokemon.picture);
+  $('#imgPokemonHide').attr('src', aPokemon.picture);
   $('#kg').text(aPokemon.weight / 10);
   $('#metro').text(aPokemon.height / 10);
   $('#type0').text(aPokemon.types[0]);
