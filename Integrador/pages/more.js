@@ -32,7 +32,6 @@ function tomarImagenPorSeccion() {
             link.setAttribute("href", img);
             link.setAttribute("download", "test.png");
             link.click();
-
         })
     })
 
