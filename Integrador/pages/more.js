@@ -12,6 +12,7 @@ function tomarImagenPorSeccion(article){
         var img = canvas.toDataURL();
         $('#download').click(function () {
             console.log(temp);
+            
         })
     })
 

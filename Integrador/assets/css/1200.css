@@ -619,5 +619,101 @@
     cursor          : pointer;
   }
 
+
+  /*SHARED*/
+
+  .formCompartir {
+    font-family: 'Grandstander';
+    font-size  : 15px;
+    text-align : justify;
+    font-style : italic;
+    margin-top : -8px;
+    width      : 100% !important;
+    padding    : 4px;
+    display: flex;
+  }
+
+  .email{
+    padding: 5px;
+    margin: 10px;
+    /* display: flex;
+    justify-content: center; */
+  }
+
+  .comentario{
+    padding: 5px;
+    margin: 10px;
+  }
+
+.success {
+  border-color: #008745;
+}
+
+.error {
+  border-color: red;
+}
+
+.disable {
+  cursor          : not-allowed;
+  pointer-events  : none;
+  color           : #c0c0c0;
+  background-color: grey;
+}
+
+.enable {
+  cursor: pointer;
+}
+
+.field{
+  padding: 10px;
+  border-radius: 4px;
+  width: 70%;
+}
+
+.field:focus{
+  border-color: black;
+}
+
+.comment{
+  /* resize   : none; */
+  border-radius: 4px;
+  border: 1px solid black;
+  font-size: large;
+  height   : 150px;
+  padding: 10px;
+}
+
+
+.obligatorio {
+  color    : red;
+  font-size: xx-large;
+}
+
+
+.obligatorio .fix {
+  float     : right;
+  margin-top: 20px;
+}
+
+
+.leyenda{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 15px;
+  color     : red;
+}
+
+.gl{
+  font-size: 16px;
+  font-family: "Grandstander";
+  text-align: left;
+}
+
+.restan{
+  margin-right: 25px;
+  float: right;
+}
   /* more-information */
 }

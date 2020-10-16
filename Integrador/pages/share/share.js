@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("email2").value = null;
     document.getElementById("comentario").value = null;
 
-    document.getElementById("email1").addEventListener('input', validarEmail);
-    document.getElementById("email2").addEventListener('input', validarEmail);
+    document.getElementById("email1").addEventListener('input', validarEmailEmisor);
+    document.getElementById("email2").addEventListener('input', validarEmailRceptor);
     document.getElementById("comentario").addEventListener('input', procesarComentario);
 
     document.getElementById("sendEmail").addEventListener('click', sendEmail);
@@ -55,31 +55,40 @@ function test() {
 
 
 
-function validarEmail() {
+function validarEmailEmisor() {
     let element = document.getElementById("email1");
-    let element2 = document.getElementById("email2");
     let value = element.value;
 
     if (reg2.test(value) && reg3.test(value)) {
         element.classList.remove("error");
         element.classList.add("success");
-        element2.classList.remove("error");
-        element2.classList.add("success");
         emailEmisorValido = true;
-        emailReceptorValido = true;
     } else if (reg2.test(value)) {
         element.classList.remove("error");
         element.classList.add("success");
-        element2.classList.remove("error");
-        element2.classList.add("success");
         emailEmisorValido = true;
-        emailReceptorValido = true;
     } else {
         element.classList.remove("success");
         element.classList.add("error");
+        emailEmisorValido = true;
+    }
+}
+
+function validarEmailRceptor() {
+    let element2 = document.getElementById("email2");
+    let value2 = element2.value;
+
+    if (reg2.test(value2) && reg3.test(value2)) {
+        element2.classList.remove("error");
+        element2.classList.add("success");
+        emailReceptorValido = true;
+    } else if (reg2.test(value2)) {
+        element2.classList.remove("error");
+        element2.classList.add("success");
+        emailReceptorValido = true;
+    } else {
         element2.classList.remove("success");
         element2.classList.add("error");
-        emailEmisorValido = true;
         emailReceptorValido = true;
     }
 }
@@ -121,13 +130,10 @@ function mailto2() {
     var email2 = document.getElementById("email2").value;
     document.location.href = "mailto:"+`${email2}`+"?subject="
         + encodeURIComponent("Conoce mas Sobre Esta App")
-        + "&body=" + encodeURIComponent(document.getElementById('item2'));
+        + "&body=" + encodeURIComponent(document.getElementById("comentario").value);
 }
 
 
 function cancelar() {
-    let response = confirm("¿Desea volver a la página anterior?");
-    if (response) {
-        window.history.back();
-    }
+    window.history.back();
 }
