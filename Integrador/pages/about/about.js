@@ -96,5 +96,5 @@ function function_ok(respuesta){
 
 function function_error(){
     var divMapa = document.getElementById('map');
-    divMapa.innerHTML = "Hubo un problema solicitando los datos";
+    divMapa.innerHTML = "<img src='../../assets/img/map-error.png' id='imgError'>"
 }

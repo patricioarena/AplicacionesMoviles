@@ -186,18 +186,24 @@
                             <form id="form1">
                                 <span class="leyenda gl">Todos los campos marcados con (*) son obligatorios</span>
                                 <div class="email">
-                                    <p>Correo Emisor:</p>
-                                    <input id="email1" type="text" class="field text">
+                                    <label for="correo" id="correo">Correo Remitente: </label>
+                                    <input type="text" id="email1" class="field" placeholder="&#xf0e0;  name@ejemplo.com" name="correo">
                                     <span class="obligatorio">*</span>
+                                    <div class="check" id="check">
+                                        
+                                    </div>
                                 </div>
                                 <div class="email">
-                                    <p>Correo Destinatario:</p>
-                                    <input id="email2" type="text" class="field text">
+                                    <label for="correo" id="correo">Correo Destinatario: </label>
+                                    <input type="text" id="email2" class="field" placeholder="&#xf0e0;  name@ejemplo.com" name="correo">
                                     <span class="obligatorio">*</span>
+                                    <div class="check" id="check2">
+                                        
+                                    </div>
                                 </div>
                                 <div class="comentario">
-                                    <p>Comentario:</p>
-                                    <textarea id="comentario" class="field comment text"></textarea>
+                                    <label for="comentario" id="comentario1">Comentario: </label>
+                                    <textarea type="text" id="comentario"  placeholder="&#xf040;  Escribe comentario aquí..." class="field comment" name="comentario"></textarea>
                                     <div class="cajita">
                                         <span class="restan gl">
                                         <span id="restante">350</span>
