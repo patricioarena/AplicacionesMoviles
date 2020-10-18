@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  if (window.location.pathname =='/pages/more.html' || window.location.pathname == '/pages/share/share.html') {
+  if (window.location.pathname =='/pages/more/more.html' || window.location.pathname == '/pages/share/share.html') {
     printPokemonMore();
   }
 
@@ -199,7 +199,7 @@ function searchPokemon(name) {
     setHistory(arr);
   });
 
-  if (window.location.pathname === '/pages/more.html') {
+  if (window.location.pathname === '/pages/more/more.html') {
     window.location.reload();
   }
 
@@ -330,7 +330,7 @@ function getDescription(data) {
 }
 
 function redirecToMore() {
-  window.location.href = 'pages/more.html';
+  window.location.href = 'pages/more/more.html';
 }
 
 // https://www.amiiboapi.com/api/amiibo/?character=charizard

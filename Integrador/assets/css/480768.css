@@ -198,6 +198,7 @@
     margin        : 10px;
     display       : inline-flex;
     flex-direction: column;
+    cursor        : pointer;
   }
 
   .box {
@@ -435,11 +436,6 @@
     background: #00381d;
   }
 
-  .copyright {
-    color      : var(--light-blue);
-    font-weight: bold;
-  }
-
   .arrow {
     margin-top   : 10px;
     padding      : 8px;
@@ -617,189 +613,214 @@
     cursor          : pointer;
   }
 
-/*SHARED*/
+  /*SHARED*/
 
-.formCompartir {
-  font-family: 'Grandstander';
-  font-size  : 15px;
-  text-align : justify;
-  font-style : italic;
-  margin-top : -8px;
-  width      : 600px !important;
-  padding    : 4px;
-  display: flex;
-}
+  .formCompartir {
+    font-family: 'Grandstander';
+    font-size  : 15px;
+    text-align : justify;
+    font-style : italic;
+    margin-top : -8px;
+    width      : 600px !important;
+    padding    : 4px;
+    display    : flex;
+  }
 
-.email input[type="text"]::-webkit-input-placeholder{
-  font-family: FontAwesome;
-  font-weight: normal;
-  overflow: visible;
-  vertical-align: top;
-  display: inline-block !important;
-  padding-left: 5px;
-  padding-top: 2px;
-  color: hsl(234, 38%, 47%); 
-}
+  .email input[type="text"]::-webkit-input-placeholder {
+    font-family   : FontAwesome;
+    font-weight   : normal;
+    overflow      : visible;
+    vertical-align: top;
+    display       : inline-block !important;
+    padding-left  : 5px;
+    padding-top   : 2px;
+    color         : hsl(234, 38%, 47%);
+  }
 
-.email input[type="text"]::-moz-placeholder{
-  font-family: FontAwesome;
-  font-weight: normal;
-  overflow: visible;
-  vertical-align: top;
-  display: inline-block !important;
-  padding-left: 5px;
-  padding-top: 2px;
-  color: hsl(234, 38%, 47%); 
-}
+  .email input[type="text"]::-moz-placeholder {
+    font-family   : FontAwesome;
+    font-weight   : normal;
+    overflow      : visible;
+    vertical-align: top;
+    display       : inline-block !important;
+    padding-left  : 5px;
+    padding-top   : 2px;
+    color         : hsl(234, 38%, 47%);
+  }
 
-.email textarea[type="text"]::-ms-placeholder{
-  font-family: FontAwesome;
-  font-weight: normal;
-  overflow: visible;
-  vertical-align: top;
-  display: inline-block !important;
-  padding-left: 5px;
-  padding-top: 2px;
-  color: hsl(234, 38%, 47%); 
-}
+  .email textarea[type="text"]::-ms-placeholder {
+    font-family   : FontAwesome;
+    font-weight   : normal;
+    overflow      : visible;
+    vertical-align: top;
+    display       : inline-block !important;
+    padding-left  : 5px;
+    padding-top   : 2px;
+    color         : hsl(234, 38%, 47%);
+  }
 
-.comentario textarea[type="text"]::-webkit-input-placeholder{
-  font-family: FontAwesome;
-  font-weight: normal;
-  overflow: visible;
-  vertical-align: top;
-  display: inline-block !important;
-  padding-left: 5px;
-  padding-top: 2px;
-  color: hsl(234, 38%, 47%); 
-}
+  .comentario textarea[type="text"]::-webkit-input-placeholder {
+    font-family   : FontAwesome;
+    font-weight   : normal;
+    overflow      : visible;
+    vertical-align: top;
+    display       : inline-block !important;
+    padding-left  : 5px;
+    padding-top   : 2px;
+    color         : hsl(234, 38%, 47%);
+  }
 
-.comentario textarea[type="text"]::-moz-placeholder{
-  font-family: FontAwesome;
-  font-weight: normal;
-  overflow: visible;
-  vertical-align: top;
-  display: inline-block !important;
-  padding-left: 5px;
-  padding-top: 2px;
-  color: hsl(234, 38%, 47%); 
-}
+  .comentario textarea[type="text"]::-moz-placeholder {
+    font-family   : FontAwesome;
+    font-weight   : normal;
+    overflow      : visible;
+    vertical-align: top;
+    display       : inline-block !important;
+    padding-left  : 5px;
+    padding-top   : 2px;
+    color         : hsl(234, 38%, 47%);
+  }
 
-.comentario input[type="text"]::-ms-placeholder{
-  font-family: FontAwesome;
-  font-weight: normal;
-  overflow: visible;
-  vertical-align: top;
-  display: inline-block !important;
-  padding-left: 5px;
-  padding-top: 2px;
-  color: hsl(234, 38%, 47%); 
-}
+  .comentario input[type="text"]::-ms-placeholder {
+    font-family   : FontAwesome;
+    font-weight   : normal;
+    overflow      : visible;
+    vertical-align: top;
+    display       : inline-block !important;
+    padding-left  : 5px;
+    padding-top   : 2px;
+    color         : hsl(234, 38%, 47%);
+  }
 
-.email {
-  padding: 5px;
-  margin: 5px;
-}
+  .email {
+    padding: 5px;
+    margin : 5px;
+  }
 
-.email #correo {
-  padding: 5px;
-  margin: 5px 0;
-  display: block;
-  padding-bottom: 5px;
-}
+  .email #correo {
+    padding       : 5px;
+    margin        : 5px 0;
+    display       : block;
+    padding-bottom: 5px;
+  }
 
-.comentario #comentario1{
-  padding: 10px;
-  margin: 5px 0;
-  display: block;
-  padding-bottom: 5px;
-}
+  .comentario #comentario1 {
+    padding       : 10px;
+    margin        : 5px 0;
+    display       : block;
+    padding-bottom: 5px;
+  }
 
-.comentario{
-  padding: 5px;
-  margin: 10px;
-}
+  .comentario {
+    padding: 5px;
+    margin : 10px;
+  }
 
-.success {
-  border-color: #008745;
-}
+  .success {
+    border-color: #008745;
+  }
 
-#checking{
-  display: flex;
-  align-items: center;
-}
+  #checking {
+    display    : flex;
+    align-items: center;
+  }
 
-.check{
-  position: relative;
-  width: 10%;
-  height: 10%;
-  padding: 10px 5px 0px 10px;
-}
+  .check {
+    position: relative;
+    width   : 10%;
+    height  : 10%;
+    padding : 10px 5px 0px 10px;
+  }
 
-.error {
-  border-color: red;
-}
+  .error {
+    border-color: red;
+  }
 
-.disable {
-  cursor          : not-allowed;
-  pointer-events  : none;
-  color           : #c0c0c0;
-  background-color: grey;
-}
+  .disable {
+    cursor          : not-allowed;
+    pointer-events  : none;
+    color           : #c0c0c0;
+    background-color: grey;
+  }
 
-.enable {
- cursor: pointer;
-}
+  .enable {
+    cursor: pointer;
+  }
 
-.field{
-  transition: opacity 250ms ease-in-out, width .35s ease-in-out;
-  padding: 10px;
-  border-radius: 4px;
-  width: 70%;
-  font-size: 18px;
-}
+  .field {
+    transition   : opacity 250ms ease-in-out, width .35s ease-in-out;
+    padding      : 10px;
+    border-radius: 4px;
+    width        : 70%;
+    font-size    : 18px;
+  }
 
-.comment{
-  border-radius: 4px;
-  border: 1px solid rgb(10, 10, 10);
-  font-size: large;
-  height   : 150px;
-  padding: 10px;
-}
-
-
-.obligatorio {
-  color    : red;
-  font-size: xx-large;
-}
+  .comment {
+    border-radius: 4px;
+    border       : 1px solid rgb(10, 10, 10);
+    font-size    : large;
+    height       : 150px;
+    padding      : 10px;
+  }
 
 
-.obligatorio .fix {
-  float     : right;
-  margin-top: 20px;
-}
+  .obligatorio {
+    color    : red;
+    font-size: xx-large;
+  }
 
 
-.leyenda{
-  display: flex;
-  justify-content: center;
-  margin-bottom: 5px;
-  margin-top: 5px;
-  padding-left: 15px;
-  color     : red;
-}
+  .obligatorio .fix {
+    float     : right;
+    margin-top: 20px;
+  }
 
-.gl{
-  font-size: 16px;
-  font-family: "Grandstander";
-  text-align: left;
-}
 
-.restan{
-  margin-right: 25px;
-  float: right;
-}
+  .leyenda {
+    display        : flex;
+    justify-content: center;
+    margin-bottom  : 5px;
+    margin-top     : 5px;
+    padding-left   : 15px;
+    color          : red;
+  }
+
+  .gl {
+    font-size  : 16px;
+    font-family: "Grandstander";
+    text-align : left;
+  }
+
+  .restan {
+    margin-right: 25px;
+    float       : right;
+  }
+
   /* more-information */
+
+  .copyright {
+    color     : var(--light-blue);
+    text-align: center;
+  }
+
+  .copyright .mb {
+    width        : 25px;
+    height       : 25px;
+    margin-bottom: -7px;
+  }
+
+  .copyright .jq {
+    width        : 20px;
+    height       : 20px;
+    margin-bottom: -5px;
+  }
+
+  .copyright .pk {
+    width        : 200px;
+    height       : 50px;
+    margin-bottom: -5px;
+  }
+
 }
 
 @media (min-width: 660px) and (max-width: 768px) {
@@ -808,19 +829,19 @@
     width: 100%;
   }
 
-  .field:focus{
-    width: 340px;
+  .field:focus {
+    width       : 340px;
     border-color: #003a87;
-    opacity: 0.7;
-  }
-  
-  .comment:focus{
-    width: 340px;
-    border-color: #003a87;
-    opacity: 0.7;
+    opacity     : 0.7;
   }
 
-  
+  .comment:focus {
+    width       : 340px;
+    border-color: #003a87;
+    opacity     : 0.7;
+  }
+
+
 }
 
 @media (min-width: 600px) and (max-width: 659px) {
@@ -829,16 +850,16 @@
     width: 70%;
   }
 
-  .field:focus{
-    width: 300px;
+  .field:focus {
+    width       : 300px;
     border-color: #003a87;
-    opacity: 0.7;
+    opacity     : 0.7;
   }
-  
-  .comment:focus{
-    width: 300px;
+
+  .comment:focus {
+    width       : 300px;
     border-color: #003a87;
-    opacity: 0.7;
+    opacity     : 0.7;
   }
 }
 
@@ -848,16 +869,16 @@
     width: 50%;
   }
 
-  .field:focus{
-    width: 250px;
+  .field:focus {
+    width       : 250px;
     border-color: #003a87;
-    opacity: 0.7;
+    opacity     : 0.7;
   }
-  
-  .comment:focus{
-    width: 250px;
+
+  .comment:focus {
+    width       : 250px;
     border-color: #003a87;
-    opacity: 0.7;
+    opacity     : 0.7;
   }
 }
 
@@ -867,16 +888,16 @@
     width: 45%;
   }
 
-  .field:focus{
-    width: 210px;
+  .field:focus {
+    width       : 210px;
     border-color: #003a87;
-    opacity: 0.7;
+    opacity     : 0.7;
   }
-  
-  .comment:focus{
-    width: 210px;
+
+  .comment:focus {
+    width       : 210px;
     border-color: #003a87;
-    opacity: 0.7;
+    opacity     : 0.7;
   }
 
   @media (min-width: 481px) and (max-width: 532px) {

@@ -105,6 +105,10 @@
   text-transform: capitalize;
 }
 
+.tfNocap{
+  font-family   : 'Proxima Nova', '-apple-system', 'Helvetica Neue', Helvetica, 'Roboto', Arial, sans-serif;
+}
+
 .np {
   font-size  : 14px;
   font-weight: bolder;

@@ -175,7 +175,7 @@ function mailto2() {
     var email2 = document.getElementById("email2").value;
     document.location.href = "mailto:"+`${email2}`+"?subject="
         + encodeURIComponent("Conoce mas Sobre Esta App")
-        + "&body=" + encodeURIComponent(document.getElementById("comentario").value) + "%0AHola%0A%0AEste%20mail%20te%20lo%20mande%20con%20un%20mailto,%20el%20pokemon%20que%20elegi%20tiene%20Nº%20de%20POKEDEX:%20" + idPokemon + 
+        + "&body=" + encodeURIComponent(document.getElementById("comentario").value) + "%0AHola%0A%0AEste%20mail%20te%20lo%20mande%20con%20un%20mailto,%20el%20pokemon%20que%20elegi%20tiene%20Nº%20de%20POKEDEX:%20" + idPokemon +
         "%0A%0ASu%20nombre%20es:%20" + namePokemon + "%0A%0ASu%20Peso%20y%20altura%20son:%20" + kg + "%20Kg%20y%20" + metro + "%20M" + "%0A%0ASu%20Tipo%20es:%20" + type0 + "%20y%20" + type1 +
         "%0A%0ASu%20puntaje%20de%20hp%20es:%20" + hp + "%0ASu%20puntaje%20de%20defensa%20es:%20" + def + "%0ASu%20puntaje%20de%20atkv%20es:%20" + atkv + "%0ASu%20puntaje%20de%20atkv%20es:%20" + spatk +
         "%0ASu%20puntaje%20de%20spdef%20es:%20" + spdef + "%0ASu%20puntaje%20de%20spdef%20es:%20" + spd + "%0A%0ASu%20habilidad%20desbloqueada%20es:%20" + habilidadUnlock +

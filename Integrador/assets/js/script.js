@@ -74,5 +74,5 @@ function printHistory() {
 }
 
 function redirecToShare() {
-  window.location.href = '../pages/share/share.html';
+  window.location.href = '../../pages/share/share.html';
 }

@@ -199,6 +199,7 @@
     margin        : 10px;
     display       : inline-flex;
     flex-direction: column;
+    cursor: pointer;
   }
 
   .box {
@@ -438,11 +439,6 @@
     background: #00381d;
   }
 
-  .copyright {
-    color      : var(--light-blue);
-    font-weight: bold;
-  }
-
   .arrows {
     color      : var(--light-blue) !important;
     font-weight: bold;
@@ -659,7 +655,7 @@
     display: inline-block !important;
     padding-left: 5px;
     padding-top: 2px;
-    color: hsl(234, 38%, 47%); 
+    color: hsl(234, 38%, 47%);
   }
 
   .email input[type="text"]::-moz-placeholder{
@@ -670,7 +666,7 @@
     display: inline-block !important;
     padding-left: 5px;
     padding-top: 2px;
-    color: hsl(234, 38%, 47%); 
+    color: hsl(234, 38%, 47%);
   }
 
   .email textarea[type="text"]::-ms-placeholder{
@@ -681,7 +677,7 @@
     display: inline-block !important;
     padding-left: 5px;
     padding-top: 2px;
-    color: hsl(234, 38%, 47%); 
+    color: hsl(234, 38%, 47%);
   }
 
   .comentario textarea[type="text"]::-webkit-input-placeholder{
@@ -692,7 +688,7 @@
     display: inline-block !important;
     padding-left: 5px;
     padding-top: 2px;
-    color: hsl(234, 38%, 47%); 
+    color: hsl(234, 38%, 47%);
   }
 
   .comentario textarea[type="text"]::-moz-placeholder{
@@ -703,7 +699,7 @@
     display: inline-block !important;
     padding-left: 5px;
     padding-top: 2px;
-    color: hsl(234, 38%, 47%); 
+    color: hsl(234, 38%, 47%);
   }
 
   .comentario input[type="text"]::-ms-placeholder{
@@ -714,7 +710,7 @@
     display: inline-block !important;
     padding-left: 5px;
     padding-top: 2px;
-    color: hsl(234, 38%, 47%); 
+    color: hsl(234, 38%, 47%);
   }
 
   .email {
@@ -822,6 +818,31 @@
   }
 
   /* more-information */
+
+
+  .copyright {
+    color      : var(--light-blue);
+    text-align: center;
+  }
+
+  .copyright .mb{
+    width: 25px;
+    height: 25px;
+    margin-bottom: -7px;
+  }
+
+  .copyright .jq{
+    width: 20px;
+    height: 20px;
+    margin-bottom: -5px;
+  }
+
+  .copyright .pk{
+    width: 200px;
+    height: 50px;
+    margin-bottom: -5px;
+  }
+  
 }
 
 @media (min-width: 440px) and (max-width: 460px) {

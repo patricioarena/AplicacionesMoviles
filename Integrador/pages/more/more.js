@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    // if (window.location.pathname == '/pages/more.html' || window.location.pathname == '/pages/share/share.html') {
+    // if (window.location.pathname == '/pages/more/more.html' || window.location.pathname == '/pages/share/share.html') {
     //     setTimeout(() => {
     //         tomarImagenPorSeccion();
     //     }, 300);
