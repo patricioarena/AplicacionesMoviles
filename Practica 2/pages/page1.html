@@ -7,501 +7,510 @@
     <meta name="description" content="">
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/bag.css">
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/script.js"></script>
     <title>Tienda</title>
 </head>
 
 <body>
     <div class="wrapper">
         <div class="container">
+            <div class="logo">
+                <a href="../index.html"><img src="../assets/img/logo1.png" alt="logo"></a>
+            </div>
             <header>
-                <div class="logo">
-                    <img src="../assets/img/logo1.png" alt="logo">
-                </div>
                 <div class="title">
-                    <a href="index.html">Tienda Online para tus Mascotas</a>
+                    <a href="../index.html">Tienda Online para tus Mascotas</a>
                 </div>
             </header>
             <nav>
                 <div class="lateral-menu">
-                    <a href="../index.html">TODOS NUESTROS PRODUCTOS</a>
-                    <a href="page1.html">PERROS</a>
-                    <a href="page2.html">GATOS</a>
-                    <a href="page3.html">REPTILES</a>
-                    <a href="page4.html">AVES</a>
-                    <a href="page5.html">ROEDORES</a>
-                    <a href="page6.html">PECES</a>
+                    <a href="../index.html" class="button">HOME</a>
+                    <a href="page1.html" class="button here">PERROS</a>
+                    <a href="page2.html" class="button">GATOS</a>
+                    <a href="page3.html" class="button">REPTILES</a>
+                    <a href="page4.html" class="button">AVES</a>
+                    <a href="page5.html" class="button">ROEDORES</a>
+                    <a href="page6.html" class="button">PECES</a>
+                    <a href="../pages/page8/page8.html" class="button">LIBROS</a>
+                    <a href="page7/page7.html" class="button">ENCUESTA</a>
+                    <a class="button carrito" id="bag"><i class="fa fa-shopping-bag"></i>carrito<sup id="bagCounter"
+                        class="bag">0</sup></a>
                 </div>
             </nav>
-            <section class="main">
+            <section class="main" id="main">
                 <!-- <div class="cuadricula"> -->
-                <div class="item">
+                <div class="item" isSelected="false" id="producto32">
                     <div class="box"><img src="../assets/img/vital-can-balanced-adulto-large-x-20-kg.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>2.999,00</span>
+                        <span>2.999</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Vital Can Balanced Adulto Raza Grande x 20 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto33">
                     <div class="box"><img src="../assets/img/vital-can-balanced-control-de-peso.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>2.999,00</span>
+                        <span>2.999</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Vital Can Balanced Control de Peso x 20 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto34">
                     <div class="box"><img src="../assets/img/royal-canin-mini-junior-x-3-kg.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>1.470,00</span>
+                        <span>1.470</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Royal Canin Mini Puppy x 3 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto35">
                     <div class="box"><img src="../assets/img/royal-canin-mini-adulto-x-3-kg.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>1.350,00</span>
+                        <span>1.350</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Royal Canin Mini Adulto x 3 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto36">
                     <div class="box"><img src="../assets/img/pro-plan-puppy-raza-mediana-x-15-kg.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>3.610,00</span>
+                        <span>3.610</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Pro Plan Puppy Raza Mediana x 15 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto37">
                     <div class="box"><img src="../assets/img/pro-plan-adulto-raza-grande-x-15-kg.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>3.340,00</span>
+                        <span>3.340</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Pro Plan Adulto Raza Grande x 15 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto38">
                     <div class="box"><img src="../assets/img/eukanuba-adulto-large-breed.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>3.590,00</span>
+                        <span>3.590</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Eukanuba Adulto Raza Grande x 15 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto39">
                     <div class="box"><img src="../assets/img/eukanuba-puppy-large-breed.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>3.880,00</span>
+                        <span>3.880</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Eukanuba Puppy Raza Grande x 15 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto40">
                     <div class="box"><img src="../assets/img/cucha-termica.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>4.283,37</span>
+                        <span>4.283</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Cucha Térmica Petmode XS hasta 10 KG 59x46x45 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto41">
                     <div class="box"><img src="../assets/img/cucha-eggys.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>4.941,00</span>
+                        <span>4.941</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Cucha Térmica Eggys Petmode hasta 10 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto42">
                     <div class="box"><img src="../assets/img/colchon-rectangular.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>2.700,00</span>
+                        <span>2.700</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Colchón Arquipets Rectangulas S 70x50 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto43">
                     <div class="box"><img src="../assets/img/moises-dormilon.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>2.805,00</span>
+                        <span>2.805</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Moises Dormilón 42x42 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto44">
                     <div class="box"><img src="../assets/img/moises-summer.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>2.902,50</span>
+                        <span>2.902</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Moises Summer 60x40 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto45">
                     <div class="box"><img src="../assets/img/colchoneta-zig-zag.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>629,10</span>
+                        <span>629</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Colchoneta Zig Zag 60x45 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto46">
                     <div class="box"><img src="../assets/img/dog-soccer-ball-nerf-m.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>563,69</span>
+                        <span>563</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Dog Soccer Ball Nerf M 8 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto47">
                     <div class="box"><img src="../assets/img/hueso-macizo-verde.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>91,80</span>
+                        <span>91</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Hueso Macizo S 10 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto48">
                     <div class="box"><img src="../assets/img/nerf-feeder-dog-trax-m.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>215,10</span>
+                        <span>215</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Nerf Feeder Dog Trax 9 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto49">
                     <div class="box"><img src="../assets/img/pelota-de-baseball.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>53,46</span>
+                        <span>53</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Pelota de Baseball 6 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto50">
                     <div class="box"><img src="../assets/img/pink-dog-dogit.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>486,75</span>
+                        <span>486</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Pink Dog Dogit Cachorros</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto51">
                     <div class="box"><img src="../assets/img/chupete-para-perros.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>98,69</span>
+                        <span>98</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Chupete Modillo Cachorros</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto52">
                     <div class="box"><img src="../assets/img/transportadora-pet-cargo-xl.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>22.292,10</span>
+                        <span>22.292</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Transportadora Pet Cargo XL 104x75x77 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto53">
                     <div class="box"><img src="../assets/img/transportadora-vari-kennel-s.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>9.643,50</span>
+                        <span>9.643</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Transportadora Vari Kennel S 71x52x54 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto54">
                     <div class="box"><img src="../assets/img/transportadora-voyageur-m.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>3.209.40</span>
+                        <span>3.209</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Transportadora Voyageur M 56x37x31 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto55">
                     <div class="box"><img src="../assets/img/bano-seco-de-espuma-pauldip.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>464,21</span>
+                        <span>464</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Baño Seco de Espuma Pauldip</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto56">
                     <div class="box"><img src="../assets/img/frontline-spray-100-ml.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>1.370,00</span>
+                        <span>1.370</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Frontline Spray x 100 ML</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto57">
                     <div class="box"><img src="../assets/img/frontline-spray-250-ml.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>2.099.00</span>
+                        <span>2.099</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Frontline Spray x 250 ML</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto58">
                     <div class="box"><img src="../assets/img/shampoo-para-cachorros-osspret.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>200,00</span>
+                        <span>200</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Shampoo para Cachorros Osspret</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto59">
                     <div class="box"><img src="../assets/img/comedero-plastico-tradicional-l-23-cm.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>107,10</span>
+                        <span>107</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Comedero Plástico Trdicional L 23 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto60">
                     <div class="box"><img src="../assets/img/comedero-automatico-break.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>1.476,00</span>
+                        <span>1.476</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Comedero Automático Break x 3,5 LTS</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto61">
                     <div class="box"><img src="../assets/img/comedero-pink-bones-xs.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>809,33</span>
+                        <span>809</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Comedero Bebedero 2 en 1 Pink Bones XS</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto62">
                     <div class="box"><img src="../assets/img/comedero-y-bebedero-2-en-1-dogit.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>2.789,10</span>
+                        <span>2.789</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Comedero Bebedero 2 en 1 Dogit</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto63">
                     <div class="box"><img src="../assets/img/correa-dogit-l-19x180cm.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>419,99</span>
+                        <span>419</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Correa Dogit L 1,9x180 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto64">
                     <div class="box"><img src="../assets/img/collar-dogit-l-40-a-55-cm.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>266,99</span>
+                        <span>266</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Collar Dogit L 40 a 55 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto65">
                     <div class="box"><img src="../assets/img/pretal-dogit-bones-m-52-a-70-cm.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>415,17</span>
+                        <span>415</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Pretal Dogil Bones M 52 a 70 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto66">
                     <div class="box"><img src="../assets/img/collar-de-nylon-m-25-a-35-cm.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>76,05</span>
+                        <span>76</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Collar de Nylon M 25 a 35 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto67">
                     <div class="box"><img src="../assets/img/cepillo-doble-neumatico-m-20-cm.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>400,01</span>
+                        <span>400</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Cepillo Doble M 20 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto68">
                     <div class="box"><img src="../assets/img/cardina-con-mango-de-madera-m.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>370,00</span>
+                        <span>370</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Cardina con Mango de Madera M 12c8 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto69">
                     <div class="box"><img src="../assets/img/peine-saca-nudos.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>350,52</span>
+                        <span>350</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Peine Saca Nudos</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto70">
                     <div class="box"><img src="../assets/img/guante-de-aseo.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>378,95</span>
+                        <span>378</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Guante de Aseo</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto71">
                     <div class="box"><img src="../assets/img/cortaunas-tijera.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>341,06</span>
+                        <span>341</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Cortauñas Tijera</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto72">
                     <div class="box"><img src="../assets/img/indoor-carpet-panopet-mini-35-x-50-cm.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>1.889,10</span>
+                        <span>1.889</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Indoor Carper PañoPet Mini 35x50 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto73">
                     <div class="box"><img src="../assets/img/indoor-carpet-panopet-max-55-x-70-cm.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>2.879,10</span>
+                        <span>2.879</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Indoor Carper PañoPet Max 55x70 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto74">
                     <div class="box"><img src="../assets/img/outdoor-carpet-panopet-max-55-x-70-cm.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>3.199,00</span>
+                        <span>3.199</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
@@ -509,11 +518,72 @@
                     </div>
                 </div>
                 <!-- </div> -->
+
+                <div id="Sidebar-bag" class="sidebar">
+                    <a class="closebtn">×</a>
+                    <table id="tabla">
+                    </table>
+                    <div id="price" class="price">
+                        <p>Total&nbsp;
+                        <span>$</span><span id="total">0</span></p>
+                        <button class="btnPrice" id="confirVenta">Confirmar</button>
+                    </div>
+                </div>
+
             </section>
         </div>
     </div>
     <footer>
-        <div class="footer">
+        <div class="container-footer-all">
+            <div class="container-body-footer">
+                <div class="column1">
+                    <h1>Mas información del Proyecto</h1>
+                    <p>Este Proyecto fue desarrollado para la materia Aplicaciones Moviles
+                        de la Universidad Nacional Arturo Jauretche.
+                    </p>
+                    <img src="/assets/img/perrito-information.png" alt="">
+                    <label>Desarrollado por:
+                        <br>
+                        Palmieri Ayelen
+                        <br>
+                        Arena Patricio</label>
+                </div>
+                <div class="column2">
+                    <h1>Redes Sociales</h1>
+                    <div class="row manito">
+                        <img src="/assets/img/facebook.png" alt="">
+                        <label>Seguinos en Facebook</label>
+                    </div>
+                    <div class="row manito">
+                        <img src="/assets/img/twitter.png" alt="">
+                        <label>Seguinos en Twitter</label>
+                    </div>
+                    <div class="row manito">
+                        <img src="/assets/img/instagram.png" alt="">
+                        <label>Seguinos en Instagram</label>
+                    </div>
+                </div>
+                <div class="column3">
+                    <h1>información Contacto</h1>
+                    <div class="row2">
+                        <img src="/assets/img/house.png" alt="">
+                        <label>Fcio Varela,
+                            Buenos Aires,
+                            Argentina.
+                        </label>
+                    </div>
+                    <div class="row2">
+                        <img src="/assets/img/smartphone.png" alt="">
+                        <label>+054********</label>
+                    </div>
+                    <div class="row2 manito" id="mailto">
+                        <img src="/assets/img/contact.png" alt="">
+                        <label>mypetshop2020@gmail.com</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="footer">
             <div class="links">
                 <a href="#">Facebook</a>
                 <a href="#">Instagram</a>
@@ -526,6 +596,14 @@
             <h3>Alumnos</h3>
             <p>Ayelen Palmieri</p>
             <p>Patricio Arena</p>
+        </div> -->
+        </div>
+        <div class="container-footer">
+            <div class="footer">
+                <div class="copyright">
+                    © 2020 Todos los Derechos Reservados | Aplicaciones Moviles
+                </div>
+            </div>
         </div>
     </footer>
 </body>

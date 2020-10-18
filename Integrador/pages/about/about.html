@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pokepedia</title>
+    <meta name="description" content="">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@300&display=swap" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+
+    <!-- Para estilos y cosas muy generales -->
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+
+    <!-- Hasta 480px – para móviles en orientación vertical -->
+    <link rel="stylesheet" media="(min-width: 280px) and (max-width: 480px)" href="../../assets/css/280480.css">
+
+    <!-- Hasta 768px – para móviles en orientación horizontal -->
+    <link rel="stylesheet" media="(min-width: 481px) and (max-width: 768px)" href="../../assets/css/480768.css">
+
+    <!-- Hasta 1024px – para tablets en orientación horizontal -->
+    <link rel="stylesheet" media="(min-width: 769px) and (max-width: 1024px)" href="../../assets/css/7681024.css">
+
+    <!-- Hasta 1025px hasta 1199px para union entre 1024 y 1200px -->
+    <link rel="stylesheet" media="(min-width: 1025px) and (max-width: 1199px)" href="../../assets/css/10241200.css">
+
+    <!-- Desde 1200px para escritorios muy anchos -->
+    <link rel="stylesheet" media="(min-width: 1200px)" href="../../assets/css/1200.css">
+
+    <script src="../../assets/js/jquery.js"></script>
+    <script src="../../assets/js/script.js"></script>
+    <script src="../../assets/js/client.js"></script>
+    <script src="../../assets/js/youtube.js"></script>
+
+    <script src="about.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+    <title>Pokepedia</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="logo">
+                <a href="../../index.html"><img src="../../assets/img/logo-pokepedia.png" alt="logo"></a>
+            </div>
+            <header>
+                <div class="header">
+                    <div class="btn-Menu">
+                        <div id="backPage">
+                            <button><i class="fa fa-arrow-left"></i></button>
+                        </div>
+                    </div>
+                    <div class="contaner-header" id="ch1">
+                        <div class="title " id="title1">
+                            <a href="../../index.html">Pokepedia</a>
+                        </div>
+                        <div class="search hidden" id="search1">
+                            <input id="inputSearch" type="text" placeholder="Buscar..."><i class="fa fa-search" id="search-Btn"></i>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <nav>
+                <div class="nav" id="menuNav">
+                    <div class="menu" id="menuBox" collapsed="true">
+                        <a href="../../index.html" class="btn orange">HOME</a>
+                        <!-- <a href="../more/more.html" class="btn orange">TEST</a> -->
+                        <a href="../about/about.html" class="btn orange">ABOUT</a>
+                    </div>
+                </div>
+            </nav>
+
+            <section class="main" id="mainMap">
+                <select name="select-location" id="select-location">
+                    <option value="-1">Seleccione una Ubicacion...</option>
+                    <option value="myPosition">Mi ubicacion</option>
+                    <option value="markerPosition">La Oficina del Equipo de Desarrollo</option>
+                </select>
+                <div class="divMapa" id="map" >
+
+                </div>
+            </section>
+        </div>
+    </div>
+    <footer>
+        <div class="footer">
+            <div class="container-footer-all">
+                <div class="container-body-footer">
+                    <div class="column">
+                        <img src="../../assets/img/flecha-qr2.png" id="flecha-qr" alt="">
+                        <img src="../../assets/img/qr-encontranos.png" alt="">
+                        <h1>Nuestra Oficina</h1>
+                    </div>
+                    <div class="column1">
+                        <h1>Más información del Proyecto</h1>
+                        <p>Este Proyecto fue desarrollado para
+                            la materia Aplicaciones Moviles
+                            de la Universidad Nacional Arturo Jauretche.
+                        </p>
+                        <img src="../../assets/img/pikapika.png" alt="">
+                        <label>Desarrollado por:
+                            <br>
+                            Palmieri Ayelen
+                            <br>
+                            Arena Patricio</label>
+                    </div>
+                    <div class="column2">
+                        <h1>Redes Sociales</h1>
+                        <div class="row manito">
+                            <img src="../../assets/img/facebook.png" alt="">
+                            <label>Seguinos en Facebook</label>
+                        </div>
+                        <div class="row manito">
+                            <img src="../../assets/img/twitter.png" alt="">
+                            <label>Seguinos en Twitter</label>
+                        </div>
+                        <div class="row manito">
+                            <img src="../../assets/img/instagram.png" alt="">
+                            <label>Seguinos en Instagram</label>
+                        </div>
+                    </div>
+                    <div class="column3">
+                        <h1>Información Contacto</h1>
+                        <div class="row2">
+                            <img src="../../assets/img/house.png" alt="">
+                            <label>La Plata,
+                                Buenos Aires,
+                                Argentina.
+                            </label>
+                        </div>
+                        <div class="row2">
+                            <img src="../../assets/img/smartphone.png" alt="">
+                            <label>+054********</label>
+                        </div>
+                        <div class="row2 manito" id="mailto">
+                            <img src="../../assets/img/contact.png" alt="">
+                            <label>pokepedia@gmail.com</label>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="container-footer">
+            <div class="subfooter">
+                <div class="copyright tfNocap">
+                    <span>© 2020 Todos los Derechos Reservados | Aplicaciones Moviles</span>
+                    <br>
+                    <span>
+                        &nbsp;<i class="fa fa-font-awesome"></i>&nbsp;FontAwesome&nbsp;&nbsp;<i class="fa fa-github"></i>&nbsp;Github&nbsp;&nbsp;<i class="fa fa-html5"></i>&nbsp; HTML5&nbsp;
+                        &nbsp;<i class="fa fa-css3"></i>&nbsp;CSS&nbsp;3&nbsp;&nbsp;<img class="jq" src="../../assets/img/js.png">&nbsp;JavaScript&nbsp;&nbsp;<i class="fa fa-leaf"></i>&nbsp;Leafletjs&nbsp;&nbsp;<i class="fa fa-youtube"></i>&nbsp;Youtube Api&nbsp;
+                        &nbsp;<img class="mb" src="../../assets/img/mapbox_icon_138401.png">&nbsp;Mapbox&nbsp;&nbsp;<img class="jq" src="../../assets/img/jq.png">&nbsp;JQuery&nbsp;
+                        <br>&nbsp;<img class="pk" src="../../assets/img/pokeapi_256.png">&nbsp;
+                    </span>
+                </div>
+            </div>
+        </div>
+        </div>
+    </footer>
+</body>
+
+</html>

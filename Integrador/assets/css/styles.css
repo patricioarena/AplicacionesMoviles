@@ -1,0 +1,146 @@
+* {
+  margin    : 0;
+  padding   : 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --blur            : 10px;
+  --primary         : #0076c6;
+  --secondary       : #333333;
+  --error           : #ce0606;
+  --success         : #009070;
+  --light-blue      : #e3f2fd;
+  --white           : #fff;
+  --black           : #000;
+  --font-color-black: #212121;
+  --font-menu-search: #7B7B7B;
+  --orange          : #d07c1c;
+  --orange-hover    : #e74c3c;
+  --color-nav       : #008745;
+  --color-header    : #2196f3;
+  --color-box-header: #d6d6d6;
+  --width-480       : 480px;
+  --width-768       : 768px;
+}
+
+.undefined {
+  display: none;
+}
+
+.normal {
+  background: #a4acaf;
+}
+
+.electric {
+  background: #efd535;
+}
+
+.poison {
+  background: #b97fc9;
+}
+
+.fairy {
+  background: #fdb9e9;
+}
+
+.fighting {
+  background: #d56723;
+}
+
+.psychic {
+  background: #f366b9;
+}
+
+.rock {
+  background: #a38c21;
+}
+
+.steel {
+  background: #9eb7b8;
+}
+
+.ice {
+  background: #51c4e7;
+}
+
+.ghost {
+  background: #7b62a3;
+}
+
+.bug {
+  background: #729f3f;
+}
+
+.water {
+  background: #4592c4;
+}
+
+.grass {
+  background: #9bcc50;
+}
+
+.fire {
+  background: #fd7d24;
+}
+
+.dark {
+  background: #707070;
+}
+
+.flying {
+  background: linear-gradient(to bottom, #3d84ef, #3d84ef 50%, #3d84ef 75%, #333 75%);
+}
+
+.dragon {
+  background: linear-gradient(to bottom, #3d84ef, #3d84ef 50%, #3d84ef 75%, #f16e57 75%);
+}
+
+.ground {
+  background: linear-gradient(to bottom, #f8df40, #f8df40 50%, #f8df40 75%, #ab9842 75%);
+}
+
+.tf {
+  font-family   : 'Proxima Nova', '-apple-system', 'Helvetica Neue', Helvetica, 'Roboto', Arial, sans-serif;
+  text-transform: capitalize;
+}
+
+.tfNocap{
+  font-family   : 'Proxima Nova', '-apple-system', 'Helvetica Neue', Helvetica, 'Roboto', Arial, sans-serif;
+}
+
+.np {
+  font-size  : 14px;
+  font-weight: bolder;
+  color      : var(--font-color-black);
+}
+
+.hb {
+  font-size  : 24px;
+  font-weight: bolder;
+  color      : var(--font-color-black);
+}
+
+.lfrt{
+  margin-left : 5px;
+  margin-right: 5px;
+}
+
+html,
+body {
+  background           : url(../img/2cc4a9e33ba1deeec113ec5bf570e5b3.jpg);
+  height               : 100%;
+  margin               : 0;
+  background-repeat    : no-repeat;
+  background-attachment: fixed;
+  background-position  : center;
+}
+
+/* .leaflet-routing-container{
+  padding-top: 20px !important;
+}
+
+.backButton{
+  font-size: 3.5em;
+}  */
+

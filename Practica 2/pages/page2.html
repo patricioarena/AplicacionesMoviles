@@ -7,260 +7,269 @@
     <meta name="description" content="">
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/bag.css">
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/script.js"></script>
     <title>Tienda</title>
 </head>
 
 <body>
     <div class="wrapper">
         <div class="container">
+            <div class="logo">
+                <a href="../index.html"><img src="../assets/img/logo1.png" alt="logo"></a>
+            </div>
             <header>
-                <div class="logo">
-                    <img src="../assets/img/logo1.png" alt="logo">
-                </div>
                 <div class="title">
-                    <a href="index.html">Tienda Online para tus Mascotas</a>
+                    <a href="../index.html">Tienda Online para tus Mascotas</a>
                 </div>
             </header>
             <nav>
                 <div class="lateral-menu">
-                    <a href="../index.html">TODOS NUESTROS PRODUCTOS</a>
-                    <a href="page1.html">PERROS</a>
-                    <a href="page2.html">GATOS</a>
-                    <a href="page3.html">REPTILES</a>
-                    <a href="page4.html">AVES</a>
-                    <a href="page5.html">ROEDORES</a>
-                    <a href="page6.html">PECES</a>
+                    <a href="../index.html" class="button">HOME</a>
+                    <a href="page1.html" class="button">PERROS</a>
+                    <a href="page2.html" class="button here">GATOS</a>
+                    <a href="page3.html" class="button">REPTILES</a>
+                    <a href="page4.html" class="button">AVES</a>
+                    <a href="page5.html" class="button">ROEDORES</a>
+                    <a href="page6.html" class="button">PECES</a>
+                    <a href="../pages/page8/page8.html" class="button">LIBROS</a>
+                    <a href="page7/page7.html" class="button">ENCUESTA</a>
+                    <a class="button carrito" id="bag"><i class="fa fa-shopping-bag"></i>carrito<sup id="bagCounter"
+                        class="bag">0</sup></a>
                 </div>
             </nav>
-            <section class="main">
+            <section class="main" id="main">
                 <!-- <div class="cuadricula"> -->
-                <div class="item">
+                <div class="item" isSelected="false" id="producto11">
                     <div class="box"><img src="../assets/img/vital-cat-balanced-kitten.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>2.110,00</span>
+                        <span>2.110</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Vital Cat Balanced Kitten x 7,5 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto12">
                     <div class="box"><img src="../assets/img/vital-cat-balanced-gato-adulto.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>2.020,00</span>
+                        <span>2.020</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Vital Cat Balanced Gato Adulto x 7,5 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto13">
                     <div class="box"><img src="../assets/img/royal-canin-babycat-x-2-kg.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>1.180,00</span>
+                        <span>1.180</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Royal Canin Babycat x 1,5 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto14">
                     <div class="box"><img src="../assets/img/royal-canin-fit-x-7-kg.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>3.490,00</span>
+                        <span>3.490</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Royal Canin Fit Gato Adulto x 7,5 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto15">
                     <div class="box"><img src="../assets/img/pro-plan-kitten-x-7-kg.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>2.673,00</span>
+                        <span>2.673</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Pro Plan Kitten x 7,5 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto16">
                     <div class="box"><img src="../assets/img/pro-plan-cat-sterilized-x-3-kg.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>1.619,06</span>
+                        <span>1.619</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Pro Plan Cat Sterilized x 3 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto17">
                     <div class="box"><img src="../assets/img/royal-canin-performance-gatito-x-7-kg.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>2.340,00</span>
+                        <span>2.340</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Royal Canin Performance Gatito x 7,5 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto18">
                     <div class="box"><img src="../assets/img/royal-canin-performance-gato-adulto-x-7-kg.jpg" alt="">
                     </div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>2.310,00</span>
+                        <span>2.310</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Royal Canin Performance Gato Adulto x 7,5 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto19">
                     <div class="box"><img src="../assets/img/funda-repuesto-arquipets-redonda-90-cm.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>1.485,00</span>
+                        <span>1.485</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Cama Arquioets Redonda 90 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto20">
                     <div class="box"><img src="../assets/img/cana-con-plumas.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>135,00</span>
+                        <span>135</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Caña con Tanza y Plumas</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto21">
                     <div class="box"><img src="../assets/img/pelotas-gatos-cascabel.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>98,99</span>
+                        <span>98</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Pelota para Gatos con Cascabel x 4 Unidades</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto22">
                     <div class="box"><img src="../assets/img/raton-a-friccion-cat-love.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>269,33</span>
+                        <span>269</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Ratón a Fricción Cat</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto23">
                     <div class="box"><img src="../assets/img/litera-esquinera-cat-love.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>1.450,00</span>
+                        <span>1.450</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Litera Transportadora Cat</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto24">
                     <div class="box"><img src="../assets/img/litera-con-filtro-stefanplast.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>3.250,00</span>
+                        <span>3.250</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Litera Transportadora Cat con Filtro</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto25">
                     <div class="box"><img src="../assets/img/bandeja-sanitaria.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>320,00</span>
+                        <span>320</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Bandeja Sanitaria 50x40x14 CM</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto26">
                     <div class="box"><img src="../assets/img/pala-sanitaria-catit.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>280,00</span>
+                        <span>280</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Pala Sanitaria Catit</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto27">
                     <div class="box"><img src="../assets/img/neutralizador-de-olores-zootec.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>266,99</span>
+                        <span>266</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Nautralizador de Olores Zootec</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto28">
                     <div class="box"><img src="../assets/img/piedritas-silicas-lazy-cat.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>690,00</span>
+                        <span>690</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Piedritas Silica Lazy Cat 3 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto29">
                     <div class="box"><img src="../assets/img/piedritas-aglomerantes-stone-cat.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>360,00</span>
+                        <span>360</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Piedritas Aglomerantes Stone Cat x 4 KG</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto30">
                     <div class="box"><img src="../assets/img/collar-elastizado-con-cascabel.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>120,69</span>
+                        <span>120</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
                         <h2>Collar Elastizado con Cascabel</h2>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" isSelected="false" id="producto31">
                     <div class="box"><img src="../assets/img/comedero-cara-de-gato.jpg" alt=""></div>
                     <div class="precioProducto">
                         <span>$</span>
-                        <span>53,00</span>
+                        <span>53</span>
                     </div>
                     <div class="envioProducto"><span>Envio Gratis</span> </div>
                     <div class="tituloProducto">
@@ -268,11 +277,70 @@
                     </div>
                 </div>
                 <!-- </div> -->
+                <div id="Sidebar-bag" class="sidebar">
+                    <a class="closebtn">×</a>
+                    <table id="tabla">
+                    </table>
+                    <div id="price" class="price">
+                        <p>Total&nbsp;
+                        <span>$</span><span id="total">0</span></p>
+                        <button class="btnPrice" id="confirVenta">Confirmar</button>
+                    </div>
+                </div>
             </section>
         </div>
     </div>
     <footer>
-        <div class="footer">
+        <div class="container-footer-all">
+            <div class="container-body-footer">
+                <div class="column1">
+                    <h1>Mas información del Proyecto</h1>
+                    <p>Este Proyecto fue desarrollado para la materia Aplicaciones Moviles
+                        de la Universidad Nacional Arturo Jauretche.
+                    </p>
+                    <img src="/assets/img/perrito-information.png" alt="">
+                    <label>Desarrollado por:
+                        <br>
+                        Palmieri Ayelen
+                        <br>
+                        Arena Patricio</label>
+                </div>
+                <div class="column2">
+                    <h1>Redes Sociales</h1>
+                    <div class="row manito">
+                        <img src="/assets/img/facebook.png" alt="">
+                        <label>Seguinos en Facebook</label>
+                    </div>
+                    <div class="row manito">
+                        <img src="/assets/img/twitter.png" alt="">
+                        <label>Seguinos en Twitter</label>
+                    </div>
+                    <div class="row manito">
+                        <img src="/assets/img/instagram.png" alt="">
+                        <label>Seguinos en Instagram</label>
+                    </div>
+                </div>
+                <div class="column3">
+                    <h1>información Contacto</h1>
+                    <div class="row2">
+                        <img src="/assets/img/house.png" alt="">
+                        <label>Fcio Varela,
+                            Buenos Aires,
+                            Argentina.
+                        </label>
+                    </div>
+                    <div class="row2">
+                        <img src="/assets/img/smartphone.png" alt="">
+                        <label>+054********</label>
+                    </div>
+                    <div class="row2 manito" id="mailto">
+                        <img src="/assets/img/contact.png" alt="">
+                        <label>mypetshop2020@gmail.com</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="footer">
             <div class="links">
                 <a href="#">Facebook</a>
                 <a href="#">Instagram</a>
@@ -285,6 +353,14 @@
             <h3>Alumnos</h3>
             <p>Ayelen Palmieri</p>
             <p>Patricio Arena</p>
+        </div> -->
+        </div>
+        <div class="container-footer">
+            <div class="footer">
+                <div class="copyright">
+                    © 2020 Todos los Derechos Reservados | Aplicaciones Moviles
+                </div>
+            </div>
         </div>
     </footer>
 </body>
