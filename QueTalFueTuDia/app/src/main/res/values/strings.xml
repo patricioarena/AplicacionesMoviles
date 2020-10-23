@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">QueTalFueTuDia</string>
+    <string name="app_name">¿Qué tal fue tu día?</string>
+    <string name="que_tal_fue_tu_dia">¿Qué tal fue tu día?</string>
+    <string name="app_msg1">¡Qué buena noticia!</string>
+    <string name="app_msg2">Seguro que mañana sera excelente</string>
+    <string name="app_msg3">¡Vamos! Que no decaiga</string>
+    <string name="app_msg4">¡Arriba ese ánimo!</string>
+    <string name="enviar">Enviar</string>
 </resources>
