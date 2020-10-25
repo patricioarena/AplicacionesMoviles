@@ -12,7 +12,7 @@
         android:layout_height="33dp"
         android:layout_marginTop="60dp"
         android:fontFamily="monospace"
-        android:text="¿Qué tal fue tu día?"
+        android:text="@string/que_tal_fue_tu_dia"
         android:textAllCaps="false"
         android:textColor="#000000"
         android:textIsSelectable="false"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/rg_respuestas"
         android:layout_width="209dp"
         android:layout_height="254dp"
         android:layout_marginStart="85dp"
@@ -36,11 +36,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/radioButton1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5sp"
-            android:text="Excelente"
+            android:text="@string/excelente"
             android:textSize="24sp" />
 
         <RadioButton
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5sp"
-            android:text="Bueno"
+            android:text="@string/bueno"
             android:textSize="24sp" />
 
         <RadioButton
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5sp"
-            android:text="Malo"
+            android:text="@string/malo"
             android:textSize="24sp" />
 
         <RadioButton
@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5sp"
-            android:text="Pésimo"
+            android:text="@string/pesimo"
             android:textSize="24sp" />
     </RadioGroup>
 
@@ -76,7 +76,7 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_enviar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="159dp"
@@ -87,6 +87,6 @@
         android:text="@string/enviar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/rg_respuestas" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

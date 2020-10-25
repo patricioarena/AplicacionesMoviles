@@ -5,5 +5,9 @@
     <string name="app_msg2">Seguro que mañana sera excelente</string>
     <string name="app_msg3">¡Vamos! Que no decaiga</string>
     <string name="app_msg4">¡Arriba ese ánimo!</string>
+    <string name="excelente">Excelente</string>
+    <string name="bueno">Bueno</string>
+    <string name="malo">Malo</string>
+    <string name="pesimo">Pesimo</string>
     <string name="enviar">Enviar</string>
 </resources>
