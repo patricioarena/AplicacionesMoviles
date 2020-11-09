@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1060896181594",
+    "firebase_url": "https://jyc-appa.firebaseio.com",
+    "project_id": "jyc-appa",
+    "storage_bucket": "jyc-appa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060896181594:android:b5b75bb776db3212df7763",
+        "android_client_info": {
+          "package_name": "com.example.jyc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060896181594-p9jh13tu70udharfuneerbi685bdhsqf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jyc",
+            "certificate_hash": "b5195b4b79e45672921ec35cd2420b9a3ee94f37"
+          }
+        },
+        {
+          "client_id": "1060896181594-voqpfcpo3ia3j9em1k2hupmfn219v6b9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdDG1M3poRmxF5uhObY1i3VGBosK1jnT8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1060896181594-voqpfcpo3ia3j9em1k2hupmfn219v6b9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

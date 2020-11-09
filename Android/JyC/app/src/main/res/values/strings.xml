@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">JyC</string>
+    <string name="name">Nombre</string>
+    <string name="lastname">Apellido</string>
+    <string name="email">Correo</string>
+    <string name="password">Contraseña</string>
+    <string name="forgotPassword">¿Se te olvidó tu contraseña?</string>
+    <string name="createAccount">Crear cuenta</string>
+</resources>
