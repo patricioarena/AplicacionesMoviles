@@ -6,4 +6,5 @@
     <string name="password">Contraseña</string>
     <string name="forgotPassword">¿Se te olvidó tu contraseña?</string>
     <string name="createAccount">Crear cuenta</string>
+    <string name="pass_confirm">Confirmar contraseña</string>
 </resources>

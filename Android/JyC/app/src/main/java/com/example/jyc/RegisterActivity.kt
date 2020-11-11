@@ -20,6 +20,7 @@ class RegisterActivity : AppCompatActivity() {
     private  lateinit var txtLastName: EditText
     private  lateinit var txtEmail: EditText
     private  lateinit var txtPassword: EditText
+    private  lateinit var txtPassword2: EditText
     private  lateinit var progressBar: ProgressBar
     private  lateinit var dbReference: DatabaseReference
     private  lateinit var database: FirebaseDatabase
@@ -33,6 +34,7 @@ class RegisterActivity : AppCompatActivity() {
         txtLastName = findViewById(R.id.txtLastName)
         txtEmail = findViewById(R.id.txtEmail)
         txtPassword = findViewById(R.id.txtPassword)
+        txtPassword2 = findViewById(R.id.txtPassword2)
         progressBar = findViewById(R.id.progressBar)
         btn_register = findViewById(R.id.btn_Register)
 
@@ -45,38 +47,38 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-
-
-
-
     private fun createNewAccount(){
         val name:String=txtName.text.toString()
         val lastname:String=txtLastName.text.toString()
         val email:String=txtEmail.text.toString()
         val password:String=txtPassword.text.toString()
+        val password2:String=txtPassword2.text.toString()
+
 
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(lastname) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
 
-            progressBar.visibility = View.VISIBLE
+            if (password.equals(password2)){
+                progressBar.visibility = View.VISIBLE
 
-            auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this){
-                task ->
-                if (task.isComplete){
-                    val user:FirebaseUser?=auth.currentUser
-                    verifyEmail(user)
+                auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this){
+                    task ->
+                    if (task.isSuccessful){
+                        val user:FirebaseUser?=auth.currentUser
+                        verifyEmail(user)
 
-                    val userDB = dbReference.child(user?.uid.toString())
-                    userDB.child("name").setValue(name)
-                    userDB.child("lastname").setValue(lastname)
-                    
-                    progressBar.visibility = View.INVISIBLE
-                    startActivity(Intent(this,LoginActivity::class.java))
+                        val userDB = dbReference.child(user?.uid.toString())
+                        userDB.child("name").setValue(name)
+                        userDB.child("lastname").setValue(lastname)
+
+                        progressBar.visibility = View.INVISIBLE
+                        startActivity(Intent(this,LoginActivity::class.java))
+                    }
                 }
+            }else{
+                Toast.makeText(this,"La contraseña y la confirmacion no coinciden",Toast.LENGTH_LONG).show()
             }
         }
     }
-
-
 
     private fun verifyEmail(user:FirebaseUser?) {
         user?.sendEmailVerification()?.addOnCompleteListener(this){
