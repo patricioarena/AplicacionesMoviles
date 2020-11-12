@@ -5,8 +5,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 import java.lang.Exception
+import java.util.*
+
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -14,6 +17,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_splash)
 
         service = Storage()

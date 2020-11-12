@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
+    private var pressedTime: Long = 0
 
     private lateinit var forgotPassword: TextView
     private lateinit var createAccount: TextView
@@ -85,5 +86,17 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onBackPressed() {
+
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            super.finishAffinity()
+        } else {
+            Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+
+        pressedTime = System.currentTimeMillis();
+    }
+
 }
 
