@@ -10,6 +10,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
+// Actividad encargadar de redireccionar a las actividades,
+// registro , reseteo de contraseña o logear al usuario en la aplicacion
+
 class LoginActivity : AppCompatActivity() {
     private var pressedTime: Long = 0
 
@@ -24,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-         super.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         forgotPassword = findViewById(R.id.forgotPassword)
@@ -70,12 +73,15 @@ class LoginActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    // Metodo para autenticar  en firebase
     fun authSign(user: String?, password: String?) {
         if (user != null && password != null) {
             auth.signInWithEmailAndPassword(user, password).addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     progressBar.visibility = View.INVISIBLE
 
+                    // Si la autenticacion es satisfactoria guardamos las credenciales
+                    // para no tener que autenticar nuevamente en el futuro
                     service.setPreferenceKey(this, "user", user)
                     service.setPreferenceKey(this, "password", password)
 
@@ -87,6 +93,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    // Sobrescribimos el metodo que la salida de la aplicacion sea mas agil
+    // de no ser asi volverimos a la actividad Splash y tendriamos que salir desde ahi
     override fun onBackPressed() {
 
         if (pressedTime + 2000 > System.currentTimeMillis()) {

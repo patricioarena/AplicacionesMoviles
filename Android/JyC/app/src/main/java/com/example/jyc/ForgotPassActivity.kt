@@ -11,6 +11,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 
+//Actividad encargadar de resetear la contraseña del usuario
 class ForgotPassActivity : AppCompatActivity() {
     private  lateinit var txtEmail: EditText
     private  lateinit var btn_sendEmail : Button

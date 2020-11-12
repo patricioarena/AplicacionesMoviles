@@ -60,12 +60,14 @@ class RegisterActivity : AppCompatActivity() {
             if (password.equals(password2)){
                 progressBar.visibility = View.VISIBLE
 
+                // En este bloque se realiza la creacion del usuario en firebase
                 auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this){
                     task ->
                     if (task.isSuccessful){
                         val user:FirebaseUser?=auth.currentUser
                         verifyEmail(user)
 
+                        // una vez registrado correctamente es almacenada la informacion en usuario en firebase realtime
                         val userDB = dbReference.child(user?.uid.toString())
                         userDB.child("name").setValue(name)
                         userDB.child("lastname").setValue(lastname)
@@ -83,7 +85,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun verifyEmail(user:FirebaseUser?) {
         user?.sendEmailVerification()?.addOnCompleteListener(this){
             task ->
-            if(task.isComplete){
+            if(task.isSuccessful){
                 Toast.makeText(this,"Email enviado",Toast.LENGTH_LONG).show()
             }else {
                 Toast.makeText(this,"Error al enviar email",Toast.LENGTH_LONG).show()

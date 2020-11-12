@@ -21,7 +21,6 @@ class Storage {
     }
 
     fun deletePreferenceKey(context: Context, keyPref: String?) {
-
         val preferences = context.getSharedPreferences(preferenceKey, Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor
         editor = preferences.edit()
