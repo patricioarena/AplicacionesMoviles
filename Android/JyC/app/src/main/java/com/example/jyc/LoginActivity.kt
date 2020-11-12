@@ -87,6 +87,7 @@ class LoginActivity : AppCompatActivity() {
 
                     startActivity(Intent(this, MainActivity::class.java))
                 } else {
+                    progressBar.visibility = View.INVISIBLE
                     showAler("Error", "Error en la autenticación")
                 }
             }
