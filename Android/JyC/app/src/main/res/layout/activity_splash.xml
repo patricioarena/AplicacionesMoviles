@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#039BE5"
+    android:background="@color/firebase_azul"
     tools:context=".SplashActivity">
 
     <ImageView
@@ -39,7 +39,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline5"
-        app:srcCompat="@drawable/ic_built_with_firebase_logo_light" />
+        app:srcCompat="@drawable/ic_built_with_firebase_logo_light"
+        tools:ignore="VectorDrawableCompat" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -55,7 +56,8 @@
         app:layout_constraintStart_toEndOf="@+id/imageView4"
         app:layout_constraintTop_toTopOf="@+id/imageView3"
         app:layout_constraintVertical_bias="0.923"
-        app:srcCompat="@drawable/ic_firebase_authentication__1__icon__light_" />
+        app:srcCompat="@drawable/ic_firebase_authentication__1__icon__light_"
+        tools:ignore="VectorDrawableCompat" />
 
     <ImageView
         android:id="@+id/imageView6"
@@ -67,7 +69,8 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="@+id/imageView3"
         app:layout_constraintVertical_bias="0.923"
-        app:srcCompat="@drawable/ic_firebase_realtime_database__1__icon__light_" />
+        app:srcCompat="@drawable/ic_firebase_realtime_database__1__icon__light_"
+        tools:ignore="VectorDrawableCompat" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -79,6 +82,7 @@
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="@+id/imageView3"
         app:layout_constraintVertical_bias="0.923"
-        app:srcCompat="@drawable/ic_google_analytics__1__icon__light_" />
+        app:srcCompat="@drawable/ic_google_analytics__1__icon__light_"
+        tools:ignore="VectorDrawableCompat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
