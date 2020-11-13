@@ -4,58 +4,37 @@ import MyResources.Storage
 import android.content.Intent
 
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity
 
-
-class MainActivity : AppCompatActivity() {
-    private var pressedTime: Long = 0
-    private lateinit var service: Storage
+class FunctionsActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
+    private lateinit var service: Storage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_functions)
 
         service = Storage()
 
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)
-        toolbar.title = "MainActivity";
-        toolbar.subtitle = "Contenido principal del feed";
+        toolbar.title = "FuntionActivity";
+        toolbar.subtitle = "Test functions DEV";
+
         setSupportActionBar(toolbar)
 
     }
 
-
-    // Si la autenticacion es satisfactoria guardamos las credenciales
-    // por lo tanto la implementacion de la funcionalidad de logout
-    // se basa en el paso inverso que es borrar las credenciales y posteriormente cerrar la aplicacion
-    // tambien podriamos reenviar al usuario al login
     private fun logoutUser() {
         service.deletePreferenceKey(this,"user")
         service.deletePreferenceKey(this,"password")
         super.finishAffinity()
-    }
-
-    // Sobrescribimos el metodo que la salida de la aplicacion sea mas agil
-    // de no ser asi volverimos a la actividad Splash y tendriamos que salir desde ahi
-    override fun onBackPressed() {
-
-        if (pressedTime + 2000 > System.currentTimeMillis()) {
-            super.finishAffinity()
-        } else {
-            Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
-        }
-
-        pressedTime = System.currentTimeMillis();
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -91,6 +70,5 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
 
 }
