@@ -34,14 +34,22 @@ class SplashActivity : AppCompatActivity() {
                     auth.signInWithEmailAndPassword(aUser, aPass).addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             routeAfterTime(main,250)
+                        }else{
+                            service.deletePreferenceKey(this,"user")
+                            service.deletePreferenceKey(this,"password")
+                            routeAfterTime(login,500)
                         }
                     }
                 }
             } else {
+                service.deletePreferenceKey(this,"user")
+                service.deletePreferenceKey(this,"password")
                 routeAfterTime(login,500)
             }
         } catch (e: Exception) {
             // Aca deberia dar la opcion de enviar informe de errores
+            service.deletePreferenceKey(this,"user")
+            service.deletePreferenceKey(this,"password")
             routeAfterTime(login,500)
         }
     }
