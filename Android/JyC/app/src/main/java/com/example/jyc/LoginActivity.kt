@@ -85,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
                     service.setPreferenceKey(this, "user", user)
                     service.setPreferenceKey(this, "password", password)
 
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, HomeActivity::class.java))
                 } else {
                     progressBar.visibility = View.INVISIBLE
                     showAler("Error", "Error en la autenticación")

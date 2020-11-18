@@ -1,96 +1,69 @@
 package com.example.jyc
 
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+
 import MyResources.Storage
 import android.content.Intent
+import android.os.Handler
+import android.text.TextUtils
+import com.google.firebase.auth.FirebaseAuth
 
-import android.os.Bundle
-import android.text.method.LinkMovementMethod
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.app.AppCompatActivity
-
-
+// Actividad encargadar de redireccionar a las actividades,
+// login o main dependiento de si hay o no credenciales almacenadas
 class MainActivity : AppCompatActivity() {
-    private var pressedTime: Long = 0
+    private lateinit var auth: FirebaseAuth
     private lateinit var service: Storage
-    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         service = Storage()
+        var main = Intent(this, HomeActivity::class.java)
+        var login = Intent(this, LoginActivity::class.java)
 
-        // Agregar toolbar personalizado a activity main
-        toolbar = findViewById(R.id.myToolbar)
-        toolbar.title = "MainActivity";
-        toolbar.subtitle = "Contenido principal del feed";
-        setSupportActionBar(toolbar)
+        try {
+            var aUser = service.getPreferenceKey(this, "user")
+            var aPass = service.getPreferenceKey(this, "password")
 
-    }
+            if (!TextUtils.isEmpty(aUser) && !TextUtils.isEmpty(aPass)) {
 
-
-    // Si la autenticacion es satisfactoria guardamos las credenciales
-    // por lo tanto la implementacion de la funcionalidad de logout
-    // se basa en el paso inverso que es borrar las credenciales y posteriormente cerrar la aplicacion
-    // tambien podriamos reenviar al usuario al login
-    private fun logoutUser() {
-        service.deletePreferenceKey(this,"user")
-        service.deletePreferenceKey(this,"password")
-        super.finishAffinity()
-    }
-
-    // Sobrescribimos el metodo que la salida de la aplicacion sea mas agil
-    // de no ser asi volverimos a la actividad Splash y tendriamos que salir desde ahi
-    override fun onBackPressed() {
-
-        if (pressedTime + 2000 > System.currentTimeMillis()) {
-            super.finishAffinity()
-        } else {
-            Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+                if (aUser != null && aPass != null) {
+                    auth = FirebaseAuth.getInstance()
+                    auth.signInWithEmailAndPassword(aUser, aPass).addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+//            startActivity(main)
+                            routeAfterTime(main,500)
+                        }else{
+                            service.deletePreferenceKey(this,"user")
+                            service.deletePreferenceKey(this,"password")
+//            startActivity(login)
+                            routeAfterTime(login,500)
+                        }
+                    }
+                }
+            } else {
+                service.deletePreferenceKey(this,"user")
+                service.deletePreferenceKey(this,"password")
+//            startActivity(login)
+                routeAfterTime(login,500)
+            }
+        } catch (e: Exception) {
+            // Aca deberia dar la opcion de enviar informe de errores
+            service.deletePreferenceKey(this,"user")
+            service.deletePreferenceKey(this,"password")
+//            startActivity(login)
+            routeAfterTime(login,500)
         }
-
-        pressedTime = System.currentTimeMillis();
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu to use in the action bar
-        val inflater = menuInflater
-        inflater.inflate(R.menu.menu_toobar, menu)
-        return super.onCreateOptionsMenu(menu)
+    // Ruteo a la actividad indicada despues de un tiempo dado
+    fun routeAfterTime(intent: Intent,time:Int) {
+        Handler().postDelayed({
+            startActivity(intent)
+            finish()
+        }, time.toLong())
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle presses on the action bar menu items
-        when (item.itemId) {
-            R.id.menu_settings -> {
-                Toast.makeText(this, "Mover a activity Settings", Toast.LENGTH_SHORT).show();
-                return true
-            }
-            R.id.nav_home -> {
-                startActivity(Intent(this, MainActivity::class.java))
-                return true
-            }
-            R.id.nav_gallery -> {
-                Toast.makeText(this, "Mover a activity Gallery", Toast.LENGTH_SHORT).show();
-                return true
-            }
-            R.id.nav_testActivity -> {
-                startActivity(Intent(this, FunctionsActivity::class.java))
-                return true
-            }
-            R.id.nav_logout -> {
-                logoutUser()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
 
 }

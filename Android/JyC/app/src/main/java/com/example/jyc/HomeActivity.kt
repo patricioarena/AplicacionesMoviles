@@ -10,29 +10,48 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity
 
-class FunctionsActivity : AppCompatActivity() {
-    private lateinit var toolbar: Toolbar
+
+class HomeActivity : AppCompatActivity() {
+    private var pressedTime: Long = 0
     private lateinit var service: Storage
+    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_functions)
+        setContentView(R.layout.activity_home)
 
         service = Storage()
 
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)
-        toolbar.title = "FuntionActivity";
-        toolbar.subtitle = "Test functions DEV";
-
+        toolbar.title = "HomeActivity";
+        toolbar.subtitle = "Contenido principal del feed";
         setSupportActionBar(toolbar)
 
     }
 
+
+    // Si la autenticacion es satisfactoria guardamos las credenciales
+    // por lo tanto la implementacion de la funcionalidad de logout
+    // se basa en el paso inverso que es borrar las credenciales y posteriormente cerrar la aplicacion
+    // tambien podriamos reenviar al usuario al login
     private fun logoutUser() {
         service.deletePreferenceKey(this,"user")
         service.deletePreferenceKey(this,"password")
         super.finishAffinity()
+    }
+
+    // Sobrescribimos el metodo que la salida de la aplicacion sea mas agil
+    // de no ser asi volverimos a la actividad Splash y tendriamos que salir desde ahi
+    override fun onBackPressed() {
+
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            super.finishAffinity()
+        } else {
+            Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+
+        pressedTime = System.currentTimeMillis();
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -68,5 +87,6 @@ class FunctionsActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
 
 }
