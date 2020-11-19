@@ -31,13 +31,12 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
-    // Si la autenticacion es satisfactoria guardamos las credenciales
+    // Si la autenticacion es satisfactoria guardamos el token
     // por lo tanto la implementacion de la funcionalidad de logout
-    // se basa en el paso inverso que es borrar las credenciales y posteriormente cerrar la aplicacion
+    // se basa en el paso inverso que es borrar el token y posteriormente cerrar la aplicacion
     // tambien podriamos reenviar al usuario al login
     private fun logoutUser() {
-        service.deletePreferenceKey(this,"user")
-        service.deletePreferenceKey(this,"password")
+        service.deletePreferenceKey(this, "token")
         super.finishAffinity()
     }
 

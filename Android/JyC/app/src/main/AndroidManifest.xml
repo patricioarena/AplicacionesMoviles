@@ -19,7 +19,7 @@
         <activity android:name=".ForgotPassActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".FunctionsActivity"/>
+        <activity android:name=".FunctionsActivity" />
         <activity android:name=".RegisterActivity" />
     </application>
 

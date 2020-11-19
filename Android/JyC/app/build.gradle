@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.example.jyc"
         minSdkVersion 16
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -40,6 +40,10 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc03"
+
+    implementation 'com.auth0.android:jwtdecode:2.0.0'
+
     implementation 'com.google.android.material:material:1.3.0-alpha03'
 
     implementation 'com.google.android.material:material:1.2.1'

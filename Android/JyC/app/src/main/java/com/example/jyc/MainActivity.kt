@@ -1,13 +1,14 @@
 package com.example.jyc
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-
 import MyResources.Storage
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
+import androidx.appcompat.app.AppCompatActivity
+import com.auth0.android.jwt.JWT
 import com.google.firebase.auth.FirebaseAuth
+import java.util.*
 
 // Actividad encargadar de redireccionar a las actividades,
 // login o main dependiento de si hay o no credenciales almacenadas
@@ -24,42 +25,32 @@ class MainActivity : AppCompatActivity() {
         var login = Intent(this, LoginActivity::class.java)
 
         try {
-            var aUser = service.getPreferenceKey(this, "user")
-            var aPass = service.getPreferenceKey(this, "password")
+            var aToken = service.getPreferenceKey(this, "token")
 
-            if (!TextUtils.isEmpty(aUser) && !TextUtils.isEmpty(aPass)) {
-
-                if (aUser != null && aPass != null) {
-                    auth = FirebaseAuth.getInstance()
-                    auth.signInWithEmailAndPassword(aUser, aPass).addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-//            startActivity(main)
-                            routeAfterTime(main,500)
-                        }else{
-                            service.deletePreferenceKey(this,"user")
-                            service.deletePreferenceKey(this,"password")
-//            startActivity(login)
-                            routeAfterTime(login,500)
-                        }
+            if (!TextUtils.isEmpty(aToken)) {
+                if (aToken != null){
+                    val jwt = JWT(aToken)
+                    if (!jwt.isExpired(10)){
+                       routeAfterTime(main,500)
+                    }else{
+                       routeAfterTime(login,500)
                     }
                 }
+
             } else {
-                service.deletePreferenceKey(this,"user")
-                service.deletePreferenceKey(this,"password")
-//            startActivity(login)
-                routeAfterTime(login,500)
+                service.deletePreferenceKey(this, "token")
+
+                routeAfterTime(login, 500)
             }
         } catch (e: Exception) {
             // Aca deberia dar la opcion de enviar informe de errores
-            service.deletePreferenceKey(this,"user")
-            service.deletePreferenceKey(this,"password")
-//            startActivity(login)
-            routeAfterTime(login,500)
+            service.deletePreferenceKey(this, "token")
+            routeAfterTime(login, 500)
         }
     }
 
     // Ruteo a la actividad indicada despues de un tiempo dado
-    fun routeAfterTime(intent: Intent,time:Int) {
+    fun routeAfterTime(intent: Intent, time: Int) {
         Handler().postDelayed({
             startActivity(intent)
             finish()

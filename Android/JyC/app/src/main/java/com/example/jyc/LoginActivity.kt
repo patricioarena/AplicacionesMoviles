@@ -4,6 +4,7 @@ import MyResources.Storage
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -80,10 +81,18 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     progressBar.visibility = View.INVISIBLE
 
-                    // Si la autenticacion es satisfactoria guardamos las credenciales
-                    // para no tener que autenticar nuevamente en el futuro
-                    service.setPreferenceKey(this, "user", user)
-                    service.setPreferenceKey(this, "password", password)
+
+                    // Si la autenticacion es satisfactoria obtenemos el token
+                    val mUser = FirebaseAuth.getInstance().currentUser
+                    mUser!!.getIdToken(true)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                val idToken = task.result!!.token
+
+                                // Guardamos el token  para inicio de sesion posterior sin tener que ingresar usuario y contraseña
+                                service.setPreferenceKey(this, "token", idToken)
+                            }
+                        }
 
                     startActivity(Intent(this, HomeActivity::class.java))
                 } else {
