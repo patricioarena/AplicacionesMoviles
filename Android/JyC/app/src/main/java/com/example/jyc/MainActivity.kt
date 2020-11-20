@@ -1,6 +1,6 @@
 package com.example.jyc
 
-import MyResources.Storage
+import MyResources.Facade
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -8,19 +8,18 @@ import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.auth0.android.jwt.JWT
 import com.google.firebase.auth.FirebaseAuth
-import java.util.*
 
 // Actividad encargadar de redireccionar a las actividades,
 // login o main dependiento de si hay o no credenciales almacenadas
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
-    private lateinit var service: Storage
+    private lateinit var service: Facade
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        service = Storage()
+        service = Facade()
         var main = Intent(this, HomeActivity::class.java)
         var login = Intent(this, LoginActivity::class.java)
 

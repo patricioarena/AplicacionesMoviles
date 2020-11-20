@@ -1,10 +1,9 @@
 package com.example.jyc
 
-import MyResources.Storage
+import MyResources.Facade
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -24,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var auth: FirebaseAuth
     private lateinit var btn_Login: Button
-    private lateinit var service: Storage
+    private lateinit var service: Facade
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -39,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
         btn_Login = findViewById(R.id.btn_Login)
 
         auth = FirebaseAuth.getInstance()
-        service = Storage()
+        service = Facade()
 
         btn_Login.setOnClickListener {
             loginUser()

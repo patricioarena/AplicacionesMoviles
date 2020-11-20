@@ -1,6 +1,6 @@
 package com.example.jyc
 
-import MyResources.Storage
+import MyResources.Facade
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -10,14 +10,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.auth0.android.jwt.JWT
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 
 
 class FunctionsActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
-    private lateinit var service: Storage
+    private lateinit var service: Facade
     private lateinit var textView6: TextView
 
     private lateinit var button_1: Button
@@ -30,7 +29,7 @@ class FunctionsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_functions)
 
-        service = Storage()
+        service = Facade()
 
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)
@@ -48,9 +47,12 @@ class FunctionsActivity : AppCompatActivity() {
         button_1.setOnClickListener {
 
 
+
         }
 
         button_2.setOnClickListener {
+
+
 
 
         }
@@ -94,6 +96,13 @@ class FunctionsActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun setDate(): String{
+        val date = Calendar.getInstance()
+        date.timeInMillis = 5000000
+        var text = date.time.toString()
+        return text
     }
 
 }

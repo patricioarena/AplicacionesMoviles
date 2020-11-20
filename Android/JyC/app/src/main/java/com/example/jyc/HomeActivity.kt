@@ -1,6 +1,6 @@
 package com.example.jyc
 
-import MyResources.Storage
+import MyResources.Facade
 import android.content.Intent
 
 import android.os.Bundle
@@ -13,14 +13,14 @@ import androidx.appcompat.app.AppCompatActivity
 
 class HomeActivity : AppCompatActivity() {
     private var pressedTime: Long = 0
-    private lateinit var service: Storage
+    private lateinit var service: Facade
     private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        service = Storage()
+        service = Facade()
 
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)
