@@ -20,6 +20,11 @@
         android:title="TEST Functions DEV" />
 
     <item
+        android:id="@+id/nav_new_pub"
+        android:title="Nueva publicacion" />
+
+
+    <item
         android:id="@+id/nav_logout"
         android:title="@string/logout" />
 
