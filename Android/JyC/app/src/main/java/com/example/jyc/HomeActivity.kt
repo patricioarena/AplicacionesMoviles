@@ -6,9 +6,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_home.*
+import java.util.*
 
 
 class HomeActivity : AppCompatActivity() {
@@ -27,6 +31,18 @@ class HomeActivity : AppCompatActivity() {
         toolbar.title = "HomeActivity";
         toolbar.subtitle = "Contenido principal del feed";
         setSupportActionBar(toolbar)
+
+
+
+        val post = Post("Hola mundo", Date(), "Ayelen")
+
+        val posts = listOf(post)
+
+        recyclerView.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(this@HomeActivity)
+            adapter = PostAdapter(this@HomeActivity, posts)
+        }
 
     }
 
