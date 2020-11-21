@@ -1,16 +1,30 @@
 package com.example.jyc
 
 import MyResources.Facade
+import android.Manifest
+import android.content.ContentResolver
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
+import android.webkit.MimeTypeMap
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 
@@ -23,7 +37,10 @@ class FunctionsActivity : AppCompatActivity() {
     private lateinit var button_2: Button
     private lateinit var auth: FirebaseAuth
 
-
+    private var mStorageRef: StorageReference? = null
+    private var imageView: ImageView? = null
+    private var bitmap: Bitmap? = null
+    var currentPhotoPath: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,23 +55,31 @@ class FunctionsActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         auth = FirebaseAuth.getInstance()
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         button_1 = findViewById(R.id.button_1)
         button_2 = findViewById(R.id.button_2)
 
         textView6 = findViewById(R.id.textView6)
+        imageView = findViewById(R.id.image)
 
-        button_1.setOnClickListener {
+        button_1.isEnabled = false
+        button_1.text = "Take pic"
 
-
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 111)
+        } else {
+            button_1.isEnabled = true
+            button_1.setOnClickListener {
+                var i = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(i, 101)
+            }
 
         }
 
+        button_2.text = "Upload"
         button_2.setOnClickListener {
-
-
-
-
+            upload()
         }
 
     }
@@ -98,12 +123,55 @@ class FunctionsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun setDate(): String{
-        val date = Calendar.getInstance()
-        date.timeInMillis = 5000000
-        var text = date.time.toString()
-        return text
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 111 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            button_1.isEnabled = true
+        }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 101) {
+            bitmap = data?.getParcelableExtra("data")
+            imageView?.setImageBitmap(bitmap)
+        }
+    }
+
+    private fun upload() {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+        val stream = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        val random: String = UUID.randomUUID().toString()
+        val imageRef: StorageReference? = mStorageRef?.child("image/$random")
+
+        val b: ByteArray = stream.toByteArray()
+        if (imageRef != null) {
+            imageRef.putBytes(b)
+                .addOnSuccessListener { taskSnapshot ->
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                    taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener { uri ->
+                        val downloadUri = uri
+                        textView6.text = downloadUri.toString()
+                    }
+                    Toast.makeText(this, "Photo Uploaded", Toast.LENGTH_SHORT).show();
+                }
+                .addOnFailureListener {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                    Toast.makeText(this, "Upload Failed", Toast.LENGTH_SHORT).show();
+                }
+        }
+    }
+
+
+
 
 }
 
