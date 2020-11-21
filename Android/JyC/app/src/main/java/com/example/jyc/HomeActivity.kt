@@ -35,8 +35,11 @@ class HomeActivity : AppCompatActivity() {
 
 
         val post = Post("Hola mundo", Date(), "Ayelen")
+        val post2 = Post("Hola mundo", Date(), "Esteban Quito")
+        val post3 = Post("Hola mundo", Date(), "Patricio")
+        val post4 = Post("Hola mundo", Date(), "Ayelen")
 
-        val posts = listOf(post)
+        val posts = listOf(post,post2,post3,post4)
 
         recyclerView.apply {
             setHasFixedSize(true)
