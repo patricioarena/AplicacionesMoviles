@@ -1,6 +1,6 @@
 package com.example.jyc
 
-import MyResources.Facade
+import MyResources.Storage
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,21 +9,26 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 
-class MyFunActivity : AppCompatActivity() {
+class EventActivity : AppCompatActivity() {
+
     private lateinit var toolbar: Toolbar
-    private lateinit var service: Facade
+    private lateinit var service: Storage
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_my_fun)
+        setContentView(R.layout.activity_event)
+
+        service = Storage()
 
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)
-        toolbar.title = "FuntionActivity";
-        toolbar.subtitle = "Test functions DEV";
+        toolbar.title = "EventActivity";
+        toolbar.subtitle = "Crear nuevo evento";
 
         setSupportActionBar(toolbar)
-        service = Facade()
+
     }
+
 
     private fun logoutUser() {
         service.deletePreferenceKey(this, "token")
@@ -36,7 +41,7 @@ class MyFunActivity : AppCompatActivity() {
         inflater.inflate(R.menu.menu_toobar, menu)
         return super.onCreateOptionsMenu(menu)
     }
-    
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle presses on the action bar menu items
         when (item.itemId) {
@@ -49,7 +54,11 @@ class MyFunActivity : AppCompatActivity() {
                 return true
             }
             R.id.nav_testActivity -> {
-                startActivity(Intent(this, MyFunActivity::class.java))
+                startActivity(Intent(this, FunctionsActivity::class.java))
+                return true
+            }
+            R.id.nav_new_event -> {
+                startActivity(Intent(this, EventActivity::class.java))
                 return true
             }
             R.id.nav_new_pub -> {
@@ -63,4 +72,5 @@ class MyFunActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
 }

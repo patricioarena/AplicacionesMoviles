@@ -11,9 +11,6 @@
     <item
         android:id="@+id/nav_home"
         android:title="@string/menu_home" />
-    <item
-        android:id="@+id/nav_gallery"
-        android:title="@string/menu_gallery" />
 
     <item
         android:id="@+id/nav_testActivity"
@@ -23,6 +20,9 @@
         android:id="@+id/nav_new_pub"
         android:title="Nueva publicacion" />
 
+    <item
+        android:id="@+id/nav_new_event"
+        android:title="Crear evento" />
 
     <item
         android:id="@+id/nav_logout"

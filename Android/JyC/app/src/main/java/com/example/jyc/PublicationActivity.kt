@@ -108,12 +108,12 @@ class PublicationActivity : AppCompatActivity() {
                 startActivity(Intent(this, HomeActivity::class.java))
                 return true
             }
-            R.id.nav_gallery -> {
-                Toast.makeText(this, "Mover a activity Gallery", Toast.LENGTH_SHORT).show();
+            R.id.nav_testActivity -> {
+                startActivity(Intent(this, FunctionsActivity::class.java))
                 return true
             }
-            R.id.nav_testActivity -> {
-                startActivity(Intent(this, MyFunActivity::class.java))
+            R.id.nav_new_event -> {
+                startActivity(Intent(this, EventActivity::class.java))
                 return true
             }
             R.id.nav_new_pub -> {

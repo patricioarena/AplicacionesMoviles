@@ -30,8 +30,7 @@ class FunctionsActivity : AppCompatActivity() {
     }
 
     private fun logoutUser() {
-        service.deletePreferenceKey(this,"user")
-        service.deletePreferenceKey(this,"password")
+        service.deletePreferenceKey(this, "token")
         super.finishAffinity()
     }
 
@@ -53,12 +52,16 @@ class FunctionsActivity : AppCompatActivity() {
                 startActivity(Intent(this, HomeActivity::class.java))
                 return true
             }
-            R.id.nav_gallery -> {
-                Toast.makeText(this, "Mover a activity Gallery", Toast.LENGTH_SHORT).show();
-                return true
-            }
             R.id.nav_testActivity -> {
                 startActivity(Intent(this, FunctionsActivity::class.java))
+                return true
+            }
+            R.id.nav_new_event -> {
+                startActivity(Intent(this, EventActivity::class.java))
+                return true
+            }
+            R.id.nav_new_pub -> {
+                startActivity(Intent(this, PublicationActivity::class.java))
                 return true
             }
             R.id.nav_logout -> {
