@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
@@ -16,7 +17,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.ByteArrayOutputStream
@@ -145,15 +148,17 @@ class PublicationActivity : AppCompatActivity() {
     }
 
     private fun upload() {
+
         window.setFlags(
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
         )
+
         val user: FirebaseUser? = auth.currentUser
         var idUsuario = user?.uid.toString()
 
         val stream = ByteArrayOutputStream()
-        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        bitmap?.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val random: String = UUID.randomUUID().toString()
         val imageRef: StorageReference? = mStorageRef?.child("$idUsuario/$random")
 
@@ -184,11 +189,16 @@ class PublicationActivity : AppCompatActivity() {
                                     "comentarios" to comentarios
                             )
 
-                            val users = database.collection("publicaciones")
-                            users.document().set(publicacion)
-
+                            val publicacionesDb = database.collection("publicaciones")
+                            publicacionesDb.add(publicacion).addOnSuccessListener { documentReference ->
+                                database.collection("usuarios").document(idUsuario)
+                                        .update("publicaciones", FieldValue.arrayUnion(documentReference.id))
+                                        .addOnSuccessListener {
+                                            Toast.makeText(this, "Photo Uploaded", Toast.LENGTH_SHORT).show();
+                                        }
+                            }
                         }
-                        Toast.makeText(this, "Photo Uploaded", Toast.LENGTH_SHORT).show();
+
                     }
                     .addOnFailureListener {
                         window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
