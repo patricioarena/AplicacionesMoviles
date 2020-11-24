@@ -15,6 +15,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 import android.content.ContentValues.TAG
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.card_post.*
 import java.lang.Exception
@@ -51,9 +53,18 @@ class HomeActivity : AppCompatActivity() {
         var publicaciones = mutableListOf<Post>()
         var publicaciones2 = mutableListOf<Post>()
 
-        db.collection("publicaciones").get()
-                .addOnSuccessListener { result ->
-                    for (document in result) {
+        db.collection("publicaciones")
+                .addSnapshotListener { querySnapshot: QuerySnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
+
+                    if (firebaseFirestoreException != null) {
+                        Log.w(TAG, "Listen failed.", firebaseFirestoreException)
+                        return@addSnapshotListener
+                    }
+
+                    publicaciones.clear()
+                    publicaciones2.clear()
+
+                    for (document in querySnapshot!!) {
 //                        Log.d("TAG", "${document.id} => ${document.data}")
 
                         var post = Post()
@@ -63,47 +74,40 @@ class HomeActivity : AppCompatActivity() {
                         post.post = document.data["articulo"].toString()
                         post.image = document.data["imagen"].toString()
 
-                        var likes2 = document.data["likes"] as ArrayList<Int>?
+                        var losUsuariosQueDieronLike = document.data["likes"] as ArrayList<String>?
+                        post.likes = losUsuariosQueDieronLike
 
-                        var cantidad = likes2?.size
-                        if(cantidad == null){
+                        var cantidad = losUsuariosQueDieronLike?.count()
+                        if (cantidad == null) {
                             cantidad = 0
                         }
 
                         post.cantidadDeLikes = cantidad
 
-
                         publicaciones.add(post)
-                    }
-                }
+                        //Log.d("TAG", "${document.id} => ${post.post}")
 
-                .addOnFailureListener {exception: Exception ->
-//                    Log.d("TAG", "Error getting documents: ", exception)
-                }
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        for (pub in publicaciones) {
-                            db.collection("usuarios").document(pub.idUsuario.toString()).get()
-                                    .addOnSuccessListener { result ->
-                                        val document = result
-                                        pub.userName = document?.data?.get("nombre").toString() + " " + document?.data?.get("apellido").toString()
-                                        publicaciones2.add(pub)
-                                    }
-                                    .addOnCompleteListener { task ->
-                                        if (task.isSuccessful) {
-                                            var temp = publicaciones2.toList();
-                                            recyclerView.apply {
-                                                setHasFixedSize(true)
-                                                layoutManager = LinearLayoutManager(this@HomeActivity)
-                                                adapter = PostAdapter(this@HomeActivity, temp)
-                                            }
+                    }
+
+                    for (pub in publicaciones) {
+                        db.collection("usuarios").document(pub.idUsuario.toString()).get()
+                                .addOnSuccessListener { result ->
+                                    val document = result
+                                    pub.userName = document?.data?.get("nombre").toString() + " " + document?.data?.get("apellido").toString()
+                                    publicaciones2.add(pub)
+                                }
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        var temp = publicaciones2.toList();
+                                        recyclerView.apply {
+                                            setHasFixedSize(true)
+                                            layoutManager = LinearLayoutManager(this@HomeActivity)
+                                            adapter = PostAdapter(this@HomeActivity, temp)
                                         }
                                     }
-                        }
+                                }
                     }
-
                 }
-
 
     }
 
