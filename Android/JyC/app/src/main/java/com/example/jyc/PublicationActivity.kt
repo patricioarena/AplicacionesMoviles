@@ -176,7 +176,6 @@ class PublicationActivity : AppCompatActivity() {
                             var categorias = emptyStringArray
                             var tags = emptyStringArray
                             var comentarios = emptyStringArray
-                            var likes = emptyStringArray
                             var fecha = service.getDateTime()
                             var textomuylargo = editTextTextMultiLine.text.toString()
 
@@ -187,9 +186,8 @@ class PublicationActivity : AppCompatActivity() {
                                     "imagen" to imagenUri,
                                     "categorias" to categorias,
                                     "tags" to tags,
-                                    "comentarios" to comentarios,
-                                    "likes" to likes
-                            )
+                                    "comentarios" to comentarios
+                                  )
 
                             val publicacionesDb = database.collection("publicaciones")
                             publicacionesDb.add(publicacion).addOnSuccessListener { documentReference ->
