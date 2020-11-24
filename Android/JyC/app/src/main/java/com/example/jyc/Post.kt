@@ -4,11 +4,11 @@ import com.google.firebase.firestore.Exclude
 import java.util.*
 import kotlin.collections.ArrayList
 
-class Post (val post: String? = null, val date: Date? = null, val userName: String? = null, val likes: ArrayList<String>? = arrayListOf()){
+class Post (var idUsuario: String? =  null, var post: String? = null, var categoria: String? = null, var comentario: String? = null, var date: String? = null, var userName: String? = null, var image: String? = null,  var cantidadDeLikes: Int?, var likes: ArrayList<String>? = arrayListOf()){
     @Exclude
     @set:Exclude
     @get:Exclude
     var uid: String? = null
 
-    constructor() : this(null, null, null, null)
+    constructor() : this(null, null, null, null, null, null, null, null)
 }

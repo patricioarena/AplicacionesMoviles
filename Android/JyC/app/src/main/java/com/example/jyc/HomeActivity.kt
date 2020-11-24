@@ -4,20 +4,29 @@ import MyResources.Facade
 import android.content.Intent
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
+import android.content.ContentValues.TAG
+import kotlinx.android.synthetic.*
+import kotlinx.android.synthetic.main.card_post.*
+import java.lang.Exception
+import java.lang.reflect.Array
+import kotlin.collections.ArrayList
 
 
 class HomeActivity : AppCompatActivity() {
     private var pressedTime: Long = 0
     private lateinit var service: Facade
     private lateinit var toolbar: Toolbar
+    private var db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,19 +40,70 @@ class HomeActivity : AppCompatActivity() {
         toolbar.subtitle = "Contenido principal del feed";
         setSupportActionBar(toolbar)
 
-        val post = Post("Hola mundo", Date(), "Ayelen")
-        val post2 = Post("Hola mundo", Date(), "Esteban Quito")
-        val post3 = Post("Hola mundo", Date(), "Patricio")
-        val post4 = Post("Hola mundo", Date(), "Ayelen")
-        val post5 = Post("Hola mundo", Date(), "Armando Esteban Quito")
+        //        val post = Post("Hola mundo", Date(), "Ayelen", "https://picsum.photos/200/300?grayscale")
+//        val post2 = Post("Hola mundo", Date(), "Esteban Quito", "https://picsum.photos/200/300?grayscale")
+//        val post3 = Post("Hola mundo", Date(), "Patricio", "https://picsum.photos/200/300?grayscale")
+//        val post4 = Post("Hola mundo", Date(), "Ayelen", "https://picsum.photos/200/300?grayscale")
+//        val post5 = Post("Hola mundo", Date(), "Armando Esteban Quito", "https://picsum.photos/200/300?grayscale")
+//
+//        val posts = listOf(post,post2,post3,post4,post5)
 
-        val posts = listOf(post,post2,post3,post4,post5)
+        var publicaciones = mutableListOf<Post>()
+        var publicaciones2 = mutableListOf<Post>()
 
-        recyclerView.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@HomeActivity)
-            adapter = PostAdapter(this@HomeActivity, posts)
-        }
+        db.collection("publicaciones").get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+//                        Log.d("TAG", "${document.id} => ${document.data}")
+
+                        var post = Post()
+                        post.uid = document.id
+                        post.idUsuario = document.data["idUsuario"].toString()
+                        post.date = document.data["fecha"].toString()
+                        post.post = document.data["articulo"].toString()
+                        post.image = document.data["imagen"].toString()
+
+                        var likes2 = document.data["likes"] as ArrayList<Int>?
+
+                        var cantidad = likes2?.size
+                        if(cantidad == null){
+                            cantidad = 0
+                        }
+
+                        post.cantidadDeLikes = cantidad
+
+
+                        publicaciones.add(post)
+                    }
+                }
+
+                .addOnFailureListener {exception: Exception ->
+//                    Log.d("TAG", "Error getting documents: ", exception)
+                }
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        for (pub in publicaciones) {
+                            db.collection("usuarios").document(pub.idUsuario.toString()).get()
+                                    .addOnSuccessListener { result ->
+                                        val document = result
+                                        pub.userName = document?.data?.get("nombre").toString() + " " + document?.data?.get("apellido").toString()
+                                        publicaciones2.add(pub)
+                                    }
+                                    .addOnCompleteListener { task ->
+                                        if (task.isSuccessful) {
+                                            var temp = publicaciones2.toList();
+                                            recyclerView.apply {
+                                                setHasFixedSize(true)
+                                                layoutManager = LinearLayoutManager(this@HomeActivity)
+                                                adapter = PostAdapter(this@HomeActivity, temp)
+                                            }
+                                        }
+                                    }
+                        }
+                    }
+
+                }
+
 
     }
 
