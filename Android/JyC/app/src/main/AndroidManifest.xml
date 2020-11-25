@@ -23,6 +23,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JyC">
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDdDG1M3poRmxF5uhObY1i3VGBosK1jnT8"/>
+
         <activity android:name=".EventActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
