@@ -1,4 +1,11 @@
 <resources>
+    <string name="nombre_del_evento">Nombre del evento</string>
+    <string name="ubicacion_del_evento">Ubicacion</string>
+    <string name="descripcion_del_evento">Descripcion</string>
+    <string name="fecha_del_evento">Fecha</string>
+    <string name="hora_del_evento">Hora</string>
+
+
     <string name="app_name">JyC</string>
     <string name="name">Nombre</string>
     <string name="lastname">Apellido</string>
@@ -20,4 +27,8 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="logout">Cerrar sesión</string>
+    <string name="selecione_banner">Selecione Banner</string>
+    <string name="descartar">Descartar</string>
+    <string name="publicar">Publicar</string>
+    <string name="en_persona">En Persona</string>
 </resources>
