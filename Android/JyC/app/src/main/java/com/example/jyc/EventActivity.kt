@@ -1,6 +1,6 @@
 package com.example.jyc
 
-import MyResources.Storage
+import MyResources.Facade
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -30,7 +30,7 @@ import java.util.*
 class EventActivity : AppCompatActivity(), OnMapReadyCallback{
 
     private lateinit var toolbar: Toolbar
-    private lateinit var service: Storage
+    private lateinit var service: Facade
     private lateinit var editTextDate: EditText
     private lateinit var editTextTime: EditText
     private lateinit var editTextTextUrl: EditText
@@ -72,7 +72,7 @@ class EventActivity : AppCompatActivity(), OnMapReadyCallback{
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        service = Storage()
+        service = Facade()
 
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)

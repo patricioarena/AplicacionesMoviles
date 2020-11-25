@@ -27,7 +27,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDdDG1M3poRmxF5uhObY1i3VGBosK1jnT8"/>
 
-        <activity android:name=".EventActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +35,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".EventActivity"/>
         <activity android:name=".MyFunActivity" />
         <activity android:name=".ForgotPassActivity" />
         <activity android:name=".LoginActivity" />

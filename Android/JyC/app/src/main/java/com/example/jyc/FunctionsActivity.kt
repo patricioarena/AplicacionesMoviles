@@ -1,6 +1,6 @@
 package com.example.jyc
 
-import MyResources.Storage
+import MyResources.Facade
 import android.content.Intent
 
 import android.os.Bundle
@@ -12,13 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 
 class FunctionsActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
-    private lateinit var service: Storage
+    private lateinit var service: Facade
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_functions)
 
-        service = Storage()
+        service = Facade()
 
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)
