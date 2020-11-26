@@ -1,8 +1,6 @@
 package com.example.jyc
 
-import MyResources.Facade
 import android.app.Activity
-import android.app.MediaRouteButton
 import android.content.Intent
 import android.graphics.Color
 import android.util.Log
@@ -22,11 +20,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class PostAdapter(private val activity: Activity, private val dataset: List<Post>) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+class PostAdapter(private val activity: Activity, private val dataset: List<Post>, private val itemClickListener: OnPublicacionesClickListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
+    interface OnPublicacionesClickListener{
+        fun onImageClick(image: String?)
+        fun onItemClick(idUsuario: String?)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PublicacionesViewHolder {
         val layout = LayoutInflater.from(parent.context).inflate(R.layout.card_post, parent, false)
@@ -45,6 +47,9 @@ class PostAdapter(private val activity: Activity, private val dataset: List<Post
 
     inner class PublicacionesViewHolder(val layout: View) : BaseViewHolder<Post>(layout){
         override fun bind(item: Post, position: Int) {
+
+            itemView.setOnClickListener{itemClickListener.onItemClick(item.idUsuario)}
+            itemView.image_tv.setOnClickListener{itemClickListener.onImageClick(item.image)}
 //            var post = dataset[position]
             var likes = item.likes
             var usuarioActual = auth.currentUser

@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.text.Layout
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,6 +19,8 @@ import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -27,7 +30,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import java.util.*
 
 
-class EventActivity : AppCompatActivity(), OnMapReadyCallback{
+class EventActivity : AppCompatActivity(){
 
     private lateinit var toolbar: Toolbar
     private lateinit var service: Facade
@@ -38,6 +41,7 @@ class EventActivity : AppCompatActivity(), OnMapReadyCallback{
     private lateinit var imageViewBanner: ImageView
     private lateinit var radioButtonUrl: RadioButton
     private lateinit var radioButtonEnPersona: RadioButton
+    private lateinit var linearLayout: ConstraintLayout
 
 
     private val CERO = "0"
@@ -68,15 +72,11 @@ class EventActivity : AppCompatActivity(), OnMapReadyCallback{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event)
 
-
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-
         service = Facade()
 
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)
-        toolbar.title = "EventActivity";
+        toolbar.title = "Jardines y Cultivos"
         toolbar.subtitle = "Crear nuevo evento";
 
         setSupportActionBar(toolbar)
@@ -113,14 +113,17 @@ class EventActivity : AppCompatActivity(), OnMapReadyCallback{
         }
 
         editTextTextUrl = findViewById(R.id.editTextTextUrl)
+        linearLayout = findViewById(R.id.linearLayout)
 
         radioButtonUrl = findViewById(R.id.radioButtonUrl)
         radioButtonUrl.setOnClickListener {
-            editTextTextUrl.setVisibility(View.VISIBLE);
+            editTextTextUrl.setVisibility(View.VISIBLE)
+            linearLayout.setVisibility(View.GONE)
         }
 
         radioButtonEnPersona = findViewById(R.id.radioButtonEnPersona)
         radioButtonEnPersona.setOnClickListener {
+            linearLayout.setVisibility(View.VISIBLE)
             editTextTextUrl.setVisibility(View.GONE);
             editTextTextUrl.text.clear()
         }
@@ -261,18 +264,5 @@ class EventActivity : AppCompatActivity(), OnMapReadyCallback{
         }
         return super.onOptionsItemSelected(item)
     }
-
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions()
-                .position(sydney)
-                .title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-    }
-
-
 }
 

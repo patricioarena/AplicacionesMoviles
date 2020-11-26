@@ -15,16 +15,18 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 import android.content.ContentValues.TAG
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.*
+import kotlinx.android.synthetic.main.activity_publication.*
 import kotlinx.android.synthetic.main.card_post.*
 import java.lang.Exception
 import java.lang.reflect.Array
 import kotlin.collections.ArrayList
 
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListener {
     private var pressedTime: Long = 0
     private lateinit var service: Facade
     private lateinit var toolbar: Toolbar
@@ -38,7 +40,7 @@ class HomeActivity : AppCompatActivity() {
 
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)
-        toolbar.title = "HomeActivity";
+        toolbar.title = "Jardines y Cultivos";
         toolbar.subtitle = "Contenido principal del feed";
         setSupportActionBar(toolbar)
 
@@ -99,11 +101,14 @@ class HomeActivity : AppCompatActivity() {
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
                                         var temp = publicaciones2.toList();
-                                        recyclerView.apply {
-                                            setHasFixedSize(true)
-                                            layoutManager = LinearLayoutManager(this@HomeActivity)
-                                            adapter = PostAdapter(this@HomeActivity, temp)
-                                        }
+//                                        recyclerView.apply {
+//                                            setHasFixedSize(true)
+//                                            layoutManager = LinearLayoutManager(this@HomeActivity)
+//                                            adapter = PostAdapter(this@HomeActivity, temp, this)
+//                                        }
+                                        recyclerView.layoutManager = LinearLayoutManager(this)
+                                        recyclerView.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
+                                        recyclerView.adapter = PostAdapter(this,temp,this)
                                     }
                                 }
                     }
@@ -170,6 +175,17 @@ class HomeActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onImageClick(image: String?) {
+
+        var intent = Intent(this, ImagenDetail::class.java)
+        intent.putExtra("imageUrl", image)
+        startActivity(intent)
+    }
+
+    override fun onItemClick(idUsuario: String?) {
+        Toast.makeText(this, idUsuario, Toast.LENGTH_SHORT).show();
     }
 
 

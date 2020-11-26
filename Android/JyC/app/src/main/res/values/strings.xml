@@ -4,8 +4,6 @@
     <string name="descripcion_del_evento">Descripcion</string>
     <string name="fecha_del_evento">Fecha</string>
     <string name="hora_del_evento">Hora</string>
-
-
     <string name="app_name">JyC</string>
     <string name="name">Nombre</string>
     <string name="lastname">Apellido</string>
@@ -31,4 +29,12 @@
     <string name="descartar">Descartar</string>
     <string name="publicar">Publicar</string>
     <string name="en_persona">En Persona</string>
+    <string name="title_activity_imagen_detail">ImagenDetail</string>
+    <string name="localidad_barrio">Localidad/Barrio</string>
+    <string name="provincia">Provincia</string>
+    <string name="calle">Calle</string>
+    <string name="n_mero">Número</string>
+    <string name="piso">Piso (Opcional)</string>
+    <string name="calle_1">Calle 1 (Opcional)</string>
+    <string name="calle_2">Calle 2 (Opcional)</string>
 </resources>

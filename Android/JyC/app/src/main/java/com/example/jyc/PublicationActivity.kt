@@ -47,8 +47,8 @@ class PublicationActivity : AppCompatActivity() {
 
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)
-        toolbar.title = "Nueva publication";
-        toolbar.subtitle = "My super publication"
+        toolbar.title = "Jardines y Cultivos";
+        toolbar.subtitle = "Nueva publicación"
 
         setSupportActionBar(toolbar)
 
