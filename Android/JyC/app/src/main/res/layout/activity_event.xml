@@ -32,7 +32,7 @@
                 app:layout_constraintGuide_percent="0.5" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/editTextTextNombreEvento"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -68,7 +68,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/guideline8"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextNombreEvento" />
 
             <EditText
                 android:id="@+id/editTextTime"
@@ -90,10 +90,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline8"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextNombreEvento" />
 
             <EditText
-                android:id="@+id/editTextTextMultiLine"
+                android:id="@+id/editTextTextMultiLineEvento"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
                 android:layout_marginStart="16dp"
@@ -134,7 +134,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine">
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLineEvento">
 
                 <RadioButton
                     android:id="@+id/radioButtonEnPersona"
@@ -332,7 +332,7 @@
                 app:layout_constraintGuide_begin="736dp" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/buttonPublicarEvento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -351,7 +351,7 @@
                 android:layout_marginBottom="20dp"
                 android:text="@string/descartar"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button" />
+                app:layout_constraintEnd_toStartOf="@+id/buttonPublicarEvento" />
 
             <TextView
                 android:id="@+id/textView2"

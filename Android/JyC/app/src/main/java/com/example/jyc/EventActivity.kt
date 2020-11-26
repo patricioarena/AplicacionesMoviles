@@ -7,42 +7,54 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
-import android.text.Layout
+import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 
-class EventActivity : AppCompatActivity(){
+class EventActivity : AppCompatActivity() {
 
     private lateinit var toolbar: Toolbar
     private lateinit var service: Facade
     private lateinit var editTextDate: EditText
     private lateinit var editTextTime: EditText
+    private lateinit var editTextTextNombreEvento: EditText
     private lateinit var editTextTextUrl: EditText
+    private lateinit var editTextTextMultiLineEvento: EditText
     private lateinit var imageViewBanner: ImageView
     private lateinit var radioButtonUrl: RadioButton
     private lateinit var radioButtonEnPersona: RadioButton
     private lateinit var linearLayout: ConstraintLayout
     private lateinit var buttonDescartarEvento: Button
-
+    private lateinit var buttonPublicarEvento: Button
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseFirestore
+    private var mStorageRef: StorageReference? = null
+    private var bitmap: Bitmap? = null
     private val CERO = "0"
     private val BARRA = "/"
     private val DOS_PUNTOS = ":"
+    private var typeEvent: String? = null
 
     //Calendario para obtener fecha & hora
     var c = Calendar.getInstance()
@@ -108,6 +120,7 @@ class EventActivity : AppCompatActivity(){
             }
         }
 
+        editTextTextNombreEvento = findViewById(R.id.editTextTextNombreEvento)
         editTextTextUrl = findViewById(R.id.editTextTextUrl)
         linearLayout = findViewById(R.id.linearLayout)
 
@@ -115,6 +128,7 @@ class EventActivity : AppCompatActivity(){
         radioButtonUrl.setOnClickListener {
             editTextTextUrl.setVisibility(View.VISIBLE)
             linearLayout.setVisibility(View.GONE)
+            typeEvent = Evento.ONLINE.toString()
         }
 
         radioButtonEnPersona = findViewById(R.id.radioButtonEnPersona)
@@ -122,13 +136,21 @@ class EventActivity : AppCompatActivity(){
             linearLayout.setVisibility(View.VISIBLE)
             editTextTextUrl.setVisibility(View.GONE);
             editTextTextUrl.text.clear()
+            typeEvent = Evento.PRESENCIAL.toString()
         }
 
         buttonDescartarEvento = findViewById(R.id.buttonDescartarEvento)
-        buttonDescartarEvento.setOnClickListener{
+        buttonDescartarEvento.setOnClickListener {
+            typeEvent = null;
             startActivity(Intent(this, HomeActivity::class.java))
         }
 
+        buttonPublicarEvento = findViewById(R.id.buttonPublicarEvento)
+        buttonPublicarEvento.setOnClickListener {
+
+            uploadEvent()
+
+        }
 //        findViewById<View>(R.id.btn1_add).setOnTouchListener { v, event ->
 //            if (event.action == MotionEvent.ACTION_DOWN) {
 //                // start tiemr
@@ -137,6 +159,11 @@ class EventActivity : AppCompatActivity(){
 //            }
 //            false
 //        }
+
+        editTextTextMultiLineEvento = findViewById(R.id.editTextTextMultiLineEvento)
+        auth = FirebaseAuth.getInstance()
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        database = FirebaseFirestore.getInstance()
     }
 
 
@@ -148,16 +175,10 @@ class EventActivity : AppCompatActivity(){
     }
 
     //handle requested permission result
-    override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int,permissions: Array<out String>,grantResults: IntArray) {
         when (requestCode) {
             PERMISSION_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] ==
-                        PackageManager.PERMISSION_GRANTED
-                ) {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED ) {
                     //permission from popup granted
                     pickImageFromGallery()
                 } else {
@@ -171,8 +192,27 @@ class EventActivity : AppCompatActivity(){
     //handle result of picked image
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-            imageViewBanner.setImageURI(data?.data)
+        if(requestCode == IMAGE_PICK_CODE && resultCode == Activity.RESULT_OK && data != null) {
+
+            val selectedPhotoUri = data.data
+            try {
+                selectedPhotoUri?.let {
+                    if(Build.VERSION.SDK_INT < 28) {
+                        val bitmapx = MediaStore.Images.Media.getBitmap(
+                                this.contentResolver,
+                                selectedPhotoUri
+                        )
+                        imageViewBanner.setImageBitmap(bitmapx)
+                    } else {
+                        val source = ImageDecoder.createSource(this.contentResolver, selectedPhotoUri)
+                        val bitmapx = ImageDecoder.decodeBitmap(source)
+                        bitmap = bitmapx
+                        imageViewBanner.setImageBitmap(bitmapx)
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -265,5 +305,107 @@ class EventActivity : AppCompatActivity(){
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun uploadEvent() {
+
+        window.setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+
+        val user: FirebaseUser? = auth.currentUser
+        var idUsuario = user?.uid.toString()
+
+        val stream = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val random: String = UUID.randomUUID().toString()
+        val imageRef: StorageReference? = mStorageRef?.child("$idUsuario/$random")
+
+        val b: ByteArray = stream.toByteArray()
+        if (imageRef != null) {
+            imageRef.putBytes(b)
+                    .addOnSuccessListener { taskSnapshot ->
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                        taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener { uri ->
+                            val downloadUri = uri
+                            var imagenUri = downloadUri.toString()
+
+                            var emptyStringArray = listOf("")
+                            var tags = emptyStringArray
+                            var comentarios = emptyStringArray
+                            var fecha = service.getDateTime()
+                            var textomuylargo = editTextTextMultiLineEvento.text.toString()
+                            var nombreEvento = editTextTextNombreEvento.text.toString()
+
+                            var fechaEvento = editTextDate.text.toString()
+                            var hora = editTextTime.text.toString()
+
+                            if (typeEvent.equals(Evento.PRESENCIAL.toString())) {
+                                var eventoPresencial = hashMapOf(
+                                        "idUsuario" to idUsuario,
+                                        "articulo" to textomuylargo,
+                                        "fecha" to fecha,
+                                        "imagen" to imagenUri,
+                                        "fechaEvento" to fechaEvento,
+                                        "hora" to hora,
+                                        "categorias" to "Evento",
+                                        "Tipo" to Evento.PRESENCIAL.toString(),
+                                        "tags" to tags,
+                                        "comentarios" to comentarios
+                                )
+                            } else if (typeEvent.equals(Evento.ONLINE.toString())) {
+                                var eventoOnline = hashMapOf(
+                                        "idUsuario" to idUsuario,
+                                        "nombreEvento" to nombreEvento,
+                                        "articulo" to textomuylargo,
+                                        "fecha" to fecha,
+                                        "imagen" to imagenUri,
+                                        "fechaEvento" to fechaEvento,
+                                        "hora" to hora,
+                                        "categorias" to "Evento",
+                                        "Tipo" to Evento.ONLINE.toString(),
+                                        "Url" to editTextTextUrl.text.toString(),
+                                        "tags" to tags,
+                                        "comentarios" to comentarios
+                                )
+
+                                val publicacionesDb = database.collection("publicaciones")
+                                publicacionesDb.add(eventoOnline).addOnSuccessListener { documentReference ->
+                                    database.collection("usuarios").document(idUsuario)
+                                            .update("publicaciones", FieldValue.arrayUnion(documentReference.id))
+                                            .addOnSuccessListener {
+                                                Toast.makeText(this, "Photo Uploaded", Toast.LENGTH_SHORT).show();
+                                            }
+                                }
+
+                            } else {
+                                Toast.makeText(this, "Event Upload Failed", Toast.LENGTH_SHORT).show();
+                            }
+
+
+//                            val publicacionesDb = database.collection("publicaciones")
+//                            publicacionesDb.add(publicacion).addOnSuccessListener { documentReference ->
+//                                database.collection("usuarios").document(idUsuario)
+//                                        .update("publicaciones", FieldValue.arrayUnion(documentReference.id))
+//                                        .addOnSuccessListener {
+//                                            Toast.makeText(this, "Photo Uploaded", Toast.LENGTH_SHORT).show();
+//                                        }
+//                            }
+                        }
+
+                    }
+                    .addOnFailureListener {
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                        Toast.makeText(this, "Upload Failed", Toast.LENGTH_SHORT).show();
+                    }
+        }
+    }
+
+
+    enum class Evento {
+        ONLINE, PRESENCIAL
+    }
+
+
 }
 
