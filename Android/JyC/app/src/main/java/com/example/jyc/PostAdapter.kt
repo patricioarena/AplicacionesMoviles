@@ -60,11 +60,16 @@ class PostAdapter(private val activity: Activity, private val dataset: List<Post
                 liked = false
             }
 
+            if (item.nombreEvento == "null"){
+                layout.CardTitle.setVisibility(View.GONE)
+                layout.buttonMore.setVisibility(View.GONE)
+            }
+
+            layout.CardTitle.text = item.nombreEvento
             layout.username_tv.text = item.userName
             layout.post_tv.text = item.post
             Picasso.get().load(item.image).into(layout.image_tv)
             layout.likesCount_tv.text = "${item.cantidadDeLikes} likes"
-
             layout.fecha_tv.text = item.date
 
             setColor(liked, layout.like_btn)

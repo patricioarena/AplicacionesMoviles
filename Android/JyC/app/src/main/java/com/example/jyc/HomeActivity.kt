@@ -15,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 import android.content.ContentValues.TAG
+import android.text.TextUtils
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
@@ -44,14 +45,6 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
         toolbar.subtitle = "Contenido principal del feed";
         setSupportActionBar(toolbar)
 
-        //        val post = Post("Hola mundo", Date(), "Ayelen", "https://picsum.photos/200/300?grayscale")
-//        val post2 = Post("Hola mundo", Date(), "Esteban Quito", "https://picsum.photos/200/300?grayscale")
-//        val post3 = Post("Hola mundo", Date(), "Patricio", "https://picsum.photos/200/300?grayscale")
-//        val post4 = Post("Hola mundo", Date(), "Ayelen", "https://picsum.photos/200/300?grayscale")
-//        val post5 = Post("Hola mundo", Date(), "Armando Esteban Quito", "https://picsum.photos/200/300?grayscale")
-//
-//        val posts = listOf(post,post2,post3,post4,post5)
-
         var publicaciones = mutableListOf<Post>()
         var publicaciones2 = mutableListOf<Post>()
 
@@ -75,6 +68,8 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
                         post.date = document.data["fecha"].toString()
                         post.post = document.data["articulo"].toString()
                         post.image = document.data["imagen"].toString()
+
+                        post.nombreEvento = document.data["nombreEvento"].toString()
 
                         var losUsuariosQueDieronLike = document.data["likes"] as ArrayList<String>?
                         post.likes = losUsuariosQueDieronLike
@@ -101,11 +96,6 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
                                         var temp = publicaciones2.toList();
-//                                        recyclerView.apply {
-//                                            setHasFixedSize(true)
-//                                            layoutManager = LinearLayoutManager(this@HomeActivity)
-//                                            adapter = PostAdapter(this@HomeActivity, temp, this)
-//                                        }
                                         recyclerView.layoutManager = LinearLayoutManager(this)
                                         recyclerView.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
                                         recyclerView.adapter = PostAdapter(this,temp,this)

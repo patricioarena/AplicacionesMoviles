@@ -396,7 +396,6 @@ class EventActivity : AppCompatActivity() {
                                         "tags" to tags,
                                         "comentarios" to comentarios,
                                         "lugar" to lugar
-
                                 )
 
                                 val publicacionesDb = database.collection("publicaciones")
