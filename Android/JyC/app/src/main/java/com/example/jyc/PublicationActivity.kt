@@ -5,6 +5,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -23,20 +24,20 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.ByteArrayOutputStream
+import android.widget.ImageView
 import java.util.*
 
 
 class PublicationActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var service: Facade
-    private lateinit var textView6: TextView
     private lateinit var editTextTextMultiLine: EditText
-    private lateinit var button_1: Button
-    private lateinit var button_2: Button
+    private lateinit var buttonDescartar: Button
+    private lateinit var buttonPublicar: Button
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseFirestore
     private var mStorageRef: StorageReference? = null
-    private var imageView: ImageView? = null
+    private lateinit var imageView: ImageView
     private var bitmap: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,33 +57,33 @@ class PublicationActivity : AppCompatActivity() {
         mStorageRef = FirebaseStorage.getInstance().getReference();
         database = FirebaseFirestore.getInstance()
 
-        button_1 = findViewById(R.id.button_1)
-        button_2 = findViewById(R.id.button_2)
+        buttonDescartar = findViewById(R.id.buttonDescartar)
+        buttonDescartar.setOnClickListener{
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
 
-        textView6 = findViewById(R.id.textView6)
         editTextTextMultiLine = findViewById(R.id.editTextTextMultiLine)
 
         imageView = findViewById(R.id.image)
-
-        button_1.isEnabled = false
-        button_1.text = "Take pic"
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 111)
-        } else {
-            button_1.isEnabled = true
-            button_1.setOnClickListener {
-                var i = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(i, 101)
+        imageView.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 111)
+            } else {
+                takepick();
             }
 
         }
 
-        button_2.text = "Upload"
-        button_2.setOnClickListener {
+        buttonPublicar = findViewById(R.id.buttonPublicar)
+        buttonPublicar.setOnClickListener {
             upload()
         }
 
+    }
+
+    fun takepick() {
+        var i = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(i, 101)
     }
 
     private fun logoutUser() {
@@ -128,17 +129,6 @@ class PublicationActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 111 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            button_1.isEnabled = true
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 101) {
@@ -170,7 +160,6 @@ class PublicationActivity : AppCompatActivity() {
                         taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener { uri ->
                             val downloadUri = uri
                             var imagenUri = downloadUri.toString()
-                            textView6.text = imagenUri
 
                             var emptyStringArray = listOf("")
                             var categorias = emptyStringArray
@@ -187,7 +176,7 @@ class PublicationActivity : AppCompatActivity() {
                                     "categorias" to categorias,
                                     "tags" to tags,
                                     "comentarios" to comentarios
-                                  )
+                            )
 
                             val publicacionesDb = database.collection("publicaciones")
                             publicacionesDb.add(publicacion).addOnSuccessListener { documentReference ->

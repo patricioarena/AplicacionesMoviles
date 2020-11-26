@@ -26,6 +26,8 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="logout">Cerrar sesión</string>
     <string name="selecione_banner">Selecione Banner</string>
+    <string name="tomar_foto">Capturar imagen</string>
+
     <string name="descartar">Descartar</string>
     <string name="publicar">Publicar</string>
     <string name="en_persona">En Persona</string>

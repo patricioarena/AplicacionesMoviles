@@ -13,10 +13,7 @@ import android.text.Layout
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.RadioButton
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -37,12 +34,11 @@ class EventActivity : AppCompatActivity(){
     private lateinit var editTextDate: EditText
     private lateinit var editTextTime: EditText
     private lateinit var editTextTextUrl: EditText
-
     private lateinit var imageViewBanner: ImageView
     private lateinit var radioButtonUrl: RadioButton
     private lateinit var radioButtonEnPersona: RadioButton
     private lateinit var linearLayout: ConstraintLayout
-
+    private lateinit var buttonDescartarEvento: Button
 
     private val CERO = "0"
     private val BARRA = "/"
@@ -126,6 +122,11 @@ class EventActivity : AppCompatActivity(){
             linearLayout.setVisibility(View.VISIBLE)
             editTextTextUrl.setVisibility(View.GONE);
             editTextTextUrl.text.clear()
+        }
+
+        buttonDescartarEvento = findViewById(R.id.buttonDescartarEvento)
+        buttonDescartarEvento.setOnClickListener{
+            startActivity(Intent(this, HomeActivity::class.java))
         }
 
 //        findViewById<View>(R.id.btn1_add).setOnTouchListener { v, event ->
