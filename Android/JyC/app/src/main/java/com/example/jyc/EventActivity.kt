@@ -39,6 +39,17 @@ class EventActivity : AppCompatActivity() {
     private lateinit var editTextDate: EditText
     private lateinit var editTextTime: EditText
     private lateinit var editTextTextNombreEvento: EditText
+
+    private lateinit var editTextProvincia: EditText
+    private lateinit var editTextLocalidad: EditText
+    private lateinit var editTextCp: EditText
+    private lateinit var editTextCalle: EditText
+    private lateinit var editTextNumero: EditText
+    private lateinit var editTextPiso: EditText
+    private lateinit var editTextEntreCalle1: EditText
+    private lateinit var editTextEntreCalle2: EditText
+
+
     private lateinit var editTextTextUrl: EditText
     private lateinit var editTextTextMultiLineEvento: EditText
     private lateinit var imageViewBanner: ImageView
@@ -160,7 +171,17 @@ class EventActivity : AppCompatActivity() {
 //            false
 //        }
 
+
+        editTextProvincia = findViewById(R.id.editTextProvincia)
+        editTextLocalidad = findViewById(R.id.editTextLocalidad)
+        editTextCp = findViewById(R.id.editTextCp)
+        editTextCalle = findViewById(R.id.editTextCalle)
+        editTextNumero = findViewById(R.id.editTextNumero)
+        editTextPiso = findViewById(R.id.editTextPiso)
+        editTextEntreCalle1 = findViewById(R.id.editTextEntreCalle1)
+        editTextEntreCalle2 = findViewById(R.id.editTextEntreCalle2)
         editTextTextMultiLineEvento = findViewById(R.id.editTextTextMultiLineEvento)
+
         auth = FirebaseAuth.getInstance()
         mStorageRef = FirebaseStorage.getInstance().getReference();
         database = FirebaseFirestore.getInstance()
@@ -175,10 +196,10 @@ class EventActivity : AppCompatActivity() {
     }
 
     //handle requested permission result
-    override fun onRequestPermissionsResult(requestCode: Int,permissions: Array<out String>,grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
             PERMISSION_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED ) {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //permission from popup granted
                     pickImageFromGallery()
                 } else {
@@ -192,12 +213,12 @@ class EventActivity : AppCompatActivity() {
     //handle result of picked image
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == IMAGE_PICK_CODE && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == IMAGE_PICK_CODE && resultCode == Activity.RESULT_OK && data != null) {
 
             val selectedPhotoUri = data.data
             try {
                 selectedPhotoUri?.let {
-                    if(Build.VERSION.SDK_INT < 28) {
+                    if (Build.VERSION.SDK_INT < 28) {
                         val bitmapx = MediaStore.Images.Media.getBitmap(
                                 this.contentResolver,
                                 selectedPhotoUri
@@ -336,13 +357,35 @@ class EventActivity : AppCompatActivity() {
                             var fecha = service.getDateTime()
                             var textomuylargo = editTextTextMultiLineEvento.text.toString()
                             var nombreEvento = editTextTextNombreEvento.text.toString()
-
                             var fechaEvento = editTextDate.text.toString()
                             var hora = editTextTime.text.toString()
 
                             if (typeEvent.equals(Evento.PRESENCIAL.toString())) {
+
+                                var calle = editTextCalle.text.toString()
+                                var eCalle1 = editTextEntreCalle1.text.toString()
+                                var eCalle2 = editTextEntreCalle2.text.toString()
+                                var numero = editTextNumero.text.toString()
+                                var cp = editTextCp.text.toString()
+                                var piso = editTextPiso.text.toString()
+                                var localidad = editTextLocalidad.text.toString()
+                                var prov_est = editTextProvincia.text.toString()
+
+                                val lugar = hashMapOf(
+                                        "eCalle_1" to eCalle1,
+                                        "eCalle_2" to eCalle2,
+                                        "calle" to calle,
+                                        "numero" to numero,
+                                        "cp" to cp,
+                                        "piso" to piso,
+                                        "localidad" to localidad,
+                                        "prov_est" to prov_est,
+                                        "pais" to "Argentina"
+                                )
+
                                 var eventoPresencial = hashMapOf(
                                         "idUsuario" to idUsuario,
+                                        "nombreEvento" to nombreEvento,
                                         "articulo" to textomuylargo,
                                         "fecha" to fecha,
                                         "imagen" to imagenUri,
@@ -351,8 +394,21 @@ class EventActivity : AppCompatActivity() {
                                         "categorias" to "Evento",
                                         "Tipo" to Evento.PRESENCIAL.toString(),
                                         "tags" to tags,
-                                        "comentarios" to comentarios
+                                        "comentarios" to comentarios,
+                                        "lugar" to lugar
+
                                 )
+
+                                val publicacionesDb = database.collection("publicaciones")
+                                publicacionesDb.add(eventoPresencial).addOnSuccessListener { documentReference ->
+                                    database.collection("usuarios").document(idUsuario)
+                                            .update("publicaciones", FieldValue.arrayUnion(documentReference.id))
+                                            .addOnSuccessListener {
+                                                Toast.makeText(this, "Event Uploaded", Toast.LENGTH_SHORT).show();
+                                                startActivity(Intent(this, HomeActivity::class.java))
+                                            }
+                                }
+
                             } else if (typeEvent.equals(Evento.ONLINE.toString())) {
                                 var eventoOnline = hashMapOf(
                                         "idUsuario" to idUsuario,
@@ -374,7 +430,8 @@ class EventActivity : AppCompatActivity() {
                                     database.collection("usuarios").document(idUsuario)
                                             .update("publicaciones", FieldValue.arrayUnion(documentReference.id))
                                             .addOnSuccessListener {
-                                                Toast.makeText(this, "Photo Uploaded", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(this, "Event Uploaded", Toast.LENGTH_SHORT).show();
+                                                startActivity(Intent(this, HomeActivity::class.java))
                                             }
                                 }
 
@@ -382,15 +439,6 @@ class EventActivity : AppCompatActivity() {
                                 Toast.makeText(this, "Event Upload Failed", Toast.LENGTH_SHORT).show();
                             }
 
-
-//                            val publicacionesDb = database.collection("publicaciones")
-//                            publicacionesDb.add(publicacion).addOnSuccessListener { documentReference ->
-//                                database.collection("usuarios").document(idUsuario)
-//                                        .update("publicaciones", FieldValue.arrayUnion(documentReference.id))
-//                                        .addOnSuccessListener {
-//                                            Toast.makeText(this, "Photo Uploaded", Toast.LENGTH_SHORT).show();
-//                                        }
-//                            }
                         }
 
                     }
@@ -405,7 +453,7 @@ class EventActivity : AppCompatActivity() {
     enum class Evento {
         ONLINE, PRESENCIAL
     }
-
+//    Las mejores flores de plastico de todo florencio varela no te lo pierdas!! Ahora en vivo venia verlas en persona te vas a asombrar!!
 
 }
 
