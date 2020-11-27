@@ -19,6 +19,7 @@ import android.text.TextUtils
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.installations.FirebaseInstallations
@@ -54,7 +55,7 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
         var publicaciones = mutableListOf<Post>()
         var publicaciones2 = mutableListOf<Post>()
 
-        db.collection("publicaciones")
+        db.collection("publicaciones").orderBy("fecha", Query.Direction.DESCENDING)
                 .addSnapshotListener { querySnapshot: QuerySnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
 
                     if (firebaseFirestoreException != null) {
@@ -199,7 +200,7 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
         })
 
 //        FirebaseMessaging.getInstance().subscribeToTopic("ONLINE")
-        FirebaseMessaging.getInstance().subscribeToTopic("PRESENCIAL")
+//        FirebaseMessaging.getInstance().subscribeToTopic("PRESENCIAL")
     }
 
 

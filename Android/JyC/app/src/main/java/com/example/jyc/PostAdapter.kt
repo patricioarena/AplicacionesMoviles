@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -95,10 +96,77 @@ class PostAdapter(private val activity: Activity, private val dataset: List<Post
                 val shareIntent = Intent.createChooser(sendIntent, null)
                 activity.startActivity(shareIntent)
             }
+
+            layout.comment_btn.setOnClickListener{
+                val commentIntent = Intent(activity,CommentsActivity::class.java)
+                commentIntent.putExtra("postId", item.uid )
+                commentIntent.putExtra("publicacionId", item.post)
+                commentIntent.putExtra("userName", item.userName)
+                commentIntent.putExtra("imagen", item.image)
+                commentIntent.putExtra("idUsuario", item.idUsuario)
+                activity.startActivity(commentIntent)
+            }
+
+
         }
 
     }
 
+
+//    class ViewHolder(val layout: View) : RecyclerView.ViewHolder(layout)
+
+
+//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+//        val layout = LayoutInflater.from(parent.context).inflate(R.layout.card_post, parent, false)
+//
+//        return ViewHolder(layout)
+//    }
+
+
+
+//    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+//        var post = dataset[position]
+//        var likes = post.likes
+//        var usuarioActual = auth.currentUser
+//
+//        var liked = likes?.contains(usuarioActual?.uid.toString())
+//
+//        if (liked == null) {
+//            liked = false
+//        }
+//
+//        holder.layout.username_tv.text = post.userName
+//        holder.layout.post_tv.text = post.post
+//        Picasso.get().load(post.image).into(holder.layout.image_tv)
+//        holder.layout.likesCount_tv.text = "${post.cantidadDeLikes} likes"
+//
+//        holder.layout.fecha_tv.text = post.date
+//
+//        setColor(liked, holder.layout.like_btn)
+//
+//        holder.layout.like_btn.setOnClickListener {
+//
+//            setColor(liked, holder.layout.like_btn)
+//
+//            if (liked?.equals(true)!!) {
+//                removeUserDb(post.uid)
+//            } else {
+//                insertUerDb(post.uid)
+//            }
+//        }
+//
+//        holder.layout.share_btn.setOnClickListener {
+//            val sendIntent = Intent().apply {
+//                action = Intent.ACTION_SEND
+//                putExtra(Intent.EXTRA_TEXT, post.post)
+//                type = "text/plain"
+//            }
+//
+//            val shareIntent = Intent.createChooser(sendIntent, null)
+//            activity.startActivity(shareIntent)
+//        }
+//
+//    }
 
     private fun setColor(liked: Boolean?, likedButton: Button) {
         if (liked!!) likedButton.setTextColor(ContextCompat.getColor(activity, R.color.purple_500))

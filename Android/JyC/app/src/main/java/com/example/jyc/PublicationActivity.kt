@@ -107,7 +107,7 @@ class PublicationActivity : AppCompatActivity() {
                 return true
             }
             R.id.nav_testActivity -> {
-                startActivity(Intent(this, FunctionsActivity::class.java))
+                startActivity(Intent(this, MyFunActivity::class.java))
                 return true
             }
             R.id.nav_new_event -> {
@@ -161,7 +161,6 @@ class PublicationActivity : AppCompatActivity() {
                             var emptyStringArray = listOf("")
                             var categorias = emptyStringArray
                             var tags = emptyStringArray
-                            var comentarios = emptyStringArray
                             var fecha = service.getDateTime()
                             var textomuylargo = editTextTextMultiLine.text.toString()
 
@@ -171,8 +170,7 @@ class PublicationActivity : AppCompatActivity() {
                                     "fecha" to fecha,
                                     "imagen" to imagenUri,
                                     "categorias" to categorias,
-                                    "tags" to tags,
-                                    "comentarios" to comentarios
+                                    "tags" to tags
                             )
 
                             val publicacionesDb = database.collection("publicaciones")
@@ -181,6 +179,7 @@ class PublicationActivity : AppCompatActivity() {
                                         .update("publicaciones", FieldValue.arrayUnion(documentReference.id))
                                         .addOnSuccessListener {
                                             Toast.makeText(this, "Photo Uploaded", Toast.LENGTH_SHORT).show();
+                                            startActivity(Intent(this, HomeActivity::class.java))
                                         }
                             }
                         }

@@ -23,10 +23,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JyC">
+        <activity android:name=".CommentsActivity"></activity>
+        <activity android:name=".CommentActivity" />
+        <activity android:name=".PopUpWindowsComment" />
         <activity
             android:name=".ImagenDetail"
             android:label="@string/title_activity_imagen_detail"
-            android:theme="@style/Theme.JyC.NoActionBar"></activity>
+            android:theme="@style/Theme.JyC.NoActionBar" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

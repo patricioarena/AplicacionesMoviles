@@ -51,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
         createAccount.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
-        
+
     }
 
     private fun loginUser() {

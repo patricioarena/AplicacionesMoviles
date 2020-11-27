@@ -308,7 +308,7 @@ class EventActivity : AppCompatActivity() {
                 return true
             }
             R.id.nav_testActivity -> {
-                startActivity(Intent(this, FunctionsActivity::class.java))
+                startActivity(Intent(this, MyFunActivity::class.java))
                 return true
             }
             R.id.nav_new_event -> {
