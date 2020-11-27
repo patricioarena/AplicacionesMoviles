@@ -3,6 +3,7 @@ package com.example.jyc
 import MyResources.Facade
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -16,6 +17,8 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -37,12 +40,18 @@ class MyFunActivity : AppCompatActivity() {
         service = Facade()
 
         button_post = findViewById(R.id.button_post)
-        button_post.setOnClickListener{
-            //val credentials = "username:$password"
-            val credentials = "postman:password"
+        button_post.setOnClickListener {
+
+
+            getRemoteConfig()
+
+
+            val credentials =
+                "key=AAAA9wJXDVo:APA91bFkgIsY3ot--5sdu5Ep94TWzg8tJZAEgRSCg2m6xmeFgNxuht6EYEj3-1pDbl9wnn1FVGrbGe0-zaNuxQVZYV_fIiUE-rmZTJ4wUSeEXlFfxRqiSJfrj2vWDa31vVEiNNIkz-t0\t\n"
             val url = "https://fcm.googleapis.com/fcm/send"
 
-            val jsonObject = JSONObject("""{
+            val jsonObject = JSONObject(
+                """{
   "to": "/topics/ONLINE",
   "notification": {
     "title": "Noticia para evento ONLINE",
@@ -52,25 +61,26 @@ class MyFunActivity : AppCompatActivity() {
     "titulo": "Este es el titular",
     "descripcion": "Aquí estará todo el contenido de la noticia"
   }
-}""")
-
-            // Make a volley custom json object request with basic authentication
-            val request = CustomJsonObjectRequestBasicAuth(Request.Method.POST, url,jsonObject,
-                { response->
-                    try {
-                        // Parse the json object here
-                        println("Response : $response")
-                    }catch (e:Exception){
-                        e.printStackTrace()
-                        println("Parse exception : $e")
-                    }
-                }, {
-                    println("Volley error: $it}")
-                },credentials
+}"""
             )
 
-            // Add the volley request to request queue
-            VolleySingleton.getInstance(this).addToRequestQueue(request)
+//            // Make a volley custom json object request with basic authentication
+//            val request = CustomJsonObjectRequestBasicAuth(Request.Method.POST, url, jsonObject,
+//                { response ->
+//                    try {
+//                        // Parse the json object here
+//                        println("Response : $response")
+//                    } catch (e: Exception) {
+//                        e.printStackTrace()
+//                        println("Parse exception : $e")
+//                    }
+//                }, {
+//                    println("Volley error: $it}")
+//                }, credentials
+//            )
+//
+//            // Add the volley request to request queue
+//            VolleySingleton.getInstance(this).addToRequestQueue(request)
         }
     }
 
@@ -86,7 +96,7 @@ class MyFunActivity : AppCompatActivity() {
         inflater.inflate(R.menu.menu_toobar, menu)
         return super.onCreateOptionsMenu(menu)
     }
-    
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle presses on the action bar menu items
         when (item.itemId) {
@@ -114,25 +124,36 @@ class MyFunActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
- class CustomJsonObjectRequestBasicAuth(
-     method:Int, url: String,
-     jsonObject: JSONObject?,
-     listener: Response.Listener<JSONObject>,
-     errorListener: Response.ErrorListener,
-     credentials:String
-)
-    : JsonObjectRequest(method,url, jsonObject, listener, errorListener) {
+    class CustomJsonObjectRequestBasicAuth(
+        method: Int, url: String,
+        jsonObject: JSONObject?,
+        listener: Response.Listener<JSONObject>,
+        errorListener: Response.ErrorListener,
+        credentials: String
+    ) : JsonObjectRequest(method, url, jsonObject, listener, errorListener) {
 
-    private var mCredentials:String = credentials
+        private var mCredentials: String = credentials
 
-    @Throws(AuthFailureError::class)
-    override fun getHeaders(): Map<String, String> {
-        val headers = HashMap<String, String>()
-        headers["Content-Type"] = "application/json"
-        //val credentials:String = "username:password"
-        val auth = "key=AAAA9wJXDVo:APA91bFkgIsY3ot--5sdu5Ep94TWzg8tJZAEgRSCg2m6xmeFgNxuht6EYEj3-1pDbl9wnn1FVGrbGe0-zaNuxQVZYV_fIiUE-rmZTJ4wUSeEXlFfxRqiSJfrj2vWDa31vVEiNNIkz-t0\t\n"
-        headers["Authorization"] = auth
-        return headers
+        @Throws(AuthFailureError::class)
+        override fun getHeaders(): Map<String, String> {
+            val auth = mCredentials
+            val headers = HashMap<String, String>()
+            headers["Content-Type"] = "application/json"
+            headers["Authorization"] = auth
+            return headers
+        }
     }
-}
+
+//
+    fun getRemoteConfig(){
+        var remoteConfig = FirebaseRemoteConfig.getInstance()
+        remoteConfig.fetchAndActivate()
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    var value = remoteConfig.getString("Authorization")
+//                    Log.d("TAG", "Config params updated: $value")
+//                    Toast.makeText(this, "Fetch and activate succeeded", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
 }
