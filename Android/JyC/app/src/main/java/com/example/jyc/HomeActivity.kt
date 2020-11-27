@@ -17,8 +17,12 @@ import java.util.*
 import android.content.ContentValues.TAG
 import android.text.TextUtils
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.installations.FirebaseInstallations
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_publication.*
 import kotlinx.android.synthetic.main.card_post.*
@@ -36,6 +40,8 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        notification()
 
         service = Facade()
 
@@ -176,6 +182,24 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
 
     override fun onItemClick(idUsuario: String?) {
         Toast.makeText(this, idUsuario, Toast.LENGTH_SHORT).show();
+    }
+
+    private fun notification(){
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            Log.d(TAG, token)
+            Toast.makeText(baseContext, "Token obtenido", Toast.LENGTH_SHORT).show()
+        })
+
+//        FirebaseMessaging.getInstance().subscribeToTopic("ONLINE")
+        FirebaseMessaging.getInstance().subscribeToTopic("PRESENCIAL")
     }
 
 
