@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -43,13 +42,13 @@ class CommentsActivity : AppCompatActivity() {
         idUsuario = intent.getStringExtra("idUsuario").toString()
         var listaIdcomentarios = intent.getStringArrayListExtra("listaIdcomentarios")
 
-        println(listaIdcomentarios)
+        //println(listaIdcomentarios)
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
         Picasso.get().load(imagen).into(post_imagen_comments)
 
-       // getAllCommets()
+        getAllCommets()
 
         post_comment.setOnClickListener{
             if(add_comment!!.text.toString().isEmpty()){
@@ -93,49 +92,31 @@ class CommentsActivity : AppCompatActivity() {
 //                println("Error getting documents: ")
 //            }
 
-        var comentarios = mutableListOf<Comment>()
+
         var comentarios2 = mutableListOf<Comment>()
 
-        db.collection("comentarios").orderBy("fecha", Query.Direction.DESCENDING)
-            .addSnapshotListener { querySnapshot: QuerySnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
+        // .orderBy("fecha", Query.Direction.DESCENDING)
 
-                if (firebaseFirestoreException != null) {
-                    Log.w(ContentValues.TAG, "Listen failed.", firebaseFirestoreException)
-                    return@addSnapshotListener
-                }
+        db.collection("comentarios").document("KDO0rOh4iN2nuk8XMXqY").get()
+            .addOnSuccessListener { result ->
+                var comment = Comment()
+                val document = result
+                comment.userName = userName
+                comment.date = document?.data?.get("fecha").toString()
+                comment.texto = document?.data?.get("texto").toString()
+                comentarios2.add(comment)
 
-                comentarios.clear()
-                comentarios2.clear()
-
-                for (document in querySnapshot!!) {
-
-                    var comment = Comment()
-                    comment.uid = document.id
-                    comment.idUsuario = document.data["idUsuario"].toString()
-                    comment.date = document.data["fecha"].toString()
-                    comment.texto = document.data["texto"].toString()
-
-
-                    comentarios.add(comment)
-
-                }
-
-                for (com in comentarios) {
-                    db.collection("usuarios").document(com.idUsuario.toString()).get()
-                        .addOnSuccessListener { result ->
-                            val document = result
-                            com.userName = document?.data?.get("nombre").toString() + " " + document?.data?.get("apellido").toString()
-                            comentarios2.add(com)
-                        }
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                var temp = comentarios2.toList();
-                                recyclerView.layoutManager = LinearLayoutManager(this)
-                                recyclerView.adapter = CommentsAdapter(this,temp)
-                            }
-                        }
+            }
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    var temp = comentarios2.toList();
+                    recycler_view_comment.layoutManager = LinearLayoutManager(this)
+                    recycler_view_comment.adapter = CommentsAdapter(this,temp)
+//                    println(temp[0].texto)
+//                    println(temp[0].date)
+//                    println(temp[0].userName)
                 }
             }
     }
-
 }
+

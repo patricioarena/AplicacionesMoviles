@@ -35,9 +35,9 @@ class CommentsAdapter(private val activity: Activity, private val dataset: List<
     inner class ComentariosViewHolder(val layout: View) : BaseViewHolder<Comment>(layout){
         override fun bind(item: Comment, position: Int) {
 
-            layout.user_name_comment.text = item.idUsuario
-            layout.comment_comment.text = item.texto
-            layout.date_comment.text = item.date
+            layout.user_name_comment.text = item.userName.toString()
+            layout.comment_comment.text = item.texto.toString()
+            layout.date_comment.text = item.date.toString()
         }
 
     }
