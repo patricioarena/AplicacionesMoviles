@@ -7,5 +7,5 @@ class RegisterDto {
     var email: String? = null
     var password: String? = null
     var fechaReg: String? = null
-
+    var fechaNac: String? = null
 }

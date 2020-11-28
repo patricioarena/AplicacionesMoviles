@@ -42,7 +42,7 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        notification()
+        //notification()
 
         service = Facade()
 
@@ -212,6 +212,8 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
 //        FirebaseMessaging.getInstance().subscribeToTopic("ONLINE")
 //        FirebaseMessaging.getInstance().subscribeToTopic("PRESENCIAL")
     }
+
+
 
 
 }

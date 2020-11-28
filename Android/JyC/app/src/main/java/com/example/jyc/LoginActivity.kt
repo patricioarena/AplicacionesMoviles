@@ -1,14 +1,17 @@
 package com.example.jyc
 
 import MyResources.Facade
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 // Actividad encargadar de redireccionar a las actividades,
 // registro , reseteo de contraseña o logear al usuario en la aplicacion
@@ -22,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var txtPassword: EditText
     private lateinit var progressBar: ProgressBar
     private lateinit var auth: FirebaseAuth
+    private var db = FirebaseFirestore.getInstance()
     private lateinit var btn_Login: Button
     private lateinit var service: Facade
 
@@ -38,6 +42,8 @@ class LoginActivity : AppCompatActivity() {
         btn_Login = findViewById(R.id.btn_Login)
 
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
         service = Facade()
 
         btn_Login.setOnClickListener {
@@ -79,20 +85,18 @@ class LoginActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(user, password).addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     progressBar.visibility = View.INVISIBLE
-
-
                     // Si la autenticacion es satisfactoria obtenemos el token
                     val mUser = FirebaseAuth.getInstance().currentUser
                     mUser!!.getIdToken(true)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 val idToken = task.result!!.token
-
+//                                Log.e("idToken", idToken.toString())
                                 // Guardamos el token  para inicio de sesion posterior sin tener que ingresar usuario y contraseña
                                 service.setPreferenceKey(this, "token", idToken)
+                                getFirebaseCurrentUser( mUser!!.uid)
                             }
                         }
-
                     startActivity(Intent(this, HomeActivity::class.java))
                 } else {
                     progressBar.visibility = View.INVISIBLE
@@ -114,6 +118,23 @@ class LoginActivity : AppCompatActivity() {
 
         pressedTime = System.currentTimeMillis();
     }
+
+    private fun getFirebaseCurrentUser(idUsuario:String?){
+        val docRef = db.collection("usuarios").document(idUsuario!!)
+        docRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        Log.e(ContentValues.TAG, "DocumentSnapshot data: ${document.data}")
+                    } else {
+                        Log.e(ContentValues.TAG, "No such document")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.e(ContentValues.TAG, "get failed with ", exception)
+                }
+    }
+
+
 
 }
 

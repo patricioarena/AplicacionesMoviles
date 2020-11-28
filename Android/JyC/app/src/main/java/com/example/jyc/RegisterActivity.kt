@@ -2,6 +2,7 @@ package com.example.jyc
 
 import Models.RegisterDto
 import MyResources.Facade
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_register.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,6 +32,8 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var register: RegisterDto
     private lateinit var service: Facade
+
+    private lateinit var editTextFechaNac: EditText
 
     private lateinit var name: EditText
     private lateinit var lastname: EditText
@@ -50,6 +54,17 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var btn_register: Button
 
+    private val CERO = "0"
+    private val BARRA = "/"
+
+    //Calendario para obtener fecha & hora
+    var c = Calendar.getInstance()
+
+    //Variables para obtener la fecha
+    var mes = c[Calendar.MONTH]
+    var dia = c[Calendar.DAY_OF_MONTH]
+    var anio = c[Calendar.YEAR]
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +83,7 @@ class RegisterActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         service = Facade()
 
+
 //        database = FirebaseDatabase.getInstance()//Para firebase realtime
 //        dbReference = database.reference.child("User") //Para firebase realtime
 //
@@ -75,6 +91,12 @@ class RegisterActivity : AppCompatActivity() {
 //        val users = database.collection("users") //Para firebase firestore
 
         btn_register.setOnClickListener { createNewAccount() }
+
+        editTextFechaNac = findViewById(R.id.editTextFechaNac)
+        editTextFechaNac.setOnClickListener {
+            obtenerFecha()
+        }
+
 
     }
 
@@ -122,6 +144,7 @@ class RegisterActivity : AppCompatActivity() {
             register.email = email.text.toString().toLowerCase()
             register.password = password.text.toString()
             register.fechaReg = service.getDateTime()
+            register.fechaNac = editTextFechaNac.text.toString()
             registerUser(register)
 
         }
@@ -179,6 +202,7 @@ class RegisterActivity : AppCompatActivity() {
                                 "apellido" to model.lastname,
                                 "email" to model.email,
                                 "fechaReg" to model.fechaReg,
+                                "fechaNac" to model.fechaNac,
                                 "domicilio" to domicilio,
                                 "telefonos" to telephones,
                                 "publicaciones" to publicaciones
@@ -196,7 +220,31 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-
+    private fun obtenerFecha() {
+        val recogerFecha = DatePickerDialog(
+                this,
+                { view, year, month, dayOfMonth -> //Esta variable lo que realiza es aumentar en uno el mes ya que comienza desde 0 = enero
+                    val mesActual = month + 1
+                    //Formateo el día obtenido: antepone el 0 si son menores de 10
+                    val diaFormateado =
+                            if (dayOfMonth < 10) CERO.toString() + dayOfMonth.toString() else dayOfMonth.toString()
+                    //Formateo el mes obtenido: antepone el 0 si son menores de 10
+                    val mesFormateado =
+                            if (mesActual < 10) CERO.toString() + mesActual.toString() else mesActual.toString()
+                    //Muestro la fecha con el formato deseado
+                    editTextFechaNac.setText(diaFormateado + BARRA.toString() + mesFormateado + BARRA + year)
+                }, //Estos valores deben ir en ese orden, de lo contrario no mostrara la fecha actual
+                /**
+                 * También puede cargar los valores que usted desee
+                 */
+                /**
+                 * También puede cargar los valores que usted desee
+                 */
+                anio, mes, dia
+        )
+        //Muestro el widget
+        recogerFecha.show()
+    }
 
 }
 

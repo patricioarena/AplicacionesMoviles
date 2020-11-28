@@ -56,35 +56,33 @@ class MyFunActivity : AppCompatActivity() {
 
         radioButton_Online.setSelected(true)
         radioButton_Online.setOnClickListener{
-            scope = EventActivity.Evento.ONLINE.toString()
+            scope = "ONLINE"
         }
 
 
         radioButton_Presencial = findViewById(R.id.radioButton_Presencial)
         radioButton_Presencial.setOnClickListener{
-            scope = EventActivity.Evento.PRESENCIAL.toString()
+            scope = "PRESENCIAL"
         }
 
 
 
         button_susc_online = findViewById(R.id.button_susc_online)
         button_susc_online.setOnClickListener{
-            subscripcion(scope!!)
+            subscripcion("ONLINE")
         }
 
 
         button_susc_presencial = findViewById(R.id.button_susc_presencial)
         button_susc_presencial.setOnClickListener{
-            subscripcion(scope!!)
+            subscripcion("PRESENCIAL")
         }
 
 
 
-
-
-
-
         button_post.setOnClickListener {
+
+            scope?.let { it1 -> Log.i("Subscribed: ", it1) }
 
             val jsonObject = JSONObject(
                     """{
@@ -206,21 +204,32 @@ class MyFunActivity : AppCompatActivity() {
     }
 
     private fun subscripcion(topic:String){
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
+//                return@OnCompleteListener
+//            }
+//
+//            // Get new FCM registration token
+//            val token = task.result
+//
+//            Log.i("Token", token)
+//            Toast.makeText(baseContext, "Token obtenido", Toast.LENGTH_SHORT).show()
+//        })
 
-            // Get new FCM registration token
-            val token = task.result
+        FirebaseMessaging.getInstance().subscribeToTopic("topic")
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Log.w(ContentValues.TAG, "Subscribe failed: ", task.exception)
+                        return@addOnCompleteListener
+                    }
 
-            Log.e(ContentValues.TAG, token)
-            Toast.makeText(baseContext, "Token obtenido", Toast.LENGTH_SHORT).show()
-        })
+                    Log.i("Subscribed: ", topic)
 
-        FirebaseMessaging.getInstance().subscribeToTopic(topic)
-//        FirebaseMessaging.getInstance().subscribeToTopic("PRESENCIAL")
+                    Toast.makeText(this, "Subscribed: ${topic}", Toast.LENGTH_SHORT).show()
+                }
+
+
     }
 
 }
