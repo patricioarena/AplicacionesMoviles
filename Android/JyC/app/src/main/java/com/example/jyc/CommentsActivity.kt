@@ -41,9 +41,9 @@ class CommentsActivity : AppCompatActivity() {
         userName = intent.getStringExtra("userName").toString()
         imagen = intent.getStringExtra("imagen").toString()
         idUsuario = intent.getStringExtra("idUsuario").toString()
-        var listaIdcomentarios = intent.getStringExtra("listaIdcomentarios")
+        var listaIdcomentarios = intent.getStringArrayListExtra("listaIdcomentarios")
 
-        println(listaIdcomentarios?.toMutableList())
+        println(listaIdcomentarios)
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
