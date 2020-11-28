@@ -9,7 +9,9 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
@@ -30,11 +32,14 @@ class CommentsActivity : AppCompatActivity() {
 
     private lateinit var facade: Facade
 
+    var comentarios = mutableListOf<Comment>()
+    var comentarios2 = mutableListOf<Comment>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comments)
 
-        val intent  = intent
+        val intent = intent
         postId = intent.getStringExtra("postId").toString()
         publicacionId = intent.getStringExtra("publicacionId").toString()
         userName = intent.getStringExtra("userName").toString()
@@ -48,25 +53,27 @@ class CommentsActivity : AppCompatActivity() {
 
         Picasso.get().load(imagen).into(post_imagen_comments)
 
-        getAllCommets()
+        getAllCommets(listaIdcomentarios)
 
-        post_comment.setOnClickListener{
-            if(add_comment!!.text.toString().isEmpty()){
-                Toast.makeText(this@CommentsActivity, "Escriba un comentario...", Toast.LENGTH_LONG).show()
-            }
-            else{
+        post_comment.setOnClickListener {
+            if (add_comment!!.text.toString().isEmpty()) {
+                Toast.makeText(this@CommentsActivity, "Escriba un comentario...", Toast.LENGTH_LONG)
+                    .show()
+            } else {
                 addComment()
             }
         }
     }
 
-    private fun addComment(){
+    private fun addComment() {
         facade = Facade()
         var fecha = facade.getDateTime()
 
-        val commentMap = hashMapOf("fecha" to fecha.toString(),
-                                   "idUsuario" to firebaseUser?.uid.toString(),
-                                   "texto" to add_comment.text.toString())
+        val commentMap = hashMapOf(
+            "fecha" to fecha.toString(),
+            "idUsuario" to firebaseUser?.uid.toString(),
+            "texto" to add_comment.text.toString()
+        )
 
 
         val comments = db.collection("comentarios")
@@ -75,48 +82,78 @@ class CommentsActivity : AppCompatActivity() {
                 .update("comentarios", FieldValue.arrayUnion(documentReference.id))
                 .addOnSuccessListener {
                     Toast.makeText(this, "Comentario Agregado", Toast.LENGTH_SHORT).show();
-                    startActivity(Intent(this, HomeActivity::class.java))
+//                    startActivity(Intent(this, HomeActivity::class.java))
+
+                    //Creaamos un nuevo objeto comnet para guardar los datos del mensaje que se acaba de enviar al servidor
+                    var comment = Comment()
+
+                    comment.date = commentMap["fecha"].toString()
+                    comment.idUsuario = commentMap["idUsuario"].toString()
+                    comment.texto = commentMap["texto"].toString()
+
+                    //falta recuperar el nombre de usuario actual
+                    comment.userName = "Patricio E. Arena"
+
+                    // almacenamos el comentario en la lista de comentarios que ya teniamos
+                    comentarios2.add(comment)
+
+                    //limpiamos el recycler para volver a dibujar los comentarios incluyendo el comentario nuevo
+                    // de este modo no tenemos que ir al servidor a recuperar el comentario que realizo el usuario
+                    recycler_view_comment.getRecycledViewPool().clear();
+                    recycler_view_comment.layoutManager = LinearLayoutManager(this)
+                    recycler_view_comment.adapter = CommentsAdapter(this, comentarios2)
+                    //desplazamos la vista hacia la parte inferior donde aparecera el nuevo comentario
+                    (recycler_view_comment.layoutManager as LinearLayoutManager).scrollToPosition(comentarios2.count() -1)
                 }
         }
 
         add_comment!!.text.clear()
     }
 
-    private fun getAllCommets(){
-//        val publicacion = db.collection("publicaciones").document("iFYSz4whOzoJUU5QSkqq"
-//        ).get()
-//            .addOnSuccessListener { document ->
-//                println(document.data)
-//            }
-//            .addOnFailureListener { exception ->
-//                println("Error getting documents: ")
-//            }
+    // .orderBy("fecha", Query.Direction.DESCENDING)
+    private fun getAllCommets(listaIdcomentarios: ArrayList<String>?) {
 
+        comentarios.clear()
+        comentarios2.clear()
 
-        var comentarios2 = mutableListOf<Comment>()
+        if (listaIdcomentarios != null) {
 
-        // .orderBy("fecha", Query.Direction.DESCENDING)
-
-        db.collection("comentarios").document("KDO0rOh4iN2nuk8XMXqY").get()
-            .addOnSuccessListener { result ->
+            for (idComentario in listaIdcomentarios) {
                 var comment = Comment()
-                val document = result
-                comment.userName = userName
-                comment.date = document?.data?.get("fecha").toString()
-                comment.texto = document?.data?.get("texto").toString()
-                comentarios2.add(comment)
+                db.collection("comentarios").document(idComentario).get()
+                    .addOnSuccessListener { result ->
 
+                        val document = result
+                        comment.idUsuario = document?.data?.get("idUsuario").toString()
+                        comment.date = document?.data?.get("fecha").toString()
+                        comment.texto = document?.data?.get("texto").toString()
+                        comentarios.add(comment)
+                    }
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+
+                            db.collection("usuarios")
+                                .document(comment.idUsuario.toString()).get()
+                                .addOnSuccessListener { result ->
+                                    val document = result
+                                    comment.userName = document?.data?.get("nombre").toString() + " " + document?.data?.get("apellido").toString()
+                                    comentarios2.add(comment)
+                                }.addOnCompleteListener{
+                                    var temp = comentarios2.toList();
+                                    if (temp != null) {
+                                        recycler_view_comment.layoutManager = LinearLayoutManager(this)
+                                        recycler_view_comment.adapter = CommentsAdapter(this, temp)
+                                    }
+                                }
+
+
+
+                        }
+                    }
             }
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    var temp = comentarios2.toList();
-                    recycler_view_comment.layoutManager = LinearLayoutManager(this)
-                    recycler_view_comment.adapter = CommentsAdapter(this,temp)
-//                    println(temp[0].texto)
-//                    println(temp[0].date)
-//                    println(temp[0].userName)
-                }
-            }
+
+
+        }
     }
 }
 

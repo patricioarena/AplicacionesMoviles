@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.comment.view.*
 class CommentsAdapter(private val activity: Activity, private val dataset: List<Comment>) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComentariosViewHolder {
-        val layout = LayoutInflater.from(parent.context).inflate(R.layout.activity_comments, parent, false)
+        val layout = LayoutInflater.from(parent.context).inflate(R.layout.comment, parent, false)
         return ComentariosViewHolder(layout)
     }
 
@@ -35,9 +35,9 @@ class CommentsAdapter(private val activity: Activity, private val dataset: List<
     inner class ComentariosViewHolder(val layout: View) : BaseViewHolder<Comment>(layout){
         override fun bind(item: Comment, position: Int) {
 
-            layout.user_name_comment.text = item.userName.toString()
-            layout.comment_comment.text = item.texto.toString()
-            layout.date_comment.text = item.date.toString()
+            layout.user_name_comment.text = item.userName
+            layout.comment_comment.text = item.texto
+            layout.date_comment.text = item.date
         }
 
     }
