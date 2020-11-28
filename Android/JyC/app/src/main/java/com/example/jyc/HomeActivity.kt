@@ -81,12 +81,22 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
                         var losUsuariosQueDieronLike = document.data["likes"] as ArrayList<String>?
                         post.likes = losUsuariosQueDieronLike
 
-                        var cantidad = losUsuariosQueDieronLike?.count()
-                        if (cantidad == null) {
-                            cantidad = 0
+                        var losUsuariosQueComentaron = document.data["comentarios"] as ArrayList<String>?
+                        post.listaIdcomentarios = losUsuariosQueComentaron
+
+                        var cantidadLikes = losUsuariosQueDieronLike?.count()
+                        if (cantidadLikes == null) {
+                            cantidadLikes = 0
                         }
 
-                        post.cantidadDeLikes = cantidad
+                        var cantidadComments = losUsuariosQueComentaron?.count()
+                        if (cantidadComments == null){
+                            cantidadComments = 0
+                        }
+
+
+                        post.cantidadDeLikes = cantidadLikes
+                        post.cantidadDeComentarios = cantidadComments
 
                         publicaciones.add(post)
                         //Log.d("TAG", "${document.id} => ${post.post}")

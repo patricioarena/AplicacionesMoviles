@@ -72,6 +72,7 @@ class PostAdapter(private val activity: Activity, private val dataset: List<Post
             Picasso.get().load(item.image).into(layout.image_tv)
             layout.likesCount_tv.text = "${item.cantidadDeLikes} likes"
             layout.fecha_tv.text = item.date
+            layout.commentsCount_tv.text = "${item.cantidadDeComentarios} comentarios"
 
             setColor(liked, layout.like_btn)
 
@@ -104,6 +105,8 @@ class PostAdapter(private val activity: Activity, private val dataset: List<Post
                 commentIntent.putExtra("userName", item.userName)
                 commentIntent.putExtra("imagen", item.image)
                 commentIntent.putExtra("idUsuario", item.idUsuario)
+                //paso los id de comentarios que tiene una publicacion
+                commentIntent.putStringArrayListExtra("listaIdcomentarios", item.listaIdcomentarios)
                 activity.startActivity(commentIntent)
             }
 
