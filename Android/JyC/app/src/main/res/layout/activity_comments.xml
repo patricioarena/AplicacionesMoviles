@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CommentsActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/app_bar_layout_comments"
+        android:background="@android:color/white"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/comment_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@android:color/white"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comments"
+                    android:textSize="18sp"
+                    android:maxLines="1"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:layout_centerVertical="true"
+                    />
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ImageView
+        android:id="@+id/post_imagen_comments"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@+id/app_bar_layout_comments"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_menu_gallery"></ImageView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_comment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/post_imagen_comments"
+        android:layout_margin="5dp"
+        android:layout_above="@+id/commentRelative"
+        >
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <RelativeLayout
+        android:id="@+id/commentRelative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#FFF"
+        android:padding="4dp"
+        >
+
+        <TextView
+            android:id="@+id/user_name_commet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="Name User"
+            android:textSize="18dp"
+            android:padding="8dp"
+            android:layout_marginTop="10dp"
+            >
+        </TextView>
+
+        <EditText
+            android:id="@+id/add_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/user_name_commet"
+            android:layout_toLeftOf="@+id/post_comment"
+            android:hint="Write your Comment Here!!"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:padding="8dp"
+            >
+        </EditText>
+
+        <TextView
+            android:id="@+id/post_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/design_default_color_primary_dark"
+            android:textStyle="bold"
+            android:text="Publish"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:textSize="18dp"
+            android:layout_marginEnd="6dp"
+            >
+        </TextView>
+
+    </RelativeLayout>
+
+</RelativeLayout>
