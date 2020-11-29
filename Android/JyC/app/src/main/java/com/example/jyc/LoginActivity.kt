@@ -104,6 +104,8 @@ class LoginActivity : AppCompatActivity() {
 //                                Log.e("idToken", idToken.toString())
                                 // Guardamos el token  para inicio de sesion posterior sin tener que ingresar usuario y contraseña
                                 service.setPreferenceKey(this, "token", idToken)
+                                // Guardamos el idUsuario para realizar consultas a SQLLite
+                                service.setPreferenceKey(this, "idUsuario", mUser.uid)
 
                                 var test =  dbLite.readData(mUser.uid)
                                 if (test!= null){

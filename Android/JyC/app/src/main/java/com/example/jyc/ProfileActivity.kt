@@ -1,5 +1,7 @@
 package com.example.jyc
 
+import Models.UserDb
+import MyResources.DataBaseHelper
 import MyResources.Facade
 import android.content.ContentValues
 import android.content.Intent
@@ -24,6 +26,11 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
     private lateinit var service: Facade
     private lateinit var toolbar: Toolbar
     private var db = FirebaseFirestore.getInstance()
+    private lateinit var idUsuario: String
+
+    //Para interectuar con la base de datos
+    private lateinit var dbLite: DataBaseHelper
+    private lateinit var userDb: UserDb
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +39,16 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         //notification()
 
         service = Facade()
+
+        //Obtenemos el idUsruario de las preferencias que se guardo al hacer login
+        idUsuario = service.getPreferenceKey(this, "idUsuario").toString()
+
+        // Inicializamos una instancia de la base de datos
+        dbLite  = DataBaseHelper(this)
+
+        //Obtenemos el usuario
+        userDb = dbLite.readData(idUsuario)!!
+
 
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)
@@ -53,7 +70,7 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         var publicaciones2 = mutableListOf<Post>()
 
 
-        db.collection("publicaciones").whereEqualTo("idUsuario", "Z2RN0gBILIUVcIQ4nX1Jg2olgwF2")
+        db.collection("publicaciones").whereEqualTo("idUsuario", userDb.idUsuario)
                 .addSnapshotListener { querySnapshot: QuerySnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
 
                     if (firebaseFirestoreException != null) {
