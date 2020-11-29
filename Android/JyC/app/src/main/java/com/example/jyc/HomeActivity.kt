@@ -176,6 +176,10 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
                 startActivity(Intent(this, PublicationActivity::class.java))
                 return true
             }
+            R.id.nav_profile -> {
+                startActivity(Intent(this, ProfileActivity::class.java))
+                return true
+            }
             R.id.nav_logout -> {
                 logoutUser()
                 return true

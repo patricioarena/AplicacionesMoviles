@@ -23,9 +23,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JyC">
-        <activity android:name=".CommentsActivity"></activity>
-        <activity android:name=".CommentActivity" />
-        <activity android:name=".PopUpWindowsComment" />
         <activity
             android:name=".ImagenDetail"
             android:label="@string/title_activity_imagen_detail"
@@ -46,6 +43,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".CommentsActivity" />
         <activity android:name=".EventActivity" />
         <activity android:name=".MyFunActivity" />
         <activity android:name=".ForgotPassActivity" />
@@ -53,6 +51,7 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".PublicationActivity" />
         <activity android:name=".RegisterActivity" />
+        <activity android:name=".ProfileActivity" />
 
         <service
             android:name=".MyFirebaseMessagingService"
