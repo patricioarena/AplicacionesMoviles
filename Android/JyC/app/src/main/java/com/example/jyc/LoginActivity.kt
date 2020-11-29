@@ -1,5 +1,8 @@
 package com.example.jyc
 
+import Models.Domicilio
+import Models.UserDb
+import MyResources.DataBaseHelper
 import MyResources.Facade
 import android.content.ContentValues
 import android.content.Intent
@@ -12,6 +15,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.Gson
+import com.google.gson.stream.JsonReader
+import java.io.StringReader
+
 
 // Actividad encargadar de redireccionar a las actividades,
 // registro , reseteo de contraseña o logear al usuario en la aplicacion
@@ -28,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
     private var db = FirebaseFirestore.getInstance()
     private lateinit var btn_Login: Button
     private lateinit var service: Facade
+    private lateinit var dbLite: DataBaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -40,6 +48,8 @@ class LoginActivity : AppCompatActivity() {
         txtPassword = findViewById(R.id.txtPassword)
         progressBar = findViewById(R.id.progressBar)
         btn_Login = findViewById(R.id.btn_Login)
+
+        dbLite  = DataBaseHelper(this)
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
@@ -94,7 +104,14 @@ class LoginActivity : AppCompatActivity() {
 //                                Log.e("idToken", idToken.toString())
                                 // Guardamos el token  para inicio de sesion posterior sin tener que ingresar usuario y contraseña
                                 service.setPreferenceKey(this, "token", idToken)
-                                getFirebaseCurrentUser( mUser!!.uid)
+
+                                var test =  dbLite.readData(mUser.uid)
+                                if (test!= null){
+                                    Log.e(ContentValues.TAG, "Se encontro uruario en SQLLite con idUruario: ${test.email}")
+                                }else {
+                                    Log.e(ContentValues.TAG, "No se encontro uruario en SQLLite")
+                                    getFirebaseCurrentUser(mUser.uid)
+                                }
                             }
                         }
                     startActivity(Intent(this, HomeActivity::class.java))
@@ -119,12 +136,48 @@ class LoginActivity : AppCompatActivity() {
         pressedTime = System.currentTimeMillis();
     }
 
-    private fun getFirebaseCurrentUser(idUsuario:String?){
+    private fun getFirebaseCurrentUser(idUsuario: String?){
         val docRef = db.collection("usuarios").document(idUsuario!!)
         docRef.get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
-                        Log.e(ContentValues.TAG, "DocumentSnapshot data: ${document.data}")
+
+                        var myJson = document.data?.get("domicilio").toString()
+                        var domicilio = Gson().fromJson(myJson, Domicilio::class.java)
+
+                        var usuario = UserDb()
+                        usuario.idUsuario = idUsuario
+                        usuario.nombre = document.data?.get("nombre").toString()
+                        usuario.apellido = document.data?.get("apellido").toString()
+                        usuario.calle = domicilio.calle
+                        usuario.numero = domicilio.numero
+                        usuario.cp = domicilio.cp
+                        usuario.ciudad = domicilio.ciudad
+                        usuario.provincia = domicilio.provincia
+                        usuario.pais = domicilio.pais
+                        usuario.email = document.data?.get("email").toString()
+                        usuario.fechaReg = document.data?.get("fechaReg").toString()
+                        usuario.fechaNac = document.data?.get("fechaNac").toString()
+                        usuario.tel = document.data?.get("tel").toString()
+                        usuario.cel = document.data?.get("cel").toString()
+
+                        dbLite.insertData(usuario)
+
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data: ${document.data}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data nombre: ${document.data?.get("nombre").toString()}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data apellido: ${document.data?.get("apellido").toString()}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data fechaNac: ${document.data?.get("fechaNac").toString()}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data fechaReg: ${document.data?.get("fechaReg").toString()}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data email: ${document.data?.get("email").toString()}")
+
+
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data calle: ${domicilio.calle}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data numero: ${domicilio.numero}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data cp: ${domicilio.cp}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data ciudad: ${domicilio.ciudad}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data provincia: ${domicilio.provincia}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data pais: ${domicilio.pais}")
+
                     } else {
                         Log.e(ContentValues.TAG, "No such document")
                     }
@@ -133,6 +186,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.e(ContentValues.TAG, "get failed with ", exception)
                 }
     }
+
 
 
 

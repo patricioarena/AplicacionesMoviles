@@ -36,4 +36,18 @@ class Facade {
         val date = Date()
         return dateFormat.format(date)
     }
+
+    fun removeSpaces(palabra: String): String{
+        var pal = palabra
+        pal = pal.trimEnd()
+        pal = pal.trimStart()
+        pal = pal.replace("\\s".toRegex(), "%20")
+        return pal
+    }
+
+    fun replace20forSpace(palabra: String): String{
+        var pal = palabra.replace("%20".toRegex(), " ")
+        return pal
+    }
+
 }

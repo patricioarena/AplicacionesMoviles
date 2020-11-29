@@ -17,9 +17,6 @@ import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_register.*
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -126,21 +123,25 @@ class RegisterActivity : AppCompatActivity() {
 
         if (TextUtils.isEmpty(repassword.text.toString())) {
             Toast.makeText(this, "Password confirmation is empty", Toast.LENGTH_SHORT).show()
-        }
-
-        else if (!(email.text.toString().toLowerCase()).equals(reemail.text.toString().toLowerCase())  ) {
-            Toast.makeText(this, "Email and email confirmation do not match", Toast.LENGTH_SHORT).show()
-        }
-
-        else if (!(password.text.toString()).equals(repassword.text.toString())  ) {
-            Toast.makeText(this, "Password and password confirmation do not match", Toast.LENGTH_SHORT).show()
-        }
-
-        else {
+        } else if (!(email.text.toString().toLowerCase()).equals(
+                reemail.text.toString().toLowerCase()
+            )
+        ) {
+            Toast.makeText(this, "Email and email confirmation do not match", Toast.LENGTH_SHORT)
+                .show()
+        } else if (!(password.text.toString()).equals(repassword.text.toString())) {
+            Toast.makeText(
+                this,
+                "Password and password confirmation do not match",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
 
             register = RegisterDto()
-            register.name = name.text.toString().toLowerCase().split(" ").joinToString(" ") { it.capitalize() }
-            register.lastname = lastname.text.toString().toLowerCase().split(" ").joinToString(" ") { it.capitalize() }
+            register.name =
+                name.text.toString().toLowerCase().split(" ").joinToString(" ") { it.capitalize() }
+            register.lastname = lastname.text.toString().toLowerCase().split(" ")
+                .joinToString(" ") { it.capitalize() }
             register.email = email.text.toString().toLowerCase()
             register.password = password.text.toString()
             register.fechaReg = service.getDateTime()
@@ -164,83 +165,80 @@ class RegisterActivity : AppCompatActivity() {
     private fun registerUser(model: RegisterDto) {
         // En este bloque se realiza la creacion del usuario en firebase
         auth.createUserWithEmailAndPassword(model.email.toString(), model.password.toString())
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        val user: FirebaseUser? = auth.currentUser
-                        verifyEmail(user)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user: FirebaseUser? = auth.currentUser
+                    verifyEmail(user)
 
-                        /*// una vez registrado correctamente es almacenada la informacion en usuario en firebase realtime
-                        val userDB = dbReference.child(user?.uid.toString())
-                        userDB.child("name").setValue(name)
-                        userDB.child("lastname").setValue(lastname)
-                        */
+                    /*// una vez registrado correctamente es almacenada la informacion en usuario en firebase realtime
+                    val userDB = dbReference.child(user?.uid.toString())
+                    userDB.child("name").setValue(name)
+                    userDB.child("lastname").setValue(lastname)
+                    */
 
-                        val publicaciones = listOf(
-                                "ObjectId(507f191e810c19729de860e3)",
-                                "ObjectId(507f191e810c19729de860e3)",
-                                "ObjectId(507f191e810c19729de860e3)"
-                        )
+                    var calle = " la calle loca "
+                    var localidad = "florencio varela "
+                    var provincia = " buenos aires"
+                    var pais = "argentina"
 
-                        val domicilio = hashMapOf(
-                                "calle" to 626,
-                                "numero" to 452,
-                                "cp" to 1888,
-                                "ciudad" to "florencio varela",
-                                "prov_est" to "buenos aires",
-                                "pais" to "argentina"
-                        )
+                    localidad = service.removeSpaces(localidad)
+                    provincia = service.removeSpaces(provincia)
+                    calle = service.removeSpaces(calle)
+                    pais = service.removeSpaces(pais)
 
-                        val telephones = hashMapOf(
-                                "cel" to 1133142754,
-                                "tel" to 42740810
-                        )
+                    val domicilio = hashMapOf(
+                        "calle" to calle,
+                        "numero" to 452,
+                        "cp" to 1888,
+                        "ciudad" to localidad,
+                        "provincia" to provincia,
+                        "pais" to pais
+                    )
 
-//                            var date = LocalDateTime.now().dayOfMonth.toString() +"/"+ LocalDateTime.now().monthValue.toString() +"/"+ LocalDateTime.now().year.toString()
+                    val userInfo = hashMapOf(
+                        "nombre" to model.name,
+                        "apellido" to model.lastname,
+                        "email" to model.email,
+                        "fechaReg" to model.fechaReg,
+                        "fechaNac" to model.fechaNac,
+                        "domicilio" to domicilio,
+                        "cel" to "1133142754",
+                        "tel" to "42740810"
+                    )
 
-                        val userInfo = hashMapOf(
-                                "nombre" to model.name,
-                                "apellido" to model.lastname,
-                                "email" to model.email,
-                                "fechaReg" to model.fechaReg,
-                                "fechaNac" to model.fechaNac,
-                                "domicilio" to domicilio,
-                                "telefonos" to telephones,
-                                "publicaciones" to publicaciones
-                        )
-
-                        val users = database.collection("usuarios")
-                        users.document(user?.uid.toString()).set(userInfo)
+                    val users = database.collection("usuarios")
+                    users.document(user?.uid.toString()).set(userInfo)
 //                            users.document(user?.uid.toString()).collection("publicaciones")
 //                                .add(publicaciones)
 
-                        progressBar.visibility = View.INVISIBLE
-                        startActivity(Intent(this, LoginActivity::class.java))
-                    }
+                    progressBar.visibility = View.INVISIBLE
+                    startActivity(Intent(this, LoginActivity::class.java))
                 }
+            }
 
     }
 
     private fun obtenerFecha() {
         val recogerFecha = DatePickerDialog(
-                this,
-                { view, year, month, dayOfMonth -> //Esta variable lo que realiza es aumentar en uno el mes ya que comienza desde 0 = enero
-                    val mesActual = month + 1
-                    //Formateo el día obtenido: antepone el 0 si son menores de 10
-                    val diaFormateado =
-                            if (dayOfMonth < 10) CERO.toString() + dayOfMonth.toString() else dayOfMonth.toString()
-                    //Formateo el mes obtenido: antepone el 0 si son menores de 10
-                    val mesFormateado =
-                            if (mesActual < 10) CERO.toString() + mesActual.toString() else mesActual.toString()
-                    //Muestro la fecha con el formato deseado
-                    editTextFechaNac.setText(diaFormateado + BARRA.toString() + mesFormateado + BARRA + year)
-                }, //Estos valores deben ir en ese orden, de lo contrario no mostrara la fecha actual
-                /**
-                 * También puede cargar los valores que usted desee
-                 */
-                /**
-                 * También puede cargar los valores que usted desee
-                 */
-                anio, mes, dia
+            this,
+            { view, year, month, dayOfMonth -> //Esta variable lo que realiza es aumentar en uno el mes ya que comienza desde 0 = enero
+                val mesActual = month + 1
+                //Formateo el día obtenido: antepone el 0 si son menores de 10
+                val diaFormateado =
+                    if (dayOfMonth < 10) CERO.toString() + dayOfMonth.toString() else dayOfMonth.toString()
+                //Formateo el mes obtenido: antepone el 0 si son menores de 10
+                val mesFormateado =
+                    if (mesActual < 10) CERO.toString() + mesActual.toString() else mesActual.toString()
+                //Muestro la fecha con el formato deseado
+                editTextFechaNac.setText(diaFormateado + BARRA.toString() + mesFormateado + BARRA + year)
+            }, //Estos valores deben ir en ese orden, de lo contrario no mostrara la fecha actual
+            /**
+             * También puede cargar los valores que usted desee
+             */
+            /**
+             * También puede cargar los valores que usted desee
+             */
+            anio, mes, dia
         )
         //Muestro el widget
         recogerFecha.show()
