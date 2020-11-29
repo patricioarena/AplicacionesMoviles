@@ -76,6 +76,7 @@ class CommentsActivity : AppCompatActivity() {
         )
 
 
+
         val comments = db.collection("comentarios")
         comments.add(commentMap).addOnSuccessListener { documentReference ->
             db.collection("publicaciones").document(postId)
@@ -86,6 +87,7 @@ class CommentsActivity : AppCompatActivity() {
 
                     //Creaamos un nuevo objeto comnet para guardar los datos del mensaje que se acaba de enviar al servidor
                     var comment = Comment()
+
 
                     comment.date = commentMap["fecha"].toString()
                     comment.idUsuario = commentMap["idUsuario"].toString()

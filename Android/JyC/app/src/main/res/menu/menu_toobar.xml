@@ -21,6 +21,10 @@
         android:title="Nueva publicacion" />
 
     <item
+        android:id="@+id/nav_profile"
+        android:title="Mi Perfil"
+        />
+    <item
         android:id="@+id/nav_new_event"
         android:title="Crear evento" />
 

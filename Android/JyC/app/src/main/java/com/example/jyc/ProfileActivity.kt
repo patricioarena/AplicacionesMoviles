@@ -1,38 +1,25 @@
 package com.example.jyc
 
 import MyResources.Facade
+import android.content.ContentValues
 import android.content.Intent
-
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_home.*
-import java.util.*
-import android.content.ContentValues.TAG
-import android.text.TextUtils
-import androidx.recyclerview.widget.DividerItemDecoration
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.installations.FirebaseInstallations
-import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.activity_publication.*
-import kotlinx.android.synthetic.main.card_post.*
-import java.lang.Exception
-import java.lang.reflect.Array
-import kotlin.collections.ArrayList
+import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_profile.*
 
-
-class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListener {
+class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickListener {
     private var pressedTime: Long = 0
     private lateinit var service: Facade
     private lateinit var toolbar: Toolbar
@@ -40,7 +27,7 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        setContentView(R.layout.activity_profile)
 
         //notification()
 
@@ -49,17 +36,28 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)
         toolbar.title = "Jardines y Cultivos";
-        toolbar.subtitle = "Contenido principal del feed";
+        toolbar.subtitle = "Mi Perfil";
         setSupportActionBar(toolbar)
+
+        OnclickButtonMyPublish ()
+
+        images_grid_btn.setOnClickListener(){
+            OnclickButtonMyPublish()
+        }
+
+    }
+
+    private fun OnclickButtonMyPublish (){
 
         var publicaciones = mutableListOf<Post>()
         var publicaciones2 = mutableListOf<Post>()
 
-        db.collection("publicaciones").orderBy("fecha", Query.Direction.DESCENDING)
+
+        db.collection("publicaciones").whereEqualTo("idUsuario", "Z2RN0gBILIUVcIQ4nX1Jg2olgwF2")
                 .addSnapshotListener { querySnapshot: QuerySnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
 
                     if (firebaseFirestoreException != null) {
-                        Log.w(TAG, "Listen failed.", firebaseFirestoreException)
+                        Log.w(ContentValues.TAG, "Listen failed.", firebaseFirestoreException)
                         return@addSnapshotListener
                     }
 
@@ -113,37 +111,13 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
                                         var temp = publicaciones2.toList();
-                                        recyclerView.layoutManager = LinearLayoutManager(this)
-                                        recyclerView.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
-                                        recyclerView.adapter = PostAdapter(this,temp,this)
+                                        recycler_view_user_profile.layoutManager = LinearLayoutManager(this)
+                                        recycler_view_user_profile.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
+                                        recycler_view_user_profile.adapter = PostAdapter(this,temp,this)
                                     }
                                 }
                     }
                 }
-
-    }
-
-
-    // Si la autenticacion es satisfactoria guardamos el token
-    // por lo tanto la implementacion de la funcionalidad de logout
-    // se basa en el paso inverso que es borrar el token y posteriormente cerrar la aplicacion
-    // tambien podriamos reenviar al usuario al login
-    private fun logoutUser() {
-        service.deletePreferenceKey(this, "token")
-        super.finishAffinity()
-    }
-
-    // Sobrescribimos el metodo que la salida de la aplicacion sea mas agil
-    // de no ser asi volverimos a la actividad Splash y tendriamos que salir desde ahi
-    override fun onBackPressed() {
-
-        if (pressedTime + 2000 > System.currentTimeMillis()) {
-            super.finishAffinity()
-        } else {
-            Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
-        }
-
-        pressedTime = System.currentTimeMillis();
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -176,12 +150,7 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
                 startActivity(Intent(this, PublicationActivity::class.java))
                 return true
             }
-            R.id.nav_profile -> {
-                startActivity(Intent(this, ProfileActivity::class.java))
-                return true
-            }
             R.id.nav_logout -> {
-                logoutUser()
                 return true
             }
         }
@@ -198,26 +167,5 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
     override fun onItemClick(idUsuario: String?) {
         Toast.makeText(this, idUsuario, Toast.LENGTH_SHORT).show();
     }
-
-    private fun notification(){
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-
-            // Get new FCM registration token
-            val token = task.result
-
-            Log.d(TAG, token)
-            Toast.makeText(baseContext, "Token obtenido", Toast.LENGTH_SHORT).show()
-        })
-
-//        FirebaseMessaging.getInstance().subscribeToTopic("ONLINE")
-//        FirebaseMessaging.getInstance().subscribeToTopic("PRESENCIAL")
-    }
-
-
-
 
 }

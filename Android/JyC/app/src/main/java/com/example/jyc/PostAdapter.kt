@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class PostAdapter(private val activity: Activity, private val dataset: List<Post>, private val itemClickListener: OnPublicacionesClickListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+open class PostAdapter(private val activity: Activity, private val dataset: List<Post>, private val itemClickListener: OnPublicacionesClickListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
