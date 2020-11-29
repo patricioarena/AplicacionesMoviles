@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
@@ -26,11 +28,11 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
     private lateinit var service: Facade
     private lateinit var toolbar: Toolbar
     private var db = FirebaseFirestore.getInstance()
-    private lateinit var idUsuario: String
 
     //Para interectuar con la base de datos
-    private lateinit var dbLite: DataBaseHelper
-    private lateinit var userDb: UserDb
+    //private lateinit var dbLite: DataBaseHelper
+    //private lateinit var userDb: UserDb
+    private lateinit var mUser: FirebaseUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,14 +43,15 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         service = Facade()
 
         //Obtenemos el idUsruario de las preferencias que se guardo al hacer login
-        idUsuario = service.getPreferenceKey(this, "idUsuario").toString()
+        //idUsuario = service.getPreferenceKey(this, "idUsuario").toString()
 
         // Inicializamos una instancia de la base de datos
-        dbLite  = DataBaseHelper(this)
+        //dbLite  = DataBaseHelper(this)
 
         //Obtenemos el usuario
-        userDb = dbLite.readData(idUsuario)!!
+        //userDb = dbLite.readData(idUsuario)!!
 
+        mUser = FirebaseAuth.getInstance().currentUser!!
 
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)
@@ -70,7 +73,7 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         var publicaciones2 = mutableListOf<Post>()
 
 
-        db.collection("publicaciones").whereEqualTo("idUsuario", userDb.idUsuario)
+        db.collection("publicaciones").whereEqualTo("idUsuario", mUser.uid)
                 .addSnapshotListener { querySnapshot: QuerySnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
 
                     if (firebaseFirestoreException != null) {

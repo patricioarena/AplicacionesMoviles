@@ -105,15 +105,16 @@ class LoginActivity : AppCompatActivity() {
                                 // Guardamos el token  para inicio de sesion posterior sin tener que ingresar usuario y contraseña
                                 service.setPreferenceKey(this, "token", idToken)
                                 // Guardamos el idUsuario para realizar consultas a SQLLite
-                                service.setPreferenceKey(this, "idUsuario", mUser.uid)
+                                //service.setPreferenceKey(this, "idUsuario", mUser.uid)
 
-                                var test =  dbLite.readData(mUser.uid)
-                                if (test!= null){
-                                    Log.e(ContentValues.TAG, "Se encontro uruario en SQLLite con idUruario: ${test.email}")
-                                }else {
-                                    Log.e(ContentValues.TAG, "No se encontro uruario en SQLLite")
-                                    getFirebaseCurrentUser(mUser.uid)
-                                }
+                                  //Buscamos el usuario en sQLLite
+//                                var test =  dbLite.readData(mUser.uid)
+//                                if (test!= null){ // Si el usuario existe
+//                                    Log.e(ContentValues.TAG, "Se encontro uruario en SQLLite con idUruario: ${test.email}")
+//                                }else { // Si no existe
+//                                    Log.e(ContentValues.TAG, "No se encontro uruario en SQLLite")
+//                                    getFirebaseCurrentUser(mUser.uid)
+//                                }
                             }
                         }
                     startActivity(Intent(this, HomeActivity::class.java))
