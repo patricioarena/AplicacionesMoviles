@@ -15,4 +15,8 @@ class UserDb {
     var fechaNac: String? = null
     var tel: String? = null
     var cel: String? = null
+    var cantidadPublicaciones: String? = null
+    var publicaciones: String? = null
+    var cantidadComentarios: String? = null
+    var comentarios:String? = null
 }

@@ -12,6 +12,12 @@
         tools:layout_editor_absoluteX="-16dp"
         tools:layout_editor_absoluteY="0dp" />
 
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="10dp"
+        />
 
     <ScrollView
         android:id="@+id/scroll_view"
@@ -68,10 +74,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textSize="13dp"
-                                android:textStyle="bold"
                                 android:textColor="@android:color/black"
-                                />
+                                android:textSize="13dp"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
