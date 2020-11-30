@@ -218,7 +218,7 @@ class EventActivity : AppCompatActivity() {
                     Event_editTextFecha.setVisibility(View.VISIBLE)
                     Event_editTextHora.setVisibility(View.VISIBLE)
                 }
-            }else{
+            } else {
                 layout_presencial.setVisibility(View.GONE)
                 layout_online.setVisibility(View.GONE)
                 Event_editTextFecha.setVisibility(View.GONE)
@@ -246,20 +246,13 @@ class EventActivity : AppCompatActivity() {
                     if (presencial) {
                         Event_editTextNumero.text = "Numero: ${domicilio.numero.toString()}"
                         Event_editTextPiso.text = "Piso: ${domicilio.piso}"
-                        Event_editTextLocalidad.text =
-                            "Localidad: ${service.replace20forSpace(domicilio.localidad.toString())}"
-                        Event_editTextProvincia.text =
-                            "Provincia: ${service.replace20forSpace(domicilio.provincia.toString())}"
-                        Event_editTextCalle.text =
-                            "Calle: ${service.replace20forSpace(domicilio.calle.toString())}"
-                        Event_editTextEntreCalle1.text =
-                            "Entre calle 1: ${service.replace20forSpace(domicilio.eCalle_1.toString())}"
-                        Event_editTextEntreCalle2.text =
-                            "Entre calle 2: ${service.replace20forSpace(domicilio.eCalle_2.toString())}"
-                        Event_editTextCp.text =
-                            "Cod. Postal: ${service.replace20forSpace(domicilio.cp.toString())}"
-                        Event_editTextPais.text =
-                            "Pais: ${service.replace20forSpace(domicilio.pais.toString())}"
+                        Event_editTextLocalidad.text = "Localidad: ${service.replace20forSpace(domicilio.localidad.toString())}"
+                        Event_editTextProvincia.text = "Provincia: ${service.replace20forSpace(domicilio.provincia.toString())}"
+                        Event_editTextCalle.text = "Calle: ${service.replace20forSpace(domicilio.calle.toString())}"
+                        Event_editTextEntreCalle1.text = "Entre calle 1: ${service.replace20forSpace(domicilio.eCalle_1.toString())}"
+                        Event_editTextEntreCalle2.text = "Entre calle 2: ${service.replace20forSpace(domicilio.eCalle_2.toString())}"
+                        Event_editTextCp.text = "Cod. Postal: ${service.replace20forSpace(domicilio.cp.toString())}"
+                        Event_editTextPais.text = "Pais: ${service.replace20forSpace(domicilio.pais.toString())}"
                     } else {
                         Event_link.text = eventoLink
                     }

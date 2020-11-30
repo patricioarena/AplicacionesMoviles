@@ -6,6 +6,7 @@ import MyResources.Facade
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -22,6 +23,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.gson.Gson
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_comments.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.fragment_account_settings.*
 
@@ -30,7 +33,7 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
     private lateinit var service: Facade
     private lateinit var toolbar: Toolbar
     private var db = FirebaseFirestore.getInstance()
-    private lateinit var modeloUser : UserDb
+    private lateinit var modeloUser: UserDb
 
     //Para interectuar con la base de datos
     //private lateinit var dbLite: DataBaseHelper
@@ -46,6 +49,12 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         service = Facade()
         modeloUser = UserDb()
 
+
+        var avatar = service.getPreferenceKey(this,"avatar").toString()
+
+        if (!TextUtils.isEmpty(avatar)) {
+            Picasso.get().load(avatar).into(profile_image)
+        }
 
         //Obtenemos el idUsruario de las preferencias que se guardo al hacer login
         //idUsuario = service.getPreferenceKey(this, "idUsuario").toString()
@@ -64,7 +73,7 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         toolbar.subtitle = "Mi Perfil";
         setSupportActionBar(toolbar)
 
-        OnclickButtonMyPublish ()
+        OnclickButtonMyPublish()
         getFirebaseCurrentUser(mUser.uid)
         getCountComentarios(mUser.uid)
 
@@ -72,7 +81,7 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
             loadFragment(AccountSettingsFragment())
         }
 
-        images_grid_btn.setOnClickListener(){
+        images_grid_btn.setOnClickListener() {
             OnclickButtonMyPublish()
         }
 
@@ -86,77 +95,77 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         fragmentTransaction.commit()
     }
 
-    private fun hideFragment(fragment: Fragment){
+    private fun hideFragment(fragment: Fragment) {
         fragmentContainer.setVisibility(View.GONE)
         scroll_view_profile.setVisibility(View.VISIBLE)
         val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
-        if (fragment != null){
+        if (fragment != null) {
             println("Muereee!!")
             supportFragmentManager.beginTransaction().remove(fragment).commit()
         }
     }
 
     //ir a comentarios y buscar todos los comentarios de un usuario y hacer count
-    private fun getCountComentarios(idUsuario: String?){
+    private fun getCountComentarios(idUsuario: String?) {
         val docRef = db.collection("comentarios").whereEqualTo("idUsuario", idUsuario)
         docRef.get()
-                .addOnSuccessListener { documents ->
-                    if (documents != null) {
-                        var index = 0
-                        for (document in documents) {
-                            index = index + 1
-                        }
-
-                        var cantidadComentarios = index
-                        if (cantidadComentarios == null) {
-                            cantidadComentarios = 0
-                        }
-
-                        modeloUser.cantidadComentarios = cantidadComentarios.toString()
-                        total_comentarios.text = modeloUser.cantidadComentarios
+            .addOnSuccessListener { documents ->
+                if (documents != null) {
+                    var index = 0
+                    for (document in documents) {
+                        index = index + 1
                     }
+
+                    var cantidadComentarios = index
+                    if (cantidadComentarios == null) {
+                        cantidadComentarios = 0
+                    }
+
+                    modeloUser.cantidadComentarios = cantidadComentarios.toString()
+                    total_comentarios.text = modeloUser.cantidadComentarios
                 }
+            }
     }
 
-    private fun getFirebaseCurrentUser(idUsuario: String?){
+    private fun getFirebaseCurrentUser(idUsuario: String?) {
         val docRef = db.collection("usuarios").document(idUsuario!!)
         docRef.get()
-                .addOnSuccessListener { document ->
-                    if (document != null) {
+            .addOnSuccessListener { document ->
+                if (document != null) {
 
-                        var myJson = document.data?.get("domicilio").toString()
-                        var domicilio = Gson().fromJson(myJson, Domicilio::class.java)
-                        var numeroPublicaciones = document.data?.get("publicaciones") as ArrayList<String>?
-                        modeloUser.publicaciones = numeroPublicaciones.toString()
+                    var myJson = document.data?.get("domicilio").toString()
+                    var domicilio = Gson().fromJson(myJson, Domicilio::class.java)
+                    var numeroPublicaciones = document.data?.get("publicaciones") as ArrayList<String>?
+                    modeloUser.publicaciones = numeroPublicaciones.toString()
 
-                        var cantidadPublicaciones = numeroPublicaciones?.count()
-                        if (cantidadPublicaciones == null) {
-                            cantidadPublicaciones = 0
-                        }
+                    var cantidadPublicaciones = numeroPublicaciones?.count()
+                    if (cantidadPublicaciones == null) {
+                        cantidadPublicaciones = 0
+                    }
 
-                        modeloUser.cantidadPublicaciones = cantidadPublicaciones.toString()
+                    modeloUser.cantidadPublicaciones = cantidadPublicaciones.toString()
 
-                        modeloUser.idUsuario = idUsuario
-                        modeloUser.nombre = document.data?.get("nombre").toString()
-                        modeloUser.apellido = document.data?.get("apellido").toString()
-                        modeloUser.calle = domicilio.calle
-                        modeloUser.numero = domicilio.numero
-                        modeloUser.cp = domicilio.cp
-                        modeloUser.ciudad = domicilio.localidad
-                        modeloUser.provincia = domicilio.provincia
-                        modeloUser.pais = domicilio.pais
-                        modeloUser.email = document.data?.get("email").toString()
-                        modeloUser.fechaReg = document.data?.get("fechaReg").toString()
-                        modeloUser.fechaNac = document.data?.get("fechaNac").toString()
-                        modeloUser.tel = document.data?.get("tel").toString()
-                        modeloUser.cel = document.data?.get("cel").toString()
+                    modeloUser.idUsuario = idUsuario
+                    modeloUser.nombre = document.data?.get("nombre").toString()
+                    modeloUser.apellido = document.data?.get("apellido").toString()
+                    modeloUser.calle = domicilio.calle
+                    modeloUser.numero = domicilio.numero
+                    modeloUser.cp = domicilio.cp
+                    modeloUser.localidad = domicilio.localidad
+                    modeloUser.provincia = domicilio.provincia
+                    modeloUser.pais = domicilio.pais
+                    modeloUser.email = document.data?.get("email").toString()
+                    modeloUser.fechaReg = document.data?.get("fechaReg").toString()
+                    modeloUser.fechaNac = document.data?.get("fechaNac").toString()
+                    modeloUser.tel = document.data?.get("tel").toString()
+                    modeloUser.cel = document.data?.get("cel").toString()
 
 
-                        var provincia = service.replace20forSpace(modeloUser.provincia!!)
-                        var localidad = service.replace20forSpace(modeloUser.ciudad!!)
-                        full_name_profile.text = modeloUser.nombre + " " + modeloUser.apellido
-                        biografi_profile.text = "Pais: " + modeloUser.pais + "\n" + "Provincia: " + provincia + "\n" + "Localidad: " + localidad
-                        total_post.text = modeloUser.cantidadPublicaciones
+                    var provincia = service.replace20forSpace(modeloUser.provincia!!)
+                    var localidad = service.replace20forSpace(modeloUser.localidad!!)
+                    full_name_profile.text = modeloUser.nombre + " " + modeloUser.apellido
+                    biografi_profile.text = "Pais: " + modeloUser.pais + "\n" + "Provincia: " + provincia + "\n" + "Localidad: " + localidad
+                    total_post.text = modeloUser.cantidadPublicaciones
 
 //                        Log.e(ContentValues.TAG, "DocumentSnapshot data: ${document.data}")
 //                        Log.e(ContentValues.TAG, "DocumentSnapshot data nombre: ${document.data?.get("nombre").toString()}")
@@ -173,101 +182,91 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
 //                        Log.e(ContentValues.TAG, "DocumentSnapshot data provincia: ${domicilio.provincia}")
 //                        Log.e(ContentValues.TAG, "DocumentSnapshot data pais: ${domicilio.pais}")
 
-                    } else {
-                        Log.e(ContentValues.TAG, "No such document")
-                    }
+                } else {
+                    Log.e(ContentValues.TAG, "No such document")
                 }
-                .addOnFailureListener { exception ->
-                    Log.e(ContentValues.TAG, "get failed with ", exception)
-                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e(ContentValues.TAG, "get failed with ", exception)
+            }
     }
 
 
-
-    private fun OnclickButtonMyPublish (){
+    private fun OnclickButtonMyPublish() {
 
         var publicaciones = mutableListOf<Post>()
         var publicaciones2 = mutableListOf<Post>()
 
 
         db.collection("publicaciones").whereEqualTo("idUsuario", mUser.uid)
-                .addSnapshotListener { querySnapshot: QuerySnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
+            .addSnapshotListener { querySnapshot: QuerySnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
 
-                    if (firebaseFirestoreException != null) {
-                        Log.w(ContentValues.TAG, "Listen failed.", firebaseFirestoreException)
-                        return@addSnapshotListener
-                    }
+                if (firebaseFirestoreException != null) {
+                    Log.w(ContentValues.TAG, "Listen failed.", firebaseFirestoreException)
+                    return@addSnapshotListener
+                }
 
-                    publicaciones.clear()
-                    publicaciones2.clear()
+                publicaciones.clear()
+                publicaciones2.clear()
 
-                    for (document in querySnapshot!!) {
+                for (document in querySnapshot!!) {
 //                        Log.d("TAG", "${document.id} => ${document.data}")
 
-                        var post = Post()
-                        post.uid = document.id
-                        post.idUsuario = document.data["idUsuario"].toString()
-                        post.date = document.data["fecha"].toString()
-                        post.post = document.data["articulo"].toString()
-                        post.image = document.data["imagen"].toString()
+                    var post = Post()
+                    post.uid = document.id
+                    post.idUsuario = document.data["idUsuario"].toString()
+                    post.date = document.data["fecha"].toString()
+                    post.post = document.data["articulo"].toString()
+                    post.image = document.data["imagen"].toString()
 
-                        post.nombreEvento = document.data["nombreEvento"].toString()
+                    post.nombreEvento = document.data["nombreEvento"].toString()
 
-                        var losUsuariosQueDieronLike = document.data["likes"] as ArrayList<String>?
-                        post.likes = losUsuariosQueDieronLike
+                    var losUsuariosQueDieronLike = document.data["likes"] as ArrayList<String>?
+                    post.likes = losUsuariosQueDieronLike
 
-                        var losUsuariosQueComentaron = document.data["comentarios"] as ArrayList<String>?
-                        post.listaIdcomentarios = losUsuariosQueComentaron
+                    var losUsuariosQueComentaron = document.data["comentarios"] as ArrayList<String>?
+                    post.listaIdcomentarios = losUsuariosQueComentaron
 
-                        var cantidadLikes = losUsuariosQueDieronLike?.count()
-                        if (cantidadLikes == null) {
-                            cantidadLikes = 0
-                        }
-
-                        var cantidadComments = losUsuariosQueComentaron?.count()
-                        if (cantidadComments == null){
-                            cantidadComments = 0
-                        }
-
-
-                        post.cantidadDeLikes = cantidadLikes
-                        post.cantidadDeComentarios = cantidadComments
-
-                        publicaciones.add(post)
-                        //Log.d("TAG", "${document.id} => ${post.post}")
-
+                    if (post.nombreEvento == "null") {
+                        post.nombreEvento = ""
                     }
 
-                    for (pub in publicaciones) {
-                        db.collection("usuarios").document(pub.idUsuario.toString()).get()
-                                .addOnSuccessListener { result ->
-                                    val document = result
-                                    pub.userName = document?.data?.get("nombre").toString() + " " + document?.data?.get(
-                                        "apellido"
-                                    ).toString()
-                                    publicaciones2.add(pub)
-                                }
-                                .addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        var temp = publicaciones2.toList();
-                                        recycler_view_user_profile.layoutManager = LinearLayoutManager(
-                                            this
-                                        )
-                                        recycler_view_user_profile.addItemDecoration(
-                                            DividerItemDecoration(
-                                                this,
-                                                DividerItemDecoration.VERTICAL
-                                            )
-                                        )
-                                        recycler_view_user_profile.adapter = PostAdapter(
-                                            this,
-                                            temp,
-                                            this
-                                        )
-                                    }
-                                }
+                    var cantidadLikes = losUsuariosQueDieronLike?.count()
+                    if (cantidadLikes == null) {
+                        cantidadLikes = 0
                     }
+
+                    var cantidadComments = losUsuariosQueComentaron?.count()
+                    if (cantidadComments == null) {
+                        cantidadComments = 0
+                    }
+
+
+                    post.cantidadDeLikes = cantidadLikes
+                    post.cantidadDeComentarios = cantidadComments
+
+                    publicaciones.add(post)
+                    //Log.d("TAG", "${document.id} => ${post.post}")
+
                 }
+
+                for (pub in publicaciones) {
+                    db.collection("usuarios").document(pub.idUsuario.toString()).get()
+                        .addOnSuccessListener { result ->
+                            val document = result
+                            pub.userName = document?.data?.get("nombre").toString() + " " + document?.data?.get("apellido").toString()
+                            publicaciones2.add(pub)
+                        }
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                var temp = publicaciones2.toList();
+                                recycler_view_user_profile.layoutManager = LinearLayoutManager(this)
+                                recycler_view_user_profile.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+                                recycler_view_user_profile.adapter = PostAdapter(this, temp, this)
+                            }
+                        }
+                }
+            }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -329,6 +328,10 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
     }
 
     override fun onMoreInfoClick(item: Post) {
+        val intent: Intent = Intent(this, EventActivity::class.java)
+            .putExtra("item.uid", item.uid)
+
+        startActivity(intent)
     }
 
     override fun onClickFragmentButtonAcept() {

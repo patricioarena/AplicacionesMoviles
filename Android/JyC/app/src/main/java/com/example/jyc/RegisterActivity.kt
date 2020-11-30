@@ -193,8 +193,8 @@ class RegisterActivity : AppCompatActivity() {
                         "ciudad" to localidad,
                         "provincia" to provincia,
                         "pais" to pais,
-                        "eCalle_1" to "",
-                        "eCalle_2" to ""
+                        "eCalle_1" to "%20",
+                        "eCalle_2" to "%20"
                     )
 
                     val userInfo = hashMapOf(

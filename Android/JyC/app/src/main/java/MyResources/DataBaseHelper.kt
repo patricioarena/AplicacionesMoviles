@@ -20,7 +20,7 @@ val COL_APELLIDO = "apellido"
 val COL_CALLE = "calle"
 val COL_NUMERO = "numero"
 val COL_CP = "cp"
-val COL_CIUDAD = "ciudad"
+val COL_LOCALIDAD = "localidad"
 val COL_PROV = "provincia"
 val COL_PAIS = "pais"
 val COL_EMAIL = "email"
@@ -42,7 +42,7 @@ class DataBaseHelper(var context: Context) : SQLiteOpenHelper(
                 "" + COL_CALLE + " VARCHAR(256)," +
                 "" + COL_NUMERO + " INTEGER," +
                 "" + COL_CP + " INTEGER," +
-                "" + COL_CIUDAD + " VARCHAR(256)," +
+                "" + COL_LOCALIDAD + " VARCHAR(256)," +
                 "" + COL_PROV + " VARCHAR(256)," +
                 "" + COL_PAIS + " VARCHAR(256)," +
                 "" + COL_EMAIL + " VARCHAR(256)," +
@@ -72,7 +72,7 @@ class DataBaseHelper(var context: Context) : SQLiteOpenHelper(
         contentValues.put(COL_CALLE, user.calle)
         contentValues.put(COL_NUMERO, user.numero)
         contentValues.put(COL_CP, user.cp)
-        contentValues.put(COL_CIUDAD, user.ciudad)
+        contentValues.put(COL_LOCALIDAD, user.localidad)
         contentValues.put(COL_PROV, user.provincia)
         contentValues.put(COL_PAIS, user.pais)
         contentValues.put(COL_EMAIL, user.email)
@@ -110,7 +110,7 @@ class DataBaseHelper(var context: Context) : SQLiteOpenHelper(
                 user.calle = result.getString(result.getColumnIndex(COL_CALLE))
                 user.numero = result.getString(result.getColumnIndex(COL_NUMERO)).toInt()
                 user.cp = result.getString(result.getColumnIndex(COL_CP)).toInt()
-                user.ciudad = result.getString(result.getColumnIndex(COL_CIUDAD))
+                user.localidad = result.getString(result.getColumnIndex(COL_LOCALIDAD))
                 user.provincia = result.getString(result.getColumnIndex(COL_PROV))
                 user.pais = result.getString(result.getColumnIndex(COL_PAIS))
                 user.email = result.getString(result.getColumnIndex(COL_EMAIL))

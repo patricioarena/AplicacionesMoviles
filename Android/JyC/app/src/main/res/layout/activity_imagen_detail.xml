@@ -19,11 +19,13 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="60dp"
-        android:background="@drawable/ic_download_80"
-        app:backgroundTint="#FFFFFF"
+        android:gravity="left"
+        android:paddingLeft="-5dp"
+        app:icon="@drawable/ic_baseline_arrow_circle_down_60"
+        android:background="@drawable/btn_circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -161,7 +161,7 @@ class LoginActivity : AppCompatActivity() {
                         usuario.calle = domicilio.calle
                         usuario.numero = domicilio.numero
                         usuario.cp = domicilio.cp
-                        usuario.ciudad = domicilio.localidad
+                        usuario.localidad = domicilio.localidad
                         usuario.provincia = domicilio.provincia
                         usuario.pais = domicilio.pais
                         usuario.email = document.data?.get("email").toString()
