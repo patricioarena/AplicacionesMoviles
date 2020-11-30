@@ -3,6 +3,7 @@ package com.example.jyc
 import Models.Domicilio
 import Models.UserDb
 import MyResources.Facade
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
@@ -81,6 +82,7 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
 
     private fun loadFragment(fragment: Fragment) {
         fragmentContainer.setVisibility(View.VISIBLE)
+        scroll_view_profile.setVisibility(View.GONE)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragmentContainer, fragment)
         fragmentTransaction.commit()
@@ -88,10 +90,12 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
 
     private fun hideFragment(fragment: Fragment){
         fragmentContainer.setVisibility(View.GONE)
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.remove(fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
+        scroll_view_profile.setVisibility(View.VISIBLE)
+        val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
+        if (fragment != null){
+            println("Muereee!!")
+            supportFragmentManager.beginTransaction().remove(fragment).commit()
+        }
     }
 
     //ir a comentarios y buscar todos los comentarios de un usuario y hacer count
@@ -240,15 +244,28 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
                         db.collection("usuarios").document(pub.idUsuario.toString()).get()
                                 .addOnSuccessListener { result ->
                                     val document = result
-                                    pub.userName = document?.data?.get("nombre").toString() + " " + document?.data?.get("apellido").toString()
+                                    pub.userName = document?.data?.get("nombre").toString() + " " + document?.data?.get(
+                                        "apellido"
+                                    ).toString()
                                     publicaciones2.add(pub)
                                 }
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
                                         var temp = publicaciones2.toList();
-                                        recycler_view_user_profile.layoutManager = LinearLayoutManager(this)
-                                        recycler_view_user_profile.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
-                                        recycler_view_user_profile.adapter = PostAdapter(this,temp,this)
+                                        recycler_view_user_profile.layoutManager = LinearLayoutManager(
+                                            this
+                                        )
+                                        recycler_view_user_profile.addItemDecoration(
+                                            DividerItemDecoration(
+                                                this,
+                                                DividerItemDecoration.VERTICAL
+                                            )
+                                        )
+                                        recycler_view_user_profile.adapter = PostAdapter(
+                                            this,
+                                            temp,
+                                            this
+                                        )
                                     }
                                 }
                     }
