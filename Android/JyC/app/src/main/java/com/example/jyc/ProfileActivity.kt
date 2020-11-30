@@ -1,7 +1,7 @@
 package com.example.jyc
 
+import Models.Domicilio
 import Models.UserDb
-import MyResources.DataBaseHelper
 import MyResources.Facade
 import android.content.ContentValues
 import android.content.Intent
@@ -12,22 +12,23 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
-import kotlinx.android.synthetic.main.activity_home.*
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_profile.*
 
-class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickListener {
+class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickListener, OnFragmentActionsListener {
     private var pressedTime: Long = 0
     private lateinit var service: Facade
     private lateinit var toolbar: Toolbar
     private var db = FirebaseFirestore.getInstance()
+    private lateinit var modeloUser : UserDb
 
     //Para interectuar con la base de datos
     //private lateinit var dbLite: DataBaseHelper
@@ -41,6 +42,8 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         //notification()
 
         service = Facade()
+        modeloUser = UserDb()
+
 
         //Obtenemos el idUsruario de las preferencias que se guardo al hacer login
         //idUsuario = service.getPreferenceKey(this, "idUsuario").toString()
@@ -60,12 +63,112 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         setSupportActionBar(toolbar)
 
         OnclickButtonMyPublish ()
+        getFirebaseCurrentUser(mUser.uid)
+        getCountComentarios(mUser.uid)
+
+        edit_account_btn.setOnClickListener() {
+            loadFragment(AccountSettingsFragment())
+        }
 
         images_grid_btn.setOnClickListener(){
             OnclickButtonMyPublish()
         }
 
     }
+
+    private fun loadFragment(fragment: Fragment) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.add(R.id.fragmentContainer, fragment)
+        fragmentTransaction.commit()
+    }
+
+    //ir a comentarios y buscar todos los comentarios de un usuario y hacer count
+    private fun getCountComentarios(idUsuario: String?){
+        val docRef = db.collection("comentarios").whereEqualTo("idUsuario", idUsuario)
+        docRef.get()
+                .addOnSuccessListener { documents ->
+                    if (documents != null) {
+                        var index = 0
+                        for (document in documents) {
+                            index = index + 1
+                        }
+
+                        var cantidadComentarios = index
+                        if (cantidadComentarios == null) {
+                            cantidadComentarios = 0
+                        }
+
+                        modeloUser.cantidadComentarios = cantidadComentarios.toString()
+                        total_comentarios.text = modeloUser.cantidadComentarios
+                    }
+                }
+    }
+
+    private fun getFirebaseCurrentUser(idUsuario: String?){
+        val docRef = db.collection("usuarios").document(idUsuario!!)
+        docRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+
+                        var myJson = document.data?.get("domicilio").toString()
+                        var domicilio = Gson().fromJson(myJson, Domicilio::class.java)
+                        var numeroPublicaciones = document.data?.get("publicaciones") as ArrayList<String>?
+                        modeloUser.publicaciones = numeroPublicaciones.toString()
+
+                        var cantidadPublicaciones = numeroPublicaciones?.count()
+                        if (cantidadPublicaciones == null) {
+                            cantidadPublicaciones = 0
+                        }
+
+                        modeloUser.cantidadPublicaciones = cantidadPublicaciones.toString()
+
+                        modeloUser.idUsuario = idUsuario
+                        modeloUser.nombre = document.data?.get("nombre").toString()
+                        modeloUser.apellido = document.data?.get("apellido").toString()
+                        modeloUser.calle = domicilio.calle
+                        modeloUser.numero = domicilio.numero
+                        modeloUser.cp = domicilio.cp
+                        modeloUser.ciudad = domicilio.ciudad
+                        modeloUser.provincia = domicilio.provincia
+                        modeloUser.pais = domicilio.pais
+                        modeloUser.email = document.data?.get("email").toString()
+                        modeloUser.fechaReg = document.data?.get("fechaReg").toString()
+                        modeloUser.fechaNac = document.data?.get("fechaNac").toString()
+                        modeloUser.tel = document.data?.get("tel").toString()
+                        modeloUser.cel = document.data?.get("cel").toString()
+
+
+                        var provincia = service.replace20forSpace(modeloUser.provincia!!)
+                        var localidad = service.replace20forSpace(modeloUser.ciudad!!)
+                        full_name_profile.text = modeloUser.nombre + " " + modeloUser.apellido
+                        biografi_profile.text = "Pais: " + modeloUser.pais + "\n" + "Provincia: " + provincia + "\n" + "Localidad: " + localidad
+                        total_post.text = modeloUser.cantidadPublicaciones
+
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data: ${document.data}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data nombre: ${document.data?.get("nombre").toString()}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data apellido: ${document.data?.get("apellido").toString()}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data fechaNac: ${document.data?.get("fechaNac").toString()}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data fechaReg: ${document.data?.get("fechaReg").toString()}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data email: ${document.data?.get("email").toString()}")
+
+
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data calle: ${domicilio.calle}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data numero: ${domicilio.numero}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data cp: ${domicilio.cp}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data ciudad: ${domicilio.ciudad}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data provincia: ${domicilio.provincia}")
+//                        Log.e(ContentValues.TAG, "DocumentSnapshot data pais: ${domicilio.pais}")
+
+                    } else {
+                        Log.e(ContentValues.TAG, "No such document")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.e(ContentValues.TAG, "get failed with ", exception)
+                }
+    }
+
+
 
     private fun OnclickButtonMyPublish (){
 
@@ -188,4 +291,19 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         Toast.makeText(this, idUsuario, Toast.LENGTH_SHORT).show();
     }
 
+    override fun onClickFragmentButtonAcept() {
+        println("ACEPTAR")
+    }
+
+    override fun onClickFragmentButtonCancel() {
+        replaceFragment(AccountSettingsFragment())
+    }
+
+    private fun replaceFragment(fragment: Fragment){
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragmentContainer, fragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+    }
 }
+
