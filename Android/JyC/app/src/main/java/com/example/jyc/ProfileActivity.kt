@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
@@ -336,7 +337,12 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
 
         println(calle_user.text.toString())
 
-        println("Eviar los datos")
+        //realizar consulta para actualizar datos
+        db.collection("usuarios").document(mUser.uid).
+            update("firstname", "John",
+                    "lastname", "Smith",
+                    "age", 25)
+
     }
 
     override fun onClickFragmentButtonCancel() {
