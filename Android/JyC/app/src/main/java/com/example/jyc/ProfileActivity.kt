@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.fragment_account_settings.*
 
 class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickListener, OnFragmentActionsListener {
     private var pressedTime: Long = 0
@@ -77,8 +79,17 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
     }
 
     private fun loadFragment(fragment: Fragment) {
+        fragmentContainer.setVisibility(View.VISIBLE)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragmentContainer, fragment)
+        fragmentTransaction.commit()
+    }
+
+    private fun hideFragment(fragment: Fragment){
+        fragmentContainer.setVisibility(View.GONE)
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.remove(fragment)
+        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
 
@@ -303,17 +314,18 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
 
     override fun onClickFragmentButtonAcept() {
         println("ACEPTAR")
+        hideFragment(AccountSettingsFragment())
+
+        println(calle_user.text.toString())
+
+        println("Eviar los datos")
     }
 
     override fun onClickFragmentButtonCancel() {
-        replaceFragment(AccountSettingsFragment())
+        println("CANCELAR")
+        hideFragment(AccountSettingsFragment())
     }
 
-    private fun replaceFragment(fragment: Fragment){
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainer, fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
-    }
+
 }
 

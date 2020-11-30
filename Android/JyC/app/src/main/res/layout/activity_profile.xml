@@ -16,8 +16,9 @@
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:elevation="10dp"
-        />
+        android:visibility="gone" />
 
     <ScrollView
         android:id="@+id/scroll_view"
