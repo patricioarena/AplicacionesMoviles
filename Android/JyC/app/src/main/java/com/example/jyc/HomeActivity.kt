@@ -13,19 +13,21 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.*
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.card_post.*
 
 
 class HomeActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickListener {
+    private var idUsuario: String? = null
     private var pressedTime: Long = 0
     private lateinit var service: Facade
     private lateinit var toolbar: Toolbar
     private var db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
+    private var inFavorites: Boolean? = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +42,8 @@ class HomeActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickListen
         toolbar.title = "Jardines y Cultivos";
         toolbar.subtitle = "Contenido principal del feed";
         setSupportActionBar(toolbar)
+
+        idUsuario = auth.currentUser?.uid
 
         var publicaciones = mutableListOf<Post>()
         var publicaciones2 = mutableListOf<Post>()
@@ -208,6 +212,18 @@ class HomeActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickListen
         startActivity(intent)
     }
 
+    override fun onFavClick(item: Post) {
+
+        if (inFavorites == false){
+            addFavorites(idUsuario,item.uid)
+            inFavorites=true
+        }
+        else {
+            removeFavorites(idUsuario,item.uid)
+            inFavorites=false
+        }
+    }
+
     private fun notification() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -222,9 +238,27 @@ class HomeActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickListen
             Toast.makeText(baseContext, "Token obtenido", Toast.LENGTH_SHORT).show()
         })
 
+
 //        FirebaseMessaging.getInstance().subscribeToTopic("ONLINE")
 //        FirebaseMessaging.getInstance().subscribeToTopic("PRESENCIAL")
     }
 
+    private fun addFavorites(idUsuario: String?,uid: String?){
+        db.collection("usuarios").document(idUsuario!!)
+            .update("favoritos", FieldValue.arrayUnion(uid))
+            .addOnSuccessListener {
+                Toast.makeText(this, "Agregado a favoritos", Toast.LENGTH_SHORT).show();
+                fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_fav_24, 0, 0, 0);
+            }
+    }
+
+    private fun removeFavorites(idUsuario: String?,uid: String?) {
+        db.collection("usuarios").document(idUsuario!!)
+            .update( "favoritos", FieldValue.arrayRemove(uid))
+            .addOnSuccessListener {
+                Toast.makeText(this, "Eliminado de favoritos", Toast.LENGTH_SHORT).show();
+                fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_24, 0, 0, 0);
+            }
+    }
 
 }

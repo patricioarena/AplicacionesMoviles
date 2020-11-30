@@ -106,6 +106,21 @@
                 app:layout_constraintTop_toTopOf="@+id/image_tv" />
 
             <Button
+                android:id="@+id/fav_btn"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/btn_circle"
+                app:icon="@drawable/ic_baseline_star_24"
+                android:gravity="left"
+                android:paddingLeft="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/share_btn"
+                />
+
+            <Button
                 android:id="@+id/like_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

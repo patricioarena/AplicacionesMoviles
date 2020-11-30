@@ -51,54 +51,64 @@ class MyFunActivity : AppCompatActivity() {
 
         button_post = findViewById(R.id.button_post)
 
-        var scope:String? = null
+        var scope: String? = null
         radioButton_Online = findViewById(R.id.radioButton_Online)
 
         radioButton_Online.setSelected(true)
-        radioButton_Online.setOnClickListener{
+        radioButton_Online.setOnClickListener {
             scope = "ONLINE"
         }
 
 
         radioButton_Presencial = findViewById(R.id.radioButton_Presencial)
-        radioButton_Presencial.setOnClickListener{
+        radioButton_Presencial.setOnClickListener {
             scope = "PRESENCIAL"
         }
 
-
-
         button_susc_online = findViewById(R.id.button_susc_online)
-        button_susc_online.setOnClickListener{
+        button_susc_online.setOnClickListener {
             subscripcion("ONLINE")
         }
 
 
         button_susc_presencial = findViewById(R.id.button_susc_presencial)
-        button_susc_presencial.setOnClickListener{
+        button_susc_presencial.setOnClickListener {
             subscripcion("PRESENCIAL")
         }
 
+        button_des_susc_online = findViewById(R.id.button_des_susc_online)
+        button_des_susc_online.setOnClickListener {
+            unsubscripcion("ONLINE")
+        }
+
+        button_des_susc_presencial = findViewById(R.id.button_des_susc_presencial)
+        button_des_susc_presencial.setOnClickListener {
+            unsubscripcion("PRESENCIAL")
+        }
 
 
         button_post.setOnClickListener {
 
             scope?.let { it1 -> Log.i("Subscribed: ", it1) }
+            var username = service.getPreferenceKey(this, "username")
 
             val jsonObject = JSONObject(
-                    """{
+                """{
                   "to": "/topics/${scope}",
                   "notification": {
-                    "title": "Noticia para evento ONLINE",
-                    "body": "Descripción de la noticia desde el Otro celular"
+                    "title": "Noticia para evento ${scope} ",
+                    "body": "${username} realizón una nueva publicación en el grupo..."
                   },
                   "data": {
                     "titulo": "Este es el titular",
-                    "descripcion": "Aquí estará todo el contenido de la noticia"
+                    "descripcion": "${username} realizon una nueva publicación en el grupo..."
                   }
                 }"""
             )
 
             getRemoteConfigAndSendNotificationCloudMessaging(jsonObject);
+            Toast.makeText(this, "Notificacion enviada a topic: ${scope}", Toast.LENGTH_LONG).show()
+
         }
     }
 
@@ -143,11 +153,11 @@ class MyFunActivity : AppCompatActivity() {
     }
 
     class CustomJsonObjectRequestBasicAuth(
-            method: Int, url: String,
-            jsonObject: JSONObject?,
-            listener: Response.Listener<JSONObject>,
-            errorListener: Response.ErrorListener,
-            credentials: String
+        method: Int, url: String,
+        jsonObject: JSONObject?,
+        listener: Response.Listener<JSONObject>,
+        errorListener: Response.ErrorListener,
+        credentials: String
     ) : JsonObjectRequest(method, url, jsonObject, listener, errorListener) {
 
         private var mCredentials: String = credentials
@@ -166,17 +176,17 @@ class MyFunActivity : AppCompatActivity() {
     fun sendNotificationCloudMessaging(url: String, jsonObject: JSONObject?, credentials: String) {
         // Make a volley custom json object request with basic authentication
         val request = CustomJsonObjectRequestBasicAuth(Request.Method.POST, url, jsonObject,
-                { response ->
-                    try {
-                        // Parse the json object here
-                        println("Response : $response")
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        println("Parse exception : $e")
-                    }
-                }, {
-            println("Volley error: $it}")
-        }, credentials
+            { response ->
+                try {
+                    // Parse the json object here
+                    println("Response : $response")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    println("Parse exception : $e")
+                }
+            }, {
+                println("Volley error: $it}")
+            }, credentials
         )
 
         // Add the volley request to request queue
@@ -188,22 +198,23 @@ class MyFunActivity : AppCompatActivity() {
         var value: String? = null
         var remoteConfig = FirebaseRemoteConfig.getInstance()
         remoteConfig.fetchAndActivate()
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        var credentials = remoteConfig.getString("Authorization")
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    var credentials = remoteConfig.getString("Authorization")
 //                    Log.d("TAG", "Config params updated: $value")
 //                    Toast.makeText(this, "Fetch and activate succeeded", Toast.LENGTH_SHORT).show
-                        sendNotificationCloudMessaging("https://fcm.googleapis.com/fcm/send", jsonObject, credentials)
+                    sendNotificationCloudMessaging("https://fcm.googleapis.com/fcm/send", jsonObject, credentials)
 
-                    } else {
-                        Log.e("Error", task.exception.toString())
-                    }
-
+                } else {
+                    Log.e("Error", task.exception.toString())
                 }
+
+            }
         return value
     }
 
-    private fun subscripcion(topic:String){
+
+//    private fun getFCMToken(topic:String){
 //        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
 //            if (!task.isSuccessful) {
 //                Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
@@ -216,18 +227,34 @@ class MyFunActivity : AppCompatActivity() {
 //            Log.i("Token", token)
 //            Toast.makeText(baseContext, "Token obtenido", Toast.LENGTH_SHORT).show()
 //        })
+//    }
 
-        FirebaseMessaging.getInstance().subscribeToTopic("topic")
-                .addOnCompleteListener { task ->
-                    if (!task.isSuccessful) {
-                        Log.w(ContentValues.TAG, "Subscribe failed: ", task.exception)
-                        return@addOnCompleteListener
-                    }
-
-                    Log.i("Subscribed: ", topic)
-
-                    Toast.makeText(this, "Subscribed: ${topic}", Toast.LENGTH_SHORT).show()
+    private fun subscripcion(topic: String) {
+        FirebaseMessaging.getInstance().subscribeToTopic(topic)
+            .addOnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(ContentValues.TAG, "Subscribe failed: ", task.exception)
+                    return@addOnCompleteListener
                 }
+
+                Log.i("Subscribed: ", topic)
+                Toast.makeText(this, "Subscribed: ${topic}", Toast.LENGTH_LONG).show()
+            }
+
+
+    }
+
+    private fun unsubscripcion(topic: String) {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(topic)
+            .addOnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(ContentValues.TAG, "Unsubscribe failed: ", task.exception)
+                    return@addOnCompleteListener
+                }
+
+                Log.i("Unsubscribe: ", topic)
+                Toast.makeText(this, "Unsubscribe: ${topic}", Toast.LENGTH_LONG).show()
+            }
 
 
     }

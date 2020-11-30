@@ -381,6 +381,8 @@ class NewEventActivity : AppCompatActivity() {
                                 var c2 = service.removeSpaces(eCalle2)
                                 var p = service.removeSpaces(piso)
 
+                                var eP = listOf("Evento PRESENCIAL")
+
                                 val lugar = hashMapOf(
                                         "eCalle_1" to c1,
                                         "eCalle_2" to c2,
@@ -401,7 +403,7 @@ class NewEventActivity : AppCompatActivity() {
                                         "imagen" to imagenUri,
                                         "fechaEvento" to fechaEvento,
                                         "hora" to hora,
-                                        "categorias" to "Evento",
+                                        "categorias" to eP,
                                         "Tipo" to Evento.PRESENCIAL.toString(),
                                         "tags" to tags,
                                         "comentarios" to comentarios,
@@ -419,6 +421,9 @@ class NewEventActivity : AppCompatActivity() {
                                 }
 
                             } else if (typeEvent.equals(Evento.ONLINE.toString())) {
+
+                                var eO = listOf("Evento ONLINE")
+
                                 var eventoOnline = hashMapOf(
                                         "idUsuario" to idUsuario,
                                         "nombreEvento" to nombreEvento,
@@ -427,7 +432,7 @@ class NewEventActivity : AppCompatActivity() {
                                         "imagen" to imagenUri,
                                         "fechaEvento" to fechaEvento,
                                         "hora" to hora,
-                                        "categorias" to "Evento",
+                                        "categorias" to eO,
                                         "tipo" to Evento.ONLINE.toString(),
                                         "url" to editTextTextUrl.text.toString(),
                                         "tags" to tags,

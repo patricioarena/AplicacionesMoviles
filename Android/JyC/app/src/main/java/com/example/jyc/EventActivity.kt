@@ -3,16 +3,13 @@ package com.example.jyc
 import Models.Domicilio
 import MyResources.Facade
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,13 +18,13 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_event.*
 
 class EventActivity : AppCompatActivity() {
+    private var inFavorites: Boolean? = false
     private lateinit var toolbar: Toolbar
     private lateinit var service: Facade
     private var db = FirebaseFirestore.getInstance()
     private var post = Post()
     private var domicilio = Domicilio()
     private val auth = FirebaseAuth.getInstance()
-    private var liked: Boolean = false
     private lateinit var fechaEvento: String
     private lateinit var horaEvento: String
     private lateinit var eventoLink: String
@@ -46,6 +43,10 @@ class EventActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         var uid = intent.getStringExtra("item.uid")
+        var idUsuario = auth.currentUser?.uid
+        getFavorites(idUsuario,uid)
+
+
         post = Post()
         getPublication(uid)
 
@@ -58,6 +59,18 @@ class EventActivity : AppCompatActivity() {
 
             val shareIntent = Intent.createChooser(sendIntent, null)
             startActivity(shareIntent)
+        }
+
+        Event_fav_btn.setOnClickListener {
+
+            if (inFavorites == false){
+                addFavorites(idUsuario)
+                inFavorites=true
+            }
+            else {
+                removeFavorites(idUsuario)
+                inFavorites=false
+            }
         }
 
         Event_comment_btn.setOnClickListener {
@@ -122,36 +135,7 @@ class EventActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setColor(liked: Boolean?, likedButton: Button) {
-        if (liked!!) likedButton.setTextColor(ContextCompat.getColor(this, R.color.purple_500))
-        else likedButton.setTextColor(Color.WHITE)
-    }
-
-    private fun removeUserDb(uid: String?) {
-        if (uid != null) {
-            val doc = db.collection("publicaciones").document(uid)
-            db.runTransaction {
-                it.update(doc, "likes", FieldValue.arrayRemove(auth.uid))
-
-                null
-            }
-        }
-
-    }
-
-    private fun insertUerDb(uid: String?) {
-        if (uid != null) {
-            val doc = db.collection("publicaciones").document(uid)
-            db.runTransaction {
-                it.update(doc, "likes", FieldValue.arrayUnion(auth.uid))
-
-                null
-            }
-        }
-
-    }
-
-    fun getPublication(uid: String?) {
+    private fun getPublication(uid: String?) {
         db.collection("publicaciones").document(uid!!).get().addOnSuccessListener { result ->
             val document = result
             post.uid = document.id
@@ -171,13 +155,13 @@ class EventActivity : AppCompatActivity() {
             var losUsuariosQueComentaron = document.data?.get("comentarios") as ArrayList<String>?
             post.listaIdcomentarios = losUsuariosQueComentaron
 
-            var evento = document.data?.get("categorias").toString()
-            var tipo = document.data?.get("tipo").toString()
+            var categorias = document.data?.get("categorias") as ArrayList<String>?
 
-            if (tipo == "PRESENCIAL") {
+            println(categorias)
+
+            if (categorias?.contains("Evento PRESENCIAL")!!) {
                 presencial = true;
             }
-
 
             var cantidadLikes = losUsuariosQueDieronLike?.count()
             if (cantidadLikes == null) {
@@ -192,7 +176,7 @@ class EventActivity : AppCompatActivity() {
             post.cantidadDeLikes = cantidadLikes
             post.cantidadDeComentarios = cantidadComments
 
-            if (evento == "Evento") {
+            if (categorias.contains("Evento PRESENCIAL") || categorias.contains("Evento ONLINE")) {
                 if (presencial) {
 
                     var myJson = document.data?.get("lugar").toString()
@@ -264,5 +248,42 @@ class EventActivity : AppCompatActivity() {
 
         }
     }
+
+    private fun addFavorites(idUsuario: String?){
+        db.collection("usuarios").document(idUsuario!!)
+            .update("favoritos", FieldValue.arrayUnion(post.uid))
+            .addOnSuccessListener {
+                Toast.makeText(this, "Agregado a favoritos", Toast.LENGTH_SHORT).show();
+                Event_fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_fav_24, 0, 0, 0);
+            }
+    }
+
+    private fun removeFavorites(idUsuario: String?) {
+            db.collection("usuarios").document(idUsuario!!)
+                .update( "favoritos", FieldValue.arrayRemove(post.uid))
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Eliminado de favoritos", Toast.LENGTH_SHORT).show();
+                    Event_fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_24, 0, 0, 0);
+                }
+        }
+
+    private fun getFavorites(idUsuario: String?,idPublicacion: String?){
+        db.collection("usuarios").document(idUsuario!!).get()
+            .addOnSuccessListener { result ->
+                val document = result
+                var fav = document.data?.get("favoritos") as  ArrayList<String>?
+
+                inFavorites = fav?.contains(idPublicacion.toString())
+
+                if (inFavorites == false) {
+                    Event_fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_24, 0, 0, 0);
+                }else{
+                    Event_fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_fav_24, 0, 0, 0);
+                }
+
+            }
+    }
+
+
 }
 

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
@@ -26,6 +27,7 @@ import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_comments.*
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.card_post.*
 import kotlinx.android.synthetic.main.fragment_account_settings.*
 
 class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickListener, OnFragmentActionsListener {
@@ -34,6 +36,7 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
     private lateinit var toolbar: Toolbar
     private var db = FirebaseFirestore.getInstance()
     private lateinit var modeloUser: UserDb
+    private var inFavorites: Boolean? = false
 
     //Para interectuar con la base de datos
     //private lateinit var dbLite: DataBaseHelper
@@ -48,7 +51,13 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
 
         service = Facade()
         modeloUser = UserDb()
+        mUser = FirebaseAuth.getInstance().currentUser!!
 
+        // Agregar toolbar personalizado a activity main
+        toolbar = findViewById(R.id.myToolbar)
+        toolbar.title = "Jardines y Cultivos";
+        toolbar.subtitle = "Mi Perfil";
+        setSupportActionBar(toolbar)
 
         var avatar = service.getPreferenceKey(this,"avatar").toString()
 
@@ -65,13 +74,9 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         //Obtenemos el usuario
         //userDb = dbLite.readData(idUsuario)!!
 
-        mUser = FirebaseAuth.getInstance().currentUser!!
 
-        // Agregar toolbar personalizado a activity main
-        toolbar = findViewById(R.id.myToolbar)
-        toolbar.title = "Jardines y Cultivos";
-        toolbar.subtitle = "Mi Perfil";
-        setSupportActionBar(toolbar)
+
+
 
         OnclickButtonMyPublish()
         getFirebaseCurrentUser(mUser.uid)
@@ -83,6 +88,10 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
 
         images_grid_btn.setOnClickListener() {
             OnclickButtonMyPublish()
+        }
+
+        images_save_btn.setOnClickListener() {
+
         }
 
     }
@@ -334,12 +343,22 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         startActivity(intent)
     }
 
+    override fun onFavClick(item: Post) {
+        if (inFavorites == false){
+            addFavorites(mUser.uid,item.uid)
+            inFavorites=true
+        }
+        else {
+            removeFavorites(mUser.uid,item.uid)
+            inFavorites=false
+        }
+    }
+
     override fun onClickFragmentButtonAcept() {
         println("ACEPTAR")
         hideFragment(AccountSettingsFragment())
 
         println(calle_user.text.toString())
-
         println("Eviar los datos")
     }
 
@@ -348,6 +367,22 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         hideFragment(AccountSettingsFragment())
     }
 
+    private fun addFavorites(idUsuario: String?,uid: String?){
+        db.collection("usuarios").document(idUsuario!!)
+            .update("favoritos", FieldValue.arrayUnion(uid))
+            .addOnSuccessListener {
+                Toast.makeText(this, "Agregado a favoritos", Toast.LENGTH_SHORT).show();
+                fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_fav_24, 0, 0, 0);
+            }
+    }
 
+    private fun removeFavorites(idUsuario: String?,uid: String?) {
+        db.collection("usuarios").document(idUsuario!!)
+            .update( "favoritos", FieldValue.arrayRemove(uid))
+            .addOnSuccessListener {
+                Toast.makeText(this, "Eliminado de favoritos", Toast.LENGTH_SHORT).show();
+                fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_24, 0, 0, 0);
+            }
+    }
 }
 
