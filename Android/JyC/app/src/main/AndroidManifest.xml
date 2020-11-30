@@ -6,7 +6,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -21,7 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JyC">
-
+        <activity android:name=".EventActivity"></activity>
         <activity
             android:name=".ImagenDetail"
             android:label="@string/title_activity_imagen_detail"
@@ -30,7 +32,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDdDG1M3poRmxF5uhObY1i3VGBosK1jnT8" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_baseline_star_24" />
@@ -42,8 +43,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CommentsActivity"/>
-        <activity android:name=".EventActivity" />
+        <activity android:name=".CommentsActivity" />
+        <activity android:name=".NewEventActivity" />
         <activity android:name=".MyFunActivity" />
         <activity android:name=".ForgotPassActivity" />
         <activity android:name=".LoginActivity" />
@@ -59,7 +60,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

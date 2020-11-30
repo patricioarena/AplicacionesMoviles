@@ -3,12 +3,10 @@ package com.example.jyc
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -16,9 +14,6 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_post.view.*
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 open class PostAdapter(private val activity: Activity, private val dataset: List<Post>, private val itemClickListener: OnPublicacionesClickListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
@@ -29,6 +24,7 @@ open class PostAdapter(private val activity: Activity, private val dataset: List
     interface OnPublicacionesClickListener{
         fun onImageClick(image: String?)
         fun onItemClick(idUsuario: String?)
+        fun onMoreInfoClick(item: Post)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PublicacionesViewHolder {
@@ -51,6 +47,7 @@ open class PostAdapter(private val activity: Activity, private val dataset: List
 
             itemView.setOnClickListener{itemClickListener.onItemClick(item.idUsuario)}
             itemView.image_tv.setOnClickListener{itemClickListener.onImageClick(item.image)}
+            itemView.buttonMore.setOnClickListener{itemClickListener.onMoreInfoClick(item)}
 //            var post = dataset[position]
             var likes = item.likes
             var usuarioActual = auth.currentUser
@@ -61,10 +58,10 @@ open class PostAdapter(private val activity: Activity, private val dataset: List
                 liked = false
             }
 
-            if (item.nombreEvento == "null"){
-                layout.CardTitle.setVisibility(View.GONE)
-                layout.buttonMore.setVisibility(View.GONE)
-            }
+//            if (item.nombreEvento == "null"){
+//                layout.CardTitle.setVisibility(View.GONE)
+//                layout.buttonMore.setVisibility(View.GONE)
+//            }
 
             layout.CardTitle.text = item.nombreEvento
             layout.username_tv.text = item.userName

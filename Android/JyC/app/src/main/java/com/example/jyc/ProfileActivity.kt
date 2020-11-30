@@ -3,7 +3,6 @@ package com.example.jyc
 import Models.Domicilio
 import Models.UserDb
 import MyResources.Facade
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
@@ -143,7 +142,7 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
                         modeloUser.calle = domicilio.calle
                         modeloUser.numero = domicilio.numero
                         modeloUser.cp = domicilio.cp
-                        modeloUser.ciudad = domicilio.ciudad
+                        modeloUser.ciudad = domicilio.localidad
                         modeloUser.provincia = domicilio.provincia
                         modeloUser.pais = domicilio.pais
                         modeloUser.email = document.data?.get("email").toString()
@@ -299,7 +298,7 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
                 return true
             }
             R.id.nav_new_event -> {
-                startActivity(Intent(this, EventActivity::class.java))
+                startActivity(Intent(this, NewEventActivity::class.java))
                 return true
             }
             R.id.nav_new_pub -> {
@@ -327,6 +326,9 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
 
     override fun onItemClick(idUsuario: String?) {
         Toast.makeText(this, idUsuario, Toast.LENGTH_SHORT).show();
+    }
+
+    override fun onMoreInfoClick(item: Post) {
     }
 
     override fun onClickFragmentButtonAcept() {

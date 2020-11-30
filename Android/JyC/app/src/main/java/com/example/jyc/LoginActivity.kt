@@ -16,8 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
-import com.google.gson.stream.JsonReader
-import java.io.StringReader
 
 
 // Actividad encargadar de redireccionar a las actividades,
@@ -163,7 +161,7 @@ class LoginActivity : AppCompatActivity() {
                         usuario.calle = domicilio.calle
                         usuario.numero = domicilio.numero
                         usuario.cp = domicilio.cp
-                        usuario.ciudad = domicilio.ciudad
+                        usuario.ciudad = domicilio.localidad
                         usuario.provincia = domicilio.provincia
                         usuario.pais = domicilio.pais
                         usuario.email = document.data?.get("email").toString()

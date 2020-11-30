@@ -1,288 +1,79 @@
 package com.example.jyc
 
+import Models.Domicilio
 import MyResources.Facade
-import android.Manifest
-import android.app.Activity
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
-import android.os.Build
+import android.graphics.Color
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
-import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.google.android.gms.maps.GoogleMap
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import java.io.ByteArrayOutputStream
-import java.util.*
-
+import com.google.gson.Gson
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_event.*
 
 class EventActivity : AppCompatActivity() {
-
     private lateinit var toolbar: Toolbar
     private lateinit var service: Facade
-    private lateinit var editTextDate: EditText
-    private lateinit var editTextTime: EditText
-    private lateinit var editTextTextNombreEvento: EditText
-
-    private lateinit var editTextProvincia: EditText
-    private lateinit var editTextLocalidad: EditText
-    private lateinit var editTextCp: EditText
-    private lateinit var editTextCalle: EditText
-    private lateinit var editTextNumero: EditText
-    private lateinit var editTextPiso: EditText
-    private lateinit var editTextEntreCalle1: EditText
-    private lateinit var editTextEntreCalle2: EditText
-
-
-    private lateinit var editTextTextUrl: EditText
-    private lateinit var editTextTextMultiLineEvento: EditText
-    private lateinit var imageViewBanner: ImageView
-    private lateinit var radioButtonUrl: RadioButton
-    private lateinit var radioButtonEnPersona: RadioButton
-    private lateinit var linearLayout: ConstraintLayout
-    private lateinit var buttonDescartarEvento: Button
-    private lateinit var buttonPublicarEvento: Button
-    private lateinit var auth: FirebaseAuth
-    private lateinit var database: FirebaseFirestore
-    private var mStorageRef: StorageReference? = null
-    private var bitmap: Bitmap? = null
-    private val CERO = "0"
-    private val BARRA = "/"
-    private val DOS_PUNTOS = ":"
-    private var typeEvent: String? = null
-
-    //Calendario para obtener fecha & hora
-    var c = Calendar.getInstance()
-
-    //Variables para obtener la fecha
-    var mes = c[Calendar.MONTH]
-    var dia = c[Calendar.DAY_OF_MONTH]
-    var anio = c[Calendar.YEAR]
-
-    //Variables para obtener la hora hora
-    var hora = c[Calendar.HOUR_OF_DAY]
-    var minuto = c[Calendar.MINUTE]
-
-    //image pick code
-    private val IMAGE_PICK_CODE = 1000;
-
-    //Permission code
-    private val PERMISSION_CODE = 1001;
-
-    private lateinit var mMap: GoogleMap
+    private var db = FirebaseFirestore.getInstance()
+    private var post = Post()
+    private var domicilio = Domicilio()
+    private val auth = FirebaseAuth.getInstance()
+    private var liked: Boolean = false
+    private lateinit var fechaEvento: String
+    private lateinit var horaEvento: String
+    private lateinit var eventoLink: String
+    private var presencial: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event)
 
         service = Facade()
-
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)
-        toolbar.title = "Jardines y Cultivos"
-        toolbar.subtitle = "Crear nuevo evento";
+        toolbar.title = "Jardines y Cultivos";
+        toolbar.subtitle = "Evento"
 
         setSupportActionBar(toolbar)
 
-        editTextDate = findViewById(R.id.editTextDate)
-        editTextDate.setOnClickListener {
-            obtenerFecha()
-        }
+        var uid = intent.getStringExtra("item.uid")
+        post = Post()
+        getPublication(uid)
 
-        editTextTime = findViewById(R.id.editTextTime)
-        editTextTime.setOnClickListener {
-            obtenerHora()
-        }
-
-        imageViewBanner = findViewById(R.id.imageViewBanner)
-        imageViewBanner.setOnClickListener {
-            //check runtime permission
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                        PackageManager.PERMISSION_DENIED
-                ) {
-                    //permission denied
-                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
-                    //show popup to request runtime permission
-                    requestPermissions(permissions, PERMISSION_CODE);
-                } else {
-                    //permission already granted
-                    pickImageFromGallery();
-                }
-            } else {
-                //system OS is < Marshmallow
-                pickImageFromGallery();
+        Event_share_btn.setOnClickListener {
+            val sendIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, post.post)
+                type = "text/plain"
             }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
         }
 
-        editTextTextNombreEvento = findViewById(R.id.editTextTextNombreEvento)
-        editTextTextUrl = findViewById(R.id.editTextTextUrl)
-        linearLayout = findViewById(R.id.linearLayout)
-
-        radioButtonUrl = findViewById(R.id.radioButtonUrl)
-        radioButtonUrl.setOnClickListener {
-            editTextTextUrl.setVisibility(View.VISIBLE)
-            linearLayout.setVisibility(View.GONE)
-            typeEvent = Evento.ONLINE.toString()
+        Event_comment_btn.setOnClickListener {
+            val commentIntent = Intent(this, CommentsActivity::class.java)
+            commentIntent.putExtra("postId", post.uid)
+            commentIntent.putExtra("publicacionId", post.post)
+            commentIntent.putExtra("userName", post.userName)
+            commentIntent.putExtra("imagen", post.image)
+            commentIntent.putExtra("idUsuario", post.idUsuario)
+            //paso los id de comentarios que tiene una publicacion
+            commentIntent.putStringArrayListExtra("listaIdcomentarios", post.listaIdcomentarios!!)
+            startActivity(commentIntent)
         }
 
-        radioButtonEnPersona = findViewById(R.id.radioButtonEnPersona)
-        radioButtonEnPersona.setOnClickListener {
-            linearLayout.setVisibility(View.VISIBLE)
-            editTextTextUrl.setVisibility(View.GONE);
-            editTextTextUrl.text.clear()
-            typeEvent = Evento.PRESENCIAL.toString()
-        }
-
-        buttonDescartarEvento = findViewById(R.id.buttonDescartarEvento)
-        buttonDescartarEvento.setOnClickListener {
-            typeEvent = null;
-            startActivity(Intent(this, HomeActivity::class.java))
-        }
-
-        buttonPublicarEvento = findViewById(R.id.buttonPublicarEvento)
-        buttonPublicarEvento.setOnClickListener {
-
-            uploadEvent()
-
-        }
-//        findViewById<View>(R.id.btn1_add).setOnTouchListener { v, event ->
-//            if (event.action == MotionEvent.ACTION_DOWN) {
-//                // start tiemr
-//            } else if (event.action == MotionEvent.ACTION_UP) {
-//                // stop timer.
-//            }
-//            false
-//        }
-
-
-        editTextProvincia = findViewById(R.id.editTextProvincia)
-        editTextLocalidad = findViewById(R.id.editTextLocalidad)
-        editTextCp = findViewById(R.id.editTextCp)
-        editTextCalle = findViewById(R.id.editTextCalle)
-        editTextNumero = findViewById(R.id.editTextNumero)
-        editTextPiso = findViewById(R.id.editTextPiso)
-        editTextEntreCalle1 = findViewById(R.id.editTextEntreCalle1)
-        editTextEntreCalle2 = findViewById(R.id.editTextEntreCalle2)
-        editTextTextMultiLineEvento = findViewById(R.id.editTextTextMultiLineEvento)
-
-        auth = FirebaseAuth.getInstance()
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        database = FirebaseFirestore.getInstance()
     }
 
-
-    private fun pickImageFromGallery() {
-        //Intent to pick image
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, IMAGE_PICK_CODE)
-    }
-
-    //handle requested permission result
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when (requestCode) {
-            PERMISSION_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //permission from popup granted
-                    pickImageFromGallery()
-                } else {
-                    //permission from popup denied
-                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
-    //handle result of picked image
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == IMAGE_PICK_CODE && resultCode == Activity.RESULT_OK && data != null) {
-
-            val selectedPhotoUri = data.data
-            try {
-                selectedPhotoUri?.let {
-                    if (Build.VERSION.SDK_INT < 28) {
-                        val bitmapx = MediaStore.Images.Media.getBitmap(
-                                this.contentResolver,
-                                selectedPhotoUri
-                        )
-                        imageViewBanner.setImageBitmap(bitmapx)
-                    } else {
-                        val source = ImageDecoder.createSource(this.contentResolver, selectedPhotoUri)
-                        val bitmapx = ImageDecoder.decodeBitmap(source)
-                        bitmap = bitmapx
-                        imageViewBanner.setImageBitmap(bitmapx)
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-    private fun obtenerFecha() {
-        val recogerFecha = DatePickerDialog(
-                this,
-                { view, year, month, dayOfMonth -> //Esta variable lo que realiza es aumentar en uno el mes ya que comienza desde 0 = enero
-                    val mesActual = month + 1
-                    //Formateo el día obtenido: antepone el 0 si son menores de 10
-                    val diaFormateado =
-                            if (dayOfMonth < 10) CERO.toString() + dayOfMonth.toString() else dayOfMonth.toString()
-                    //Formateo el mes obtenido: antepone el 0 si son menores de 10
-                    val mesFormateado =
-                            if (mesActual < 10) CERO.toString() + mesActual.toString() else mesActual.toString()
-                    //Muestro la fecha con el formato deseado
-                    editTextDate.setText(diaFormateado + BARRA.toString() + mesFormateado + BARRA + year)
-                }, //Estos valores deben ir en ese orden, de lo contrario no mostrara la fecha actual
-                /**
-                 * También puede cargar los valores que usted desee
-                 */
-                anio, mes, dia
-        )
-        //Muestro el widget
-        recogerFecha.show()
-    }
-
-    private fun obtenerHora() {
-        val recogerHora = TimePickerDialog(
-                this,
-                { view, hourOfDay, minute -> //Formateo el hora obtenido: antepone el 0 si son menores de 10
-                    val horaFormateada = if (hourOfDay < 10) CERO + hourOfDay else hourOfDay.toString()
-                    //Formateo el minuto obtenido: antepone el 0 si son menores de 10
-                    val minutoFormateado = if (minute < 10) CERO + minute else minute.toString()
-                    //Obtengo el valor a.m. o p.m., dependiendo de la selección del usuario
-                    val AM_PM: String
-                    AM_PM = if (hourOfDay < 12) {
-                        "a.m."
-                    } else {
-                        "p.m."
-                    }
-                    //Muestro la hora con el formato deseado
-                    editTextTime.setText(horaFormateada + DOS_PUNTOS.toString() + minutoFormateado + " " + AM_PM)
-                }, //Estos valores deben ir en ese orden
-                //Al colocar en false se muestra en formato 12 horas y true en formato 24 horas
-                //Pero el sistema devuelve la hora en formato 24 horas
-                hora, minuto, false
-        )
-        recogerHora.show()
-    }
 
     private fun logoutUser() {
         service.deletePreferenceKey(this, "token")
@@ -312,7 +103,7 @@ class EventActivity : AppCompatActivity() {
                 return true
             }
             R.id.nav_new_event -> {
-                startActivity(Intent(this, EventActivity::class.java))
+                startActivity(Intent(this, NewEventActivity::class.java))
                 return true
             }
             R.id.nav_new_pub -> {
@@ -331,132 +122,154 @@ class EventActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun uploadEvent() {
+    private fun setColor(liked: Boolean?, likedButton: Button) {
+        if (liked!!) likedButton.setTextColor(ContextCompat.getColor(this, R.color.purple_500))
+        else likedButton.setTextColor(Color.WHITE)
+    }
 
-        window.setFlags(
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-        )
+    private fun removeUserDb(uid: String?) {
+        if (uid != null) {
+            val doc = db.collection("publicaciones").document(uid)
+            db.runTransaction {
+                it.update(doc, "likes", FieldValue.arrayRemove(auth.uid))
 
-        val user: FirebaseUser? = auth.currentUser
-        var idUsuario = user?.uid.toString()
+                null
+            }
+        }
 
-        val stream = ByteArrayOutputStream()
-        bitmap?.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        val random: String = UUID.randomUUID().toString()
-        val imageRef: StorageReference? = mStorageRef?.child("$idUsuario/$random")
+    }
 
-        val b: ByteArray = stream.toByteArray()
-        if (imageRef != null) {
-            imageRef.putBytes(b)
-                    .addOnSuccessListener { taskSnapshot ->
-                        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                        taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener { uri ->
-                            val downloadUri = uri
-                            var imagenUri = downloadUri.toString()
+    private fun insertUerDb(uid: String?) {
+        if (uid != null) {
+            val doc = db.collection("publicaciones").document(uid)
+            db.runTransaction {
+                it.update(doc, "likes", FieldValue.arrayUnion(auth.uid))
 
-                            var emptyStringArray = listOf("")
-                            var tags = emptyStringArray
-                            var comentarios = emptyStringArray
-                            var fecha = service.getDateTime()
-                            var textomuylargo = editTextTextMultiLineEvento.text.toString()
-                            var nombreEvento = editTextTextNombreEvento.text.toString()
-                            var fechaEvento = editTextDate.text.toString()
-                            var hora = editTextTime.text.toString()
+                null
+            }
+        }
 
-                            if (typeEvent.equals(Evento.PRESENCIAL.toString())) {
+    }
 
-                                var calle = editTextCalle.text.toString()
-                                var eCalle1 = editTextEntreCalle1.text.toString()
-                                var eCalle2 = editTextEntreCalle2.text.toString()
-                                var numero = editTextNumero.text.toString()
-                                var cp = editTextCp.text.toString()
-                                var piso = editTextPiso.text.toString()
-                                var localidad = editTextLocalidad.text.toString()
-                                var prov_est = editTextProvincia.text.toString()
+    fun getPublication(uid: String?) {
+        db.collection("publicaciones").document(uid!!).get().addOnSuccessListener { result ->
+            val document = result
+            post.uid = document.id
+            post.idUsuario = document.data?.get("idUsuario")?.toString()
+            post.date = document.data?.get("fecha")?.toString()
+            post.post = document.data?.get("articulo")?.toString()
+            post.image = document.data?.get("imagen")?.toString()
+            post.nombreEvento = document.data?.get("nombreEvento")?.toString()
 
-                                val lugar = hashMapOf(
-                                        "eCalle_1" to eCalle1,
-                                        "eCalle_2" to eCalle2,
-                                        "calle" to calle,
-                                        "numero" to numero,
-                                        "cp" to cp,
-                                        "piso" to piso,
-                                        "localidad" to localidad,
-                                        "prov_est" to prov_est,
-                                        "pais" to "Argentina"
-                                )
+            fechaEvento = document.data?.get("fechaEvento")?.toString().toString()
+            horaEvento = document.data?.get("hora")?.toString().toString()
+            eventoLink = ""
 
-                                var eventoPresencial = hashMapOf(
-                                        "idUsuario" to idUsuario,
-                                        "nombreEvento" to nombreEvento,
-                                        "articulo" to textomuylargo,
-                                        "fecha" to fecha,
-                                        "imagen" to imagenUri,
-                                        "fechaEvento" to fechaEvento,
-                                        "hora" to hora,
-                                        "categorias" to "Evento",
-                                        "Tipo" to Evento.PRESENCIAL.toString(),
-                                        "tags" to tags,
-                                        "comentarios" to comentarios,
-                                        "lugar" to lugar
-                                )
+            var losUsuariosQueDieronLike = document.data?.get("likes") as ArrayList<String>?
+            post.likes = losUsuariosQueDieronLike
 
-                                val publicacionesDb = database.collection("publicaciones")
-                                publicacionesDb.add(eventoPresencial).addOnSuccessListener { documentReference ->
-                                    database.collection("usuarios").document(idUsuario)
-                                            .update("publicaciones", FieldValue.arrayUnion(documentReference.id))
-                                            .addOnSuccessListener {
-                                                Toast.makeText(this, "Event Uploaded", Toast.LENGTH_SHORT).show();
-                                                startActivity(Intent(this, HomeActivity::class.java))
-                                            }
-                                }
+            var losUsuariosQueComentaron = document.data?.get("comentarios") as ArrayList<String>?
+            post.listaIdcomentarios = losUsuariosQueComentaron
 
-                            } else if (typeEvent.equals(Evento.ONLINE.toString())) {
-                                var eventoOnline = hashMapOf(
-                                        "idUsuario" to idUsuario,
-                                        "nombreEvento" to nombreEvento,
-                                        "articulo" to textomuylargo,
-                                        "fecha" to fecha,
-                                        "imagen" to imagenUri,
-                                        "fechaEvento" to fechaEvento,
-                                        "hora" to hora,
-                                        "categorias" to "Evento",
-                                        "Tipo" to Evento.ONLINE.toString(),
-                                        "Url" to editTextTextUrl.text.toString(),
-                                        "tags" to tags,
-                                        "comentarios" to comentarios
-                                )
+            var evento = document.data?.get("categorias").toString()
+            var tipo = document.data?.get("tipo").toString()
 
-                                val publicacionesDb = database.collection("publicaciones")
-                                publicacionesDb.add(eventoOnline).addOnSuccessListener { documentReference ->
-                                    database.collection("usuarios").document(idUsuario)
-                                            .update("publicaciones", FieldValue.arrayUnion(documentReference.id))
-                                            .addOnSuccessListener {
-                                                Toast.makeText(this, "Event Uploaded", Toast.LENGTH_SHORT).show();
-                                                startActivity(Intent(this, HomeActivity::class.java))
-                                            }
-                                }
+            if (tipo == "PRESENCIAL") {
+                presencial = true;
+            }
 
-                            } else {
-                                Toast.makeText(this, "Event Upload Failed", Toast.LENGTH_SHORT).show();
-                            }
 
-                        }
+            var cantidadLikes = losUsuariosQueDieronLike?.count()
+            if (cantidadLikes == null) {
+                cantidadLikes = 0
+            }
 
+            var cantidadComments = losUsuariosQueComentaron?.count()
+            if (cantidadComments == null) {
+                cantidadComments = 0
+            }
+
+            post.cantidadDeLikes = cantidadLikes
+            post.cantidadDeComentarios = cantidadComments
+
+            if (evento == "Evento") {
+                if (presencial) {
+
+                    var myJson = document.data?.get("lugar").toString()
+                    var dom = Gson().fromJson(myJson, Domicilio::class.java)
+
+                    domicilio.calle = dom.calle
+                    domicilio.cp = dom.cp
+                    domicilio.localidad = dom.localidad
+                    domicilio.provincia = dom.provincia
+                    domicilio.numero = dom.numero
+                    domicilio.pais = dom.pais
+                    domicilio.piso = dom.piso
+                    domicilio.eCalle_1 = dom.eCalle_1
+                    domicilio.eCalle_2 = dom.eCalle_2
+                    layout_presencial.setVisibility(View.VISIBLE)
+                    layout_online.setVisibility(View.GONE)
+                    Event_editTextFecha.setVisibility(View.VISIBLE)
+                    Event_editTextHora.setVisibility(View.VISIBLE)
+                } else {
+                    eventoLink = document.data?.get("url")?.toString().toString()
+                    layout_online.setVisibility(View.VISIBLE)
+                    layout_presencial.setVisibility(View.GONE)
+                    Event_editTextFecha.setVisibility(View.VISIBLE)
+                    Event_editTextHora.setVisibility(View.VISIBLE)
+                }
+            }else{
+                layout_presencial.setVisibility(View.GONE)
+                layout_online.setVisibility(View.GONE)
+                Event_editTextFecha.setVisibility(View.GONE)
+                Event_editTextHora.setVisibility(View.GONE)
+            }
+
+        }.addOnCompleteListener {
+
+            db.collection("usuarios")
+                .document(post.idUsuario!!).get()
+                .addOnSuccessListener { result ->
+                    val document = result
+                    post.userName = document?.data?.get("nombre")
+                        .toString() + " " + document?.data?.get("apellido").toString()
+                }.addOnCompleteListener {
+
+                    Event_CardTitle.text = post.nombreEvento
+                    Event_username_tv.text = post.userName
+                    Event_post_tv.text = post.post
+                    Picasso.get().load(post.image).into(Event_image_tv)
+                    Event_likesCount_tv.text = "${post.cantidadDeLikes} likes"
+                    Event_fecha_tv.text = post.date
+                    Event_commentsCount_tv.text = "${post.cantidadDeComentarios} comentarios"
+
+                    if (presencial) {
+                        Event_editTextNumero.text = "Numero: ${domicilio.numero.toString()}"
+                        Event_editTextPiso.text = "Piso: ${domicilio.piso}"
+                        Event_editTextLocalidad.text =
+                            "Localidad: ${service.replace20forSpace(domicilio.localidad.toString())}"
+                        Event_editTextProvincia.text =
+                            "Provincia: ${service.replace20forSpace(domicilio.provincia.toString())}"
+                        Event_editTextCalle.text =
+                            "Calle: ${service.replace20forSpace(domicilio.calle.toString())}"
+                        Event_editTextEntreCalle1.text =
+                            "Entre calle 1: ${service.replace20forSpace(domicilio.eCalle_1.toString())}"
+                        Event_editTextEntreCalle2.text =
+                            "Entre calle 2: ${service.replace20forSpace(domicilio.eCalle_2.toString())}"
+                        Event_editTextCp.text =
+                            "Cod. Postal: ${service.replace20forSpace(domicilio.cp.toString())}"
+                        Event_editTextPais.text =
+                            "Pais: ${service.replace20forSpace(domicilio.pais.toString())}"
+                    } else {
+                        Event_link.text = eventoLink
                     }
-                    .addOnFailureListener {
-                        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                        Toast.makeText(this, "Upload Failed", Toast.LENGTH_SHORT).show();
-                    }
+
+                    Event_editTextFecha.text = "Fecha: ${fechaEvento}"
+                    Event_editTextHora.text = "Hora: ${horaEvento}"
+
+                }
+
         }
     }
-
-
-    enum class Evento {
-        ONLINE, PRESENCIAL
-    }
-//    Las mejores flores de plastico de todo florencio varela no te lo pierdas!! Ahora en vivo venia verlas en persona te vas a asombrar!!
-
 }
 

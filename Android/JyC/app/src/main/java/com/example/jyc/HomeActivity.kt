@@ -1,38 +1,27 @@
 package com.example.jyc
 
 import MyResources.Facade
+import android.content.ContentValues.TAG
 import android.content.Intent
-
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_home.*
-import java.util.*
-import android.content.ContentValues.TAG
-import android.text.TextUtils
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.activity_publication.*
-import kotlinx.android.synthetic.main.card_post.*
-import java.lang.Exception
-import java.lang.reflect.Array
-import kotlin.collections.ArrayList
+import kotlinx.android.synthetic.main.activity_home.*
 
 
-class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListener {
+class HomeActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickListener {
     private var pressedTime: Long = 0
     private lateinit var service: Facade
     private lateinit var toolbar: Toolbar
@@ -56,70 +45,83 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
         var publicaciones2 = mutableListOf<Post>()
 
         db.collection("publicaciones").orderBy("fecha", Query.Direction.DESCENDING)
-                .addSnapshotListener { querySnapshot: QuerySnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
+            .addSnapshotListener { querySnapshot: QuerySnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
 
-                    if (firebaseFirestoreException != null) {
-                        Log.w(TAG, "Listen failed.", firebaseFirestoreException)
-                        return@addSnapshotListener
-                    }
+                if (firebaseFirestoreException != null) {
+                    Log.w(TAG, "Listen failed.", firebaseFirestoreException)
+                    return@addSnapshotListener
+                }
 
-                    publicaciones.clear()
-                    publicaciones2.clear()
+                publicaciones.clear()
+                publicaciones2.clear()
 
-                    for (document in querySnapshot!!) {
+                for (document in querySnapshot!!) {
 //                        Log.d("TAG", "${document.id} => ${document.data}")
 
-                        var post = Post()
-                        post.uid = document.id
-                        post.idUsuario = document.data["idUsuario"].toString()
-                        post.date = document.data["fecha"].toString()
-                        post.post = document.data["articulo"].toString()
-                        post.image = document.data["imagen"].toString()
+                    var post = Post()
+                    post.uid = document.id
+                    post.idUsuario = document.data["idUsuario"].toString()
+                    post.date = document.data["fecha"].toString()
+                    post.post = document.data["articulo"].toString()
+                    post.image = document.data["imagen"].toString()
 
-                        post.nombreEvento = document.data["nombreEvento"].toString()
+                    post.nombreEvento = document.data["nombreEvento"].toString()
 
-                        var losUsuariosQueDieronLike = document.data["likes"] as ArrayList<String>?
-                        post.likes = losUsuariosQueDieronLike
+                    var losUsuariosQueDieronLike = document.data["likes"] as ArrayList<String>?
+                    post.likes = losUsuariosQueDieronLike
 
-                        var losUsuariosQueComentaron = document.data["comentarios"] as ArrayList<String>?
-                        post.listaIdcomentarios = losUsuariosQueComentaron
+                    var losUsuariosQueComentaron =
+                        document.data["comentarios"] as ArrayList<String>?
+                    post.listaIdcomentarios = losUsuariosQueComentaron
 
-                        var cantidadLikes = losUsuariosQueDieronLike?.count()
-                        if (cantidadLikes == null) {
-                            cantidadLikes = 0
-                        }
-
-                        var cantidadComments = losUsuariosQueComentaron?.count()
-                        if (cantidadComments == null){
-                            cantidadComments = 0
-                        }
-
-
-                        post.cantidadDeLikes = cantidadLikes
-                        post.cantidadDeComentarios = cantidadComments
-
-                        publicaciones.add(post)
-                        //Log.d("TAG", "${document.id} => ${post.post}")
-
+                    if (post.nombreEvento == "null") {
+                        post.nombreEvento = ""
                     }
 
-                    for (pub in publicaciones) {
-                        db.collection("usuarios").document(pub.idUsuario.toString()).get()
-                                .addOnSuccessListener { result ->
-                                    val document = result
-                                    pub.userName = document?.data?.get("nombre").toString() + " " + document?.data?.get("apellido").toString()
-                                    publicaciones2.add(pub)
-                                }
-                                .addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        var temp = publicaciones2.toList();
-                                        recyclerView.layoutManager = LinearLayoutManager(this)
-                                        recyclerView.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
-                                        recyclerView.adapter = PostAdapter(this,temp,this)
-                                    }
-                                }
+                    var cantidadLikes = losUsuariosQueDieronLike?.count()
+                    if (cantidadLikes == null) {
+                        cantidadLikes = 0
                     }
+
+                    var cantidadComments = losUsuariosQueComentaron?.count()
+                    if (cantidadComments == null) {
+                        cantidadComments = 0
+                    }
+
+
+                    post.cantidadDeLikes = cantidadLikes
+                    post.cantidadDeComentarios = cantidadComments
+
+                    publicaciones.add(post)
+                    //Log.d("TAG", "${document.id} => ${post.post}")
+
                 }
+
+                for (pub in publicaciones) {
+                    db.collection("usuarios").document(pub.idUsuario.toString()).get()
+                        .addOnSuccessListener { result ->
+                            val document = result
+                            pub.userName = document?.data?.get("nombre")
+                                .toString() + " " + document?.data?.get(
+                                "apellido"
+                            ).toString()
+                            publicaciones2.add(pub)
+                        }
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                var temp = publicaciones2.toList();
+                                recyclerView.layoutManager = LinearLayoutManager(this)
+                                recyclerView.addItemDecoration(
+                                    DividerItemDecoration(
+                                        this,
+                                        DividerItemDecoration.VERTICAL
+                                    )
+                                )
+                                recyclerView.adapter = PostAdapter(this, temp, this)
+                            }
+                        }
+                }
+            }
 
     }
 
@@ -169,7 +171,7 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
                 return true
             }
             R.id.nav_new_event -> {
-                startActivity(Intent(this, EventActivity::class.java))
+                startActivity(Intent(this, NewEventActivity::class.java))
                 return true
             }
             R.id.nav_new_pub -> {
@@ -199,7 +201,14 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
 //        Toast.makeText(this, idUsuario, Toast.LENGTH_SHORT).show();
     }
 
-    private fun notification(){
+    override fun onMoreInfoClick(item: Post) {
+        val intent: Intent = Intent(this, EventActivity::class.java)
+            .putExtra("item.uid", item.uid)
+
+        startActivity(intent)
+    }
+
+    private fun notification() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w(TAG, "Fetching FCM registration token failed", task.exception)
@@ -216,8 +225,6 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
 //        FirebaseMessaging.getInstance().subscribeToTopic("ONLINE")
 //        FirebaseMessaging.getInstance().subscribeToTopic("PRESENCIAL")
     }
-
-
 
 
 }

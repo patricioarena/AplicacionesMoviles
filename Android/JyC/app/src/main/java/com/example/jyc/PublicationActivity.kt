@@ -111,7 +111,7 @@ class PublicationActivity : AppCompatActivity() {
                 return true
             }
             R.id.nav_new_event -> {
-                startActivity(Intent(this, EventActivity::class.java))
+                startActivity(Intent(this, NewEventActivity::class.java))
                 return true
             }
             R.id.nav_new_pub -> {

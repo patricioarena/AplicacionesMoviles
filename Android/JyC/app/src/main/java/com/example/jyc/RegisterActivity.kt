@@ -188,11 +188,13 @@ class RegisterActivity : AppCompatActivity() {
 
                     val domicilio = hashMapOf(
                         "calle" to calle,
-                        "numero" to 452,
-                        "cp" to 1888,
+                        "numero" to 0,
+                        "cp" to 0,
                         "ciudad" to localidad,
                         "provincia" to provincia,
-                        "pais" to pais
+                        "pais" to pais,
+                        "eCalle_1" to "",
+                        "eCalle_2" to ""
                     )
 
                     val userInfo = hashMapOf(

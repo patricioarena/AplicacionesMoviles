@@ -1,29 +1,20 @@
 package com.example.jyc
 
 import MyResources.Facade
-import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_comments.*
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_publication.*
-import kotlinx.android.synthetic.main.card_post.view.*
 
 class CommentsActivity : AppCompatActivity() {
     private var postId = ""
@@ -202,7 +193,7 @@ class CommentsActivity : AppCompatActivity() {
                 return true
             }
             R.id.nav_new_event -> {
-                startActivity(Intent(this, EventActivity::class.java))
+                startActivity(Intent(this, NewEventActivity::class.java))
                 return true
             }
             R.id.nav_new_pub -> {
