@@ -196,7 +196,7 @@ class HomeActivity : AppCompatActivity(),PostAdapter.OnPublicacionesClickListene
     }
 
     override fun onItemClick(idUsuario: String?) {
-        Toast.makeText(this, idUsuario, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, idUsuario, Toast.LENGTH_SHORT).show();
     }
 
     private fun notification(){

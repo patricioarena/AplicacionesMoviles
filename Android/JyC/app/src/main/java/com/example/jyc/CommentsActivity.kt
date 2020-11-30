@@ -5,10 +5,14 @@ import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,8 +33,8 @@ class CommentsActivity : AppCompatActivity() {
     private var idUsuario = ""
     private var firebaseUser: FirebaseUser? = null
     private var db = FirebaseFirestore.getInstance()
-
-    private lateinit var facade: Facade
+    private lateinit var toolbar: Toolbar
+    private lateinit var service: Facade
 
     var comentarios = mutableListOf<Comment>()
     var comentarios2 = mutableListOf<Comment>()
@@ -38,6 +42,14 @@ class CommentsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comments)
+
+        service = Facade()
+
+        // Agregar toolbar personalizado a activity main
+        toolbar = findViewById(R.id.myToolbar)
+        toolbar.title = "Jardines y Cultivos";
+        toolbar.subtitle = "Comentarios";
+        setSupportActionBar(toolbar)
 
         val intent = intent
         postId = intent.getStringExtra("postId").toString()
@@ -53,6 +65,12 @@ class CommentsActivity : AppCompatActivity() {
 
         Picasso.get().load(imagen).into(post_imagen_comments)
 
+        var avatar = service.getPreferenceKey(this,"avatar").toString()
+
+        if (!TextUtils.isEmpty(avatar)) {
+            Picasso.get().load(avatar).into(image_avatar)
+        }
+
         getAllCommets(listaIdcomentarios)
 
         post_comment.setOnClickListener {
@@ -66,8 +84,7 @@ class CommentsActivity : AppCompatActivity() {
     }
 
     private fun addComment() {
-        facade = Facade()
-        var fecha = facade.getDateTime()
+        var fecha = service.getDateTime()
 
         val commentMap = hashMapOf(
             "fecha" to fecha.toString(),
@@ -82,19 +99,18 @@ class CommentsActivity : AppCompatActivity() {
             db.collection("publicaciones").document(postId)
                 .update("comentarios", FieldValue.arrayUnion(documentReference.id))
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Comentario Agregado", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "Comentario Agregado", Toast.LENGTH_SHORT).show();
 //                    startActivity(Intent(this, HomeActivity::class.java))
 
                     //Creaamos un nuevo objeto comnet para guardar los datos del mensaje que se acaba de enviar al servidor
                     var comment = Comment()
 
-
                     comment.date = commentMap["fecha"].toString()
                     comment.idUsuario = commentMap["idUsuario"].toString()
                     comment.texto = commentMap["texto"].toString()
 
-                    //falta recuperar el nombre de usuario actual
-                    comment.userName = "Patricio E. Arena"
+                    //frecupera el nombre de usuario actual de preference
+                    comment.userName = service.getPreferenceKey(this,"username")
 
                     // almacenamos el comentario en la lista de comentarios que ya teniamos
                     comentarios2.add(comment)
@@ -156,6 +172,53 @@ class CommentsActivity : AppCompatActivity() {
 
 
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu to use in the action bar
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_toobar, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun logoutUser() {
+        service.deletePreferenceKey(this, "token")
+        super.finishAffinity()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle presses on the action bar menu items
+        when (item.itemId) {
+            R.id.menu_settings -> {
+                Toast.makeText(this, "Mover a activity Settings", Toast.LENGTH_SHORT).show();
+                return true
+            }
+            R.id.nav_home -> {
+                startActivity(Intent(this, HomeActivity::class.java))
+                return true
+            }
+            R.id.nav_testActivity -> {
+                startActivity(Intent(this, MyFunActivity::class.java))
+                return true
+            }
+            R.id.nav_new_event -> {
+                startActivity(Intent(this, EventActivity::class.java))
+                return true
+            }
+            R.id.nav_new_pub -> {
+                startActivity(Intent(this, PublicationActivity::class.java))
+                return true
+            }
+            R.id.nav_profile -> {
+                startActivity(Intent(this, ProfileActivity::class.java))
+                return true
+            }
+            R.id.nav_logout -> {
+                logoutUser()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 

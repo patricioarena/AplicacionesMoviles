@@ -39,4 +39,5 @@
     <string name="piso">Piso (Opcional)</string>
     <string name="calle_1">Calle 1 (Opcional)</string>
     <string name="calle_2">Calle 2 (Opcional)</string>
+    <string name="escriba_un_comentario_aqui">Escriba un comentario aqui!!</string>
 </resources>

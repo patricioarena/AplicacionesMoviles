@@ -147,6 +147,11 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         return super.onCreateOptionsMenu(menu)
     }
 
+    private fun logoutUser() {
+        service.deletePreferenceKey(this, "token")
+        super.finishAffinity()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle presses on the action bar menu items
         when (item.itemId) {
@@ -170,7 +175,12 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
                 startActivity(Intent(this, PublicationActivity::class.java))
                 return true
             }
+            R.id.nav_profile -> {
+                startActivity(Intent(this, ProfileActivity::class.java))
+                return true
+            }
             R.id.nav_logout -> {
+                logoutUser()
                 return true
             }
         }

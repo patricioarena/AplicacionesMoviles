@@ -49,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar)
         btn_Login = findViewById(R.id.btn_Login)
 
-        dbLite  = DataBaseHelper(this)
+        dbLite = DataBaseHelper(this)
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
@@ -98,16 +98,24 @@ class LoginActivity : AppCompatActivity() {
                     // Si la autenticacion es satisfactoria obtenemos el token
                     val mUser = FirebaseAuth.getInstance().currentUser
                     mUser!!.getIdToken(true)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                val idToken = task.result!!.token
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    val idToken = task.result!!.token
 //                                Log.e("idToken", idToken.toString())
-                                // Guardamos el token  para inicio de sesion posterior sin tener que ingresar usuario y contraseña
-                                service.setPreferenceKey(this, "token", idToken)
-                                // Guardamos el idUsuario para realizar consultas a SQLLite
-                                //service.setPreferenceKey(this, "idUsuario", mUser.uid)
+                                    // Guardamos el token  para inicio de sesion posterior sin tener que ingresar usuario y contraseña
+                                    service.setPreferenceKey(this, "token", idToken)
+                                    val docRef = db.collection("usuarios").document(mUser.uid)
+                                    docRef.get()
+                                            .addOnSuccessListener { document ->
+                                                var username = document?.data?.get("nombre").toString() + " " + document?.data?.get("apellido").toString()
+                                                var avatar = document?.data?.get("avatar").toString()
+                                                service.setPreferenceKey(this, "username", username)
+                                                service.setPreferenceKey(this, "avatar", avatar)
+                                            }
+                                    // Guardamos el idUsuario para realizar consultas a SQLLite
+                                    //service.setPreferenceKey(this, "idUsuario", mUser.uid)
 
-                                  //Buscamos el usuario en sQLLite
+                                    //Buscamos el usuario en sQLLite
 //                                var test =  dbLite.readData(mUser.uid)
 //                                if (test!= null){ // Si el usuario existe
 //                                    Log.e(ContentValues.TAG, "Se encontro uruario en SQLLite con idUruario: ${test.email}")
@@ -115,8 +123,8 @@ class LoginActivity : AppCompatActivity() {
 //                                    Log.e(ContentValues.TAG, "No se encontro uruario en SQLLite")
 //                                    getFirebaseCurrentUser(mUser.uid)
 //                                }
+                                }
                             }
-                        }
                     startActivity(Intent(this, HomeActivity::class.java))
                 } else {
                     progressBar.visibility = View.INVISIBLE
@@ -139,7 +147,7 @@ class LoginActivity : AppCompatActivity() {
         pressedTime = System.currentTimeMillis();
     }
 
-    private fun getFirebaseCurrentUser(idUsuario: String?){
+    private fun getFirebaseCurrentUser(idUsuario: String?) {
         val docRef = db.collection("usuarios").document(idUsuario!!)
         docRef.get()
                 .addOnSuccessListener { document ->
@@ -189,8 +197,6 @@ class LoginActivity : AppCompatActivity() {
                     Log.e(ContentValues.TAG, "get failed with ", exception)
                 }
     }
-
-
 
 
 }
