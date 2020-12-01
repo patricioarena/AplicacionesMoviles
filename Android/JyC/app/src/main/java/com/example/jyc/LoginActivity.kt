@@ -122,6 +122,7 @@ class LoginActivity : AppCompatActivity() {
 //                                    getFirebaseCurrentUser(mUser.uid)
 //                                }
                                 }
+                                FirebaseAuth.getInstance().getAccessToken(true)
                             }
                     startActivity(Intent(this, HomeActivity::class.java))
                 } else {

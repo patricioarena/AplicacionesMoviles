@@ -356,7 +356,6 @@ class NewEventActivity : AppCompatActivity() {
 
                             var emptyStringArray = listOf("")
                             var tags = emptyStringArray
-                            var comentarios = emptyStringArray
                             var fecha = service.getDateTime()
                             var textomuylargo = editTextTextMultiLineEvento.text.toString()
                             var nombreEvento = editTextTextNombreEvento.text.toString()
@@ -406,7 +405,6 @@ class NewEventActivity : AppCompatActivity() {
                                         "categorias" to eP,
                                         "Tipo" to Evento.PRESENCIAL.toString(),
                                         "tags" to tags,
-                                        "comentarios" to comentarios,
                                         "lugar" to lugar
                                 )
 
@@ -435,8 +433,7 @@ class NewEventActivity : AppCompatActivity() {
                                         "categorias" to eO,
                                         "tipo" to Evento.ONLINE.toString(),
                                         "url" to editTextTextUrl.text.toString(),
-                                        "tags" to tags,
-                                        "comentarios" to comentarios
+                                        "tags" to tags
                                 )
 
                                 val publicacionesDb = database.collection("publicaciones")
