@@ -84,19 +84,19 @@
             app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/ic_account_circle_60" />
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/post_comment"
-            style="@style/Widget.MaterialComponents.Button.Icon"
-            android:layout_width="45dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:background="@drawable/btn_circle"
             android:textStyle="bold"
-            app:icon="@drawable/ic_baseline_send_24"
+            android:gravity="top|end"
+            app:srcCompat="@drawable/ic_baseline_send_24"
+            app:backgroundTint="@color/firebase_azul"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

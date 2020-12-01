@@ -141,6 +141,7 @@
                     android:layout_width="150dp"
                     android:layout_height="43dp"
                     android:layout_margin="8dp"
+                    android:checked="false"
                     android:text="@string/en_persona"
                     android:textSize="18sp" />
 
@@ -149,6 +150,7 @@
                     android:layout_width="150dp"
                     android:layout_height="43dp"
                     android:layout_margin="8dp"
+                    android:checked="false"
                     android:text="Online"
                     android:textSize="18sp" />
 
@@ -182,12 +184,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
                 android:layout_marginBottom="60dp"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

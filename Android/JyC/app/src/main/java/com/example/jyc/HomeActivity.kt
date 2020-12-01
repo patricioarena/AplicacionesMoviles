@@ -10,12 +10,14 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.android.synthetic.main.activity_event.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.card_post.*
 
@@ -101,14 +103,12 @@ class HomeActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickListen
 
                 }
 
+                //Optener nombre y apellido del autor
                 for (pub in publicaciones) {
                     db.collection("usuarios").document(pub.idUsuario.toString()).get()
                         .addOnSuccessListener { result ->
                             val document = result
-                            pub.userName = document?.data?.get("nombre")
-                                .toString() + " " + document?.data?.get(
-                                "apellido"
-                            ).toString()
+                            pub.userName = document?.data?.get("nombre").toString() + " " + document?.data?.get("apellido").toString()
                             publicaciones2.add(pub)
                         }
                         .addOnCompleteListener { task ->
@@ -212,35 +212,18 @@ class HomeActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickListen
         startActivity(intent)
     }
 
-    override fun onFavClick(item: Post) {
+    override fun onFavClick(uid: String?) {
 
+        println(uid)
+        Toast.makeText(this, "${uid}", Toast.LENGTH_SHORT).show();
         if (inFavorites == false){
-            addFavorites(idUsuario,item.uid)
+            addFavorites(idUsuario,uid)
             inFavorites=true
         }
         else {
-            removeFavorites(idUsuario,item.uid)
+            removeFavorites(idUsuario,uid)
             inFavorites=false
         }
-    }
-
-    private fun notification() {
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-
-            // Get new FCM registration token
-            val token = task.result
-
-            Log.d(TAG, token)
-            Toast.makeText(baseContext, "Token obtenido", Toast.LENGTH_SHORT).show()
-        })
-
-
-//        FirebaseMessaging.getInstance().subscribeToTopic("ONLINE")
-//        FirebaseMessaging.getInstance().subscribeToTopic("PRESENCIAL")
     }
 
     private fun addFavorites(idUsuario: String?,uid: String?){
@@ -248,7 +231,8 @@ class HomeActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickListen
             .update("favoritos", FieldValue.arrayUnion(uid))
             .addOnSuccessListener {
                 Toast.makeText(this, "Agregado a favoritos", Toast.LENGTH_SHORT).show();
-                fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_fav_24, 0, 0, 0);
+//                fav_btn.setImageResource(R.drawable.ic_baseline_star_fav_24)
+                fav_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.firebase_amarillo));
             }
     }
 
@@ -257,7 +241,8 @@ class HomeActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickListen
             .update( "favoritos", FieldValue.arrayRemove(uid))
             .addOnSuccessListener {
                 Toast.makeText(this, "Eliminado de favoritos", Toast.LENGTH_SHORT).show();
-                fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_24, 0, 0, 0);
+//                fav_btn.setImageResource(R.drawable.ic_baseline_star_24)
+                fav_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.firebase_azul));
             }
     }
 

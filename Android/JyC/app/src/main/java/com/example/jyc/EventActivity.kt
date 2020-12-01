@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -81,7 +82,7 @@ class EventActivity : AppCompatActivity() {
             commentIntent.putExtra("imagen", post.image)
             commentIntent.putExtra("idUsuario", post.idUsuario)
             //paso los id de comentarios que tiene una publicacion
-            commentIntent.putStringArrayListExtra("listaIdcomentarios", post.listaIdcomentarios!!)
+            commentIntent.putStringArrayListExtra("listaIdcomentarios", post.listaIdcomentarios)
             startActivity(commentIntent)
         }
 
@@ -254,7 +255,8 @@ class EventActivity : AppCompatActivity() {
             .update("favoritos", FieldValue.arrayUnion(post.uid))
             .addOnSuccessListener {
                 Toast.makeText(this, "Agregado a favoritos", Toast.LENGTH_SHORT).show();
-                Event_fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_fav_24, 0, 0, 0);
+//                Event_fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_fav_24, 0, 0, 0);
+                Event_fav_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.firebase_amarillo));
             }
     }
 
@@ -263,7 +265,8 @@ class EventActivity : AppCompatActivity() {
                 .update( "favoritos", FieldValue.arrayRemove(post.uid))
                 .addOnSuccessListener {
                     Toast.makeText(this, "Eliminado de favoritos", Toast.LENGTH_SHORT).show();
-                    Event_fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_24, 0, 0, 0);
+//                    Event_fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_24, 0, 0, 0);
+                    Event_fav_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.firebase_azul));
                 }
         }
 
@@ -276,9 +279,11 @@ class EventActivity : AppCompatActivity() {
                 inFavorites = fav?.contains(idPublicacion.toString())
 
                 if (inFavorites == false) {
-                    Event_fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_24, 0, 0, 0);
+//                   Event_fav_btn.setImageResource(R.drawable.ic_baseline_star_24);
+                   Event_fav_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.firebase_azul));
                 }else{
-                    Event_fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_fav_24, 0, 0, 0);
+//                    Event_fav_btn.setImageResource(R.drawable.ic_baseline_star_fav_24);
+                    Event_fav_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.firebase_amarillo));
                 }
 
             }

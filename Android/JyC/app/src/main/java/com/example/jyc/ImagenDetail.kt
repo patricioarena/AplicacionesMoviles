@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_imagen_detail.*
 import java.io.File
 
 
@@ -41,7 +42,6 @@ class ImagenDetail : AppCompatActivity() {
             val ivBasicImage = findViewById<View>(R.id.photo_view) as ImageView
             Picasso.get().load(imageUrl).into(ivBasicImage)
 
-            var download_btn = findViewById<View>(R.id.button3) as Button
             download_btn.setOnClickListener {
                 // After API 23 (Marshmallow) and lower Android 10 you need to ask for permission first before save an image
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {

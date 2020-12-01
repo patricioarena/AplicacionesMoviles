@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_comments.*
+import kotlinx.android.synthetic.main.activity_event.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.card_post.*
 import kotlinx.android.synthetic.main.fragment_account_settings.*
@@ -343,13 +345,13 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         startActivity(intent)
     }
 
-    override fun onFavClick(item: Post) {
+    override fun onFavClick(uid: String?) {
         if (inFavorites == false){
-            addFavorites(mUser.uid,item.uid)
+            addFavorites(mUser.uid,uid)
             inFavorites=true
         }
         else {
-            removeFavorites(mUser.uid,item.uid)
+            removeFavorites(mUser.uid,uid)
             inFavorites=false
         }
     }
@@ -372,7 +374,8 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
             .update("favoritos", FieldValue.arrayUnion(uid))
             .addOnSuccessListener {
                 Toast.makeText(this, "Agregado a favoritos", Toast.LENGTH_SHORT).show();
-                fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_fav_24, 0, 0, 0);
+//                fav_btn.setImageResource(R.drawable.ic_baseline_star_fav_24)
+                fav_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.firebase_amarillo));
             }
     }
 
@@ -381,7 +384,8 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
             .update( "favoritos", FieldValue.arrayRemove(uid))
             .addOnSuccessListener {
                 Toast.makeText(this, "Eliminado de favoritos", Toast.LENGTH_SHORT).show();
-                fav_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_24, 0, 0, 0);
+//                fav_btn.setImageResource(R.drawable.ic_baseline_star_24)
+                fav_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.firebase_azul));
             }
     }
 }

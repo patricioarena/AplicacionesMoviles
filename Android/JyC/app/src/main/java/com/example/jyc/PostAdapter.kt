@@ -7,14 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_event.*
 import kotlinx.android.synthetic.main.card_post.view.*
 
 
@@ -27,7 +25,7 @@ open class PostAdapter(private val activity: Activity, private val dataset: List
         fun onImageClick(image: String?)
         fun onItemClick(idUsuario: String?)
         fun onMoreInfoClick(item: Post)
-        fun onFavClick(item: Post)
+        fun onFavClick(uid: String?)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PublicacionesViewHolder {
@@ -51,7 +49,7 @@ open class PostAdapter(private val activity: Activity, private val dataset: List
             itemView.setOnClickListener{itemClickListener.onItemClick(item.idUsuario)}
             itemView.image_tv.setOnClickListener{itemClickListener.onImageClick(item.image)}
             itemView.buttonMore.setOnClickListener{itemClickListener.onMoreInfoClick(item)}
-            itemView.fav_btn.setOnClickListener { itemClickListener.onFavClick(item) }
+            itemView.fav_btn.setOnClickListener { itemClickListener.onFavClick(item.uid) }
 //            var post = dataset[position]
             var likes = item.likes
             var usuarioActual = auth.currentUser
@@ -107,7 +105,7 @@ open class PostAdapter(private val activity: Activity, private val dataset: List
                 commentIntent.putExtra("imagen", item.image)
                 commentIntent.putExtra("idUsuario", item.idUsuario)
                 //paso los id de comentarios que tiene una publicacion
-                commentIntent.putStringArrayListExtra("listaIdcomentarios", item.listaIdcomentarios!!)
+                commentIntent.putStringArrayListExtra("listaIdcomentarios", item.listaIdcomentarios)
                 activity.startActivity(commentIntent)
             }
 
