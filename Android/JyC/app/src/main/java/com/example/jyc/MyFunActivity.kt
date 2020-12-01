@@ -97,11 +97,11 @@ class MyFunActivity : AppCompatActivity() {
                   "to": "/topics/${scope}",
                   "notification": {
                     "title": "Noticia para evento ${scope} ",
-                    "body": "${username} realizón una nueva publicación en el grupo..."
+                    "body": "${username} realizó una nueva publicación en el grupo..."
                   },
                   "data": {
                     "titulo": "Este es el titular",
-                    "descripcion": "${username} realizon una nueva publicación en el grupo..."
+                    "descripcion": "${username} realizó una nueva publicación en el grupo..."
                   }
                 }"""
             )
@@ -214,7 +214,7 @@ class MyFunActivity : AppCompatActivity() {
     }
 
 
-//    private fun getFCMToken(topic:String){
+//    private fun getFCMToken(){
 //        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
 //            if (!task.isSuccessful) {
 //                Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
