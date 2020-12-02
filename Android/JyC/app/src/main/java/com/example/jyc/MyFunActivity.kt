@@ -83,13 +83,13 @@ class MyFunActivity : AppCompatActivity() {
                   "to": "/topics/${scope}",
                   "notification": {
                     "title": "Noticia para evento ${scope} ",
-                    "body": "${username} realizó una nueva publicación en el grupo...",
+                    "body": "${username} a publicado un nuevo evento",
                     "image": "${image}",
                     "sound": "default"
                   },
                   "data": {
-                    "title": "Este es el titular... data",
-                    "body": "${username} realizó una nueva publicación en el grupo...data",
+                   "title": "Nuevo evento ${scope}.. data",
+                    "body": "${username} a publicado un nuevo evento.. data",
                     "idPublicacion": "${idPublicacion}"
                   }
                 }"""
@@ -112,13 +112,13 @@ class MyFunActivity : AppCompatActivity() {
                   "to": "/topics/${scope}",
                   "notification": {
                     "title": "Noticia para evento ${scope} ",
-                    "body": "${username} realizó una nueva publicación en el grupo...",
+                    "body": "${username} a publicado un nuevo evento",
                     "image": "${image}",
                     "sound": "default"
                   },
                   "data": {
-                    "title": "Este es el titular... data",
-                    "body": "${username} realizó una nueva publicación en el grupo...data",
+                   "title": "Nuevo evento ${scope}.. data",
+                    "body": "${username} a publicado un nuevo evento.. data",
                     "idPublicacion": "${idPublicacion}"
                   }
                 }"""

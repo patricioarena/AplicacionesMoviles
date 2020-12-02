@@ -1,13 +1,18 @@
 package com.example.jyc
 
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
+import android.media.RingtoneManager
 import android.os.Handler
 import android.os.Looper
 import android.os.StrictMode
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.android.HandlerDispatcher
@@ -15,78 +20,41 @@ import kotlinx.coroutines.android.HandlerDispatcher
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
+    private var TAG = "MyFirebaseMessagingService"
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        // TODO(developer): Handle FCM messages here.
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-        Log.d(TAG, "From: ${remoteMessage.from}")
 
-        // Check if message contains a data payload.
+        Log.d(TAG, "FROM : " + remoteMessage.from)
+
         if (remoteMessage.data.isNotEmpty()) {
-            Log.e(TAG, "Message data payload: ${remoteMessage.data}")
-
-            if (/* Check if data needs to be processed by long running job */ true) {
-                // For long-running tasks (10 seconds or more) use WorkManager.
-//                scheduleJob()
-                Looper.prepare()
-
-                Handler().post{
-                    var title = remoteMessage.data.get("title")
-                    var body = remoteMessage.data.get("body")
-                    var idPublicacion = remoteMessage.data.get("idPublicacion")
-                    Toast.makeText(this, "Message Notification Body: ${remoteMessage.data}", Toast.LENGTH_LONG).show()
-                }
-
-                Looper.loop()
-
-            } else {
-                // Handle message within 10 seconds
-//                handleNow()
-            }
+            Log.d(TAG, "Message data : " + remoteMessage.data)
         }
-        // Check if message contains a notification payload.
-        remoteMessage.notification?.let {
-            Log.e(TAG, "Message Notification Body: ${it.body}")
+
+        if (remoteMessage.notification != null) {
+            Log.d(TAG,"Message body : "+ remoteMessage.notification!!.body)
+            sendNotification(remoteMessage.notification!!.title,remoteMessage.notification!!.body)
         }
     }
 
-//    fun showAler(title: String?, message: String?) {
-//        val builder = AlertDialog.Builder(this)
-//        builder.setTitle(title)
-//        builder.setMessage(message)
-//        builder.setPositiveButton("Aceptar", null)
-//        val dialog: AlertDialog = builder.create()
-//        dialog.show()
-//    }
+    private fun sendNotification(title: String?,body: String?) {
+        var intent = Intent(this,MainActivity::class.java)
 
- //    private fun showAler(title: String?, message: String?) {
-//        val builder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))
-//        builder.setTitle(title)
-//        builder.setMessage(message)
-//
-//        //Adding positive button
-//        builder.setPositiveButton("Aceptar", object : DialogInterface.OnClickListener {
-//            override fun onClick(dialog: DialogInterface, id: Int) {
-//                Log.e(TAG, "OK button was clicked")
-//            }
-//        })
-//
-//        //Adding negative button
-//        builder.setNegativeButton("Cancelar", object : DialogInterface.OnClickListener {
-//            override fun onClick(dialog: DialogInterface, id: Int) {
-//                Log.e(TAG, "Cancel button was clicked")
-//            }
-//        })
-//
-//        //Adding neutral button
-//        builder.setNeutralButton("Remind Me later", object : DialogInterface.OnClickListener {
-//            override fun onClick(dialog: DialogInterface, id: Int) {
-//                Log.e(TAG, "Remind me later button was clicked")
-//            }
-//        })
-//
-//        val dialog: AlertDialog = builder.create()
-//        dialog.show()
-//    }
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        intent.putExtra("Notification",body)
 
+        var pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT)
+        val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
+        var notificationBuilder = NotificationCompat.Builder(this,"Notification")
+            .setSmallIcon(R.drawable.ic_baseline_star_fav_24)
+            .setContentTitle(title)
+            .setContentText(body)
+            .setAutoCancel(true)
+            .setSound(notificationSound)
+            .setContentIntent(pendingIntent)
+
+        var notificationManager: NotificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(0,notificationBuilder.build())
+    }
 
 }
