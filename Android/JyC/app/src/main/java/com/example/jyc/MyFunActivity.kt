@@ -42,8 +42,8 @@ class MyFunActivity : AppCompatActivity() {
 
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)
-        toolbar.title = "FuntionActivity";
-        toolbar.subtitle = "Test functions DEV";
+        toolbar.title = "Suscripción a eventos";
+        toolbar.subtitle = "Suscribirce o revocar suscripciones";
 
         setSupportActionBar(toolbar)
         service = Facade()
