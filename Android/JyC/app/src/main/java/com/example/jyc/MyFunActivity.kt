@@ -157,8 +157,16 @@ class MyFunActivity : AppCompatActivity() {
                 startActivity(Intent(this, MyFunActivity::class.java))
                 return true
             }
+            R.id.nav_new_event -> {
+                startActivity(Intent(this, NewEventActivity::class.java))
+                return true
+            }
             R.id.nav_new_pub -> {
                 startActivity(Intent(this, PublicationActivity::class.java))
+                return true
+            }
+            R.id.nav_profile -> {
+                startActivity(Intent(this, ProfileActivity::class.java))
                 return true
             }
             R.id.nav_logout -> {
@@ -168,7 +176,7 @@ class MyFunActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
+        
     class CustomJsonObjectRequestBasicAuth(
         method: Int, url: String,
         jsonObject: JSONObject?,

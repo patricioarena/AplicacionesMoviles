@@ -73,7 +73,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="6dp"
                 android:text="Cambiar Imagen"
-                android:textColor="@color/purple_700"
+                android:textColor="@color/black"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
@@ -88,7 +88,7 @@
                 android:drawableLeft="@drawable/ic__house_24"
                 android:gravity="center"
                 android:text="Domicilio"
-                android:textColor="@color/purple_700"
+                android:textColor="@color/black"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
@@ -112,7 +112,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:hint="Numero..."
-                android:inputType="text" />
+                android:inputType="number" />
 
             <EditText
                 android:id="@+id/ciudad_user"
@@ -134,7 +134,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:hint="CP."
-                android:inputType="text" />
+                android:inputType="number" />
 
             <EditText
                 android:id="@+id/provincia_user"
@@ -157,7 +157,7 @@
                 android:drawableLeft="@drawable/ic_contact_phone_24"
                 android:gravity="center"
                 android:text=" Contacto"
-                android:textColor="@color/purple_700"
+                android:textColor="@color/black"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
@@ -170,7 +170,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:hint="Celular de contacto..."
-                android:inputType="text" />
+                android:inputType="number" />
 
             <EditText
                 android:id="@+id/tel_user"
@@ -181,7 +181,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:hint="Telefono de contacto..."
-                android:inputType="text" />
+                android:inputType="number" />
 
         </RelativeLayout>
     </ScrollView>

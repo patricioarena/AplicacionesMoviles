@@ -204,8 +204,9 @@ class RegisterActivity : AppCompatActivity() {
                         "fechaReg" to model.fechaReg,
                         "fechaNac" to model.fechaNac,
                         "domicilio" to domicilio,
-                        "cel" to "1133142754",
-                        "tel" to "42740810"
+                        "cel" to "%20",
+                        "tel" to "%20",
+                        "avatar" to "https://firebasestorage.googleapis.com/v0/b/jyc-appa.appspot.com/o/user-logos-user-logo-png-1920_1280.png?alt=media&token=311b1b6f-b51f-4adb-8a4d-98c7d5aa893d"
                     )
 
                     val users = database.collection("usuarios")

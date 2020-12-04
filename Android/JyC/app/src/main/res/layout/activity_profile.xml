@@ -173,7 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nombre Completo"
-                    android:textColor="@color/purple_700"
+                    android:textColor="@color/black"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 

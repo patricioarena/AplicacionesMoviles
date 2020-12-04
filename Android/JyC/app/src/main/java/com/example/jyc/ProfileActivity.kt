@@ -3,14 +3,25 @@ package com.example.jyc
 import Models.Domicilio
 import Models.UserDb
 import MyResources.Facade
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
+import android.text.Editable
 import android.text.TextUtils
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -24,6 +35,8 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_comments.*
@@ -31,19 +44,33 @@ import kotlinx.android.synthetic.main.activity_event.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.card_post.*
 import kotlinx.android.synthetic.main.fragment_account_settings.*
+import kotlinx.android.synthetic.main.fragment_account_settings.view.*
+import org.json.JSONObject
+import java.io.ByteArrayOutputStream
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickListener, OnFragmentActionsListener {
-    private var pressedTime: Long = 0
+    private lateinit var avatar: String
     private lateinit var service: Facade
     private lateinit var toolbar: Toolbar
     private var db = FirebaseFirestore.getInstance()
     private lateinit var modeloUser: UserDb
     private var inFavorites: Boolean? = false
+    private lateinit var bundle: Bundle
 
     //Para interectuar con la base de datos
     //private lateinit var dbLite: DataBaseHelper
     //private lateinit var userDb: UserDb
     private lateinit var mUser: FirebaseUser
+    private var mStorageRef: StorageReference? = null
+    private var bitmap: Bitmap? = null
+
+    //image pick code
+    private val IMAGE_PICK_CODE = 1000;
+
+    //Permission code
+    private val PERMISSION_CODE = 1001;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +81,8 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         service = Facade()
         modeloUser = UserDb()
         mUser = FirebaseAuth.getInstance().currentUser!!
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
 
         // Agregar toolbar personalizado a activity main
         toolbar = findViewById(R.id.myToolbar)
@@ -61,7 +90,7 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         toolbar.subtitle = "Mi Perfil";
         setSupportActionBar(toolbar)
 
-        var avatar = service.getPreferenceKey(this,"avatar").toString()
+        avatar = service.getPreferenceKey(this, "avatar").toString()
 
         if (!TextUtils.isEmpty(avatar)) {
             Picasso.get().load(avatar).into(profile_image)
@@ -75,10 +104,6 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
 
         //Obtenemos el usuario
         //userDb = dbLite.readData(idUsuario)!!
-
-
-
-
 
         OnclickButtonMyPublish()
         getFirebaseCurrentUser(mUser.uid)
@@ -98,9 +123,13 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
 
     }
 
+    @SuppressLint("WrongViewCast")
     private fun loadFragment(fragment: Fragment) {
         fragmentContainer.setVisibility(View.VISIBLE)
         scroll_view_profile.setVisibility(View.GONE)
+
+        fragment.arguments = bundle
+
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragmentContainer, fragment)
         fragmentTransaction.commit()
@@ -139,13 +168,13 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
     }
 
     private fun getFirebaseCurrentUser(idUsuario: String?) {
-        val docRef = db.collection("usuarios").document(idUsuario!!)
-        docRef.get()
+        db.collection("usuarios").document(idUsuario!!).get()
             .addOnSuccessListener { document ->
                 if (document != null) {
 
                     var myJson = document.data?.get("domicilio").toString()
                     var domicilio = Gson().fromJson(myJson, Domicilio::class.java)
+
                     var numeroPublicaciones = document.data?.get("publicaciones") as ArrayList<String>?
                     modeloUser.publicaciones = numeroPublicaciones.toString()
 
@@ -171,12 +200,25 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
                     modeloUser.tel = document.data?.get("tel").toString()
                     modeloUser.cel = document.data?.get("cel").toString()
 
-
                     var provincia = service.replace20forSpace(modeloUser.provincia!!)
                     var localidad = service.replace20forSpace(modeloUser.localidad!!)
                     full_name_profile.text = modeloUser.nombre + " " + modeloUser.apellido
                     biografi_profile.text = "Pais: " + modeloUser.pais + "\n" + "Provincia: " + provincia + "\n" + "Localidad: " + localidad
                     total_post.text = modeloUser.cantidadPublicaciones
+
+                    bundle = Bundle()
+                    bundle.putString("calle", service.replace20forSpace(modeloUser.calle.toString()))
+                    bundle.putString("numero", modeloUser.numero.toString())
+                    bundle.putString("cp", modeloUser.cp.toString())
+                    bundle.putString("localidad", service.replace20forSpace(modeloUser.localidad.toString()))
+                    bundle.putString("provincia", service.replace20forSpace(modeloUser.provincia.toString()))
+                    bundle.putString("pais", service.replace20forSpace(modeloUser.pais.toString()))
+                    bundle.putString("cel", modeloUser.cel)
+                    bundle.putString("tel", modeloUser.tel)
+                    bundle.putString("avatar", avatar)
+
+//                    if (modeloUser.calle != null)
+//                        calle_user.setText(modeloUser.calle)
 
 //                        Log.e(ContentValues.TAG, "DocumentSnapshot data: ${document.data}")
 //                        Log.e(ContentValues.TAG, "DocumentSnapshot data nombre: ${document.data?.get("nombre").toString()}")
@@ -201,7 +243,6 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
                 Log.e(ContentValues.TAG, "get failed with ", exception)
             }
     }
-
 
     private fun OnclickButtonMyPublish() {
 
@@ -328,7 +369,6 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
     }
 
     override fun onImageClick(image: String?) {
-
         var intent = Intent(this, ImagenDetail::class.java)
         intent.putExtra("imageUrl", image)
         startActivity(intent)
@@ -346,22 +386,18 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
     }
 
     override fun onFavClick(uid: String?) {
-        if (inFavorites == false){
-            addFavorites(mUser.uid,uid)
-            inFavorites=true
-        }
-        else {
-            removeFavorites(mUser.uid,uid)
-            inFavorites=false
+        if (inFavorites == false) {
+            addFavorites(mUser.uid, uid)
+            inFavorites = true
+        } else {
+            removeFavorites(mUser.uid, uid)
+            inFavorites = false
         }
     }
 
     override fun onClickFragmentButtonAcept() {
         println("ACEPTAR")
-        hideFragment(AccountSettingsFragment())
-
-        println(calle_user.text.toString())
-        println("Eviar los datos")
+        uploadEvent()
     }
 
     override fun onClickFragmentButtonCancel() {
@@ -369,7 +405,31 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
         hideFragment(AccountSettingsFragment())
     }
 
-    private fun addFavorites(idUsuario: String?,uid: String?){
+    override fun onClickFragmentImage() {
+        println("onClickFragmentImage")
+
+        //check runtime permission
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_DENIED
+            ) {
+                //permission denied
+                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
+                //show popup to request runtime permission
+                requestPermissions(permissions, PERMISSION_CODE);
+            } else {
+                //permission already granted
+                pickImageFromGallery();
+            }
+        } else {
+            //system OS is < Marshmallow
+            pickImageFromGallery();
+        }
+
+    }
+
+
+    private fun addFavorites(idUsuario: String?, uid: String?) {
         db.collection("usuarios").document(idUsuario!!)
             .update("favoritos", FieldValue.arrayUnion(uid))
             .addOnSuccessListener {
@@ -379,13 +439,132 @@ class ProfileActivity : AppCompatActivity(), PostAdapter.OnPublicacionesClickLis
             }
     }
 
-    private fun removeFavorites(idUsuario: String?,uid: String?) {
+    private fun removeFavorites(idUsuario: String?, uid: String?) {
         db.collection("usuarios").document(idUsuario!!)
-            .update( "favoritos", FieldValue.arrayRemove(uid))
+            .update("favoritos", FieldValue.arrayRemove(uid))
             .addOnSuccessListener {
                 Toast.makeText(this, "Eliminado de favoritos", Toast.LENGTH_SHORT).show();
 //                fav_btn.setImageResource(R.drawable.ic_baseline_star_24)
                 fav_btn.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.firebase_azul));
+            }
+    }
+
+
+    private fun uploadEvent() {
+
+        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
+        val user: FirebaseUser? = mUser
+        var idUsuario = user?.uid.toString()
+
+        val stream = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val random: String = UUID.randomUUID().toString()
+        val b: ByteArray = stream.toByteArray()
+
+        if (b.size == 0) {
+
+            println("b = 0, actualizar solo datos")
+            var imagenUri = "https://firebasestorage.googleapis.com/v0/b/jyc-appa.appspot.com/o/user-logos-user-logo-png-1920_1280.png?alt=media&token=311b1b6f-b51f-4adb-8a4d-98c7d5aa893d"
+            if (avatar !=imagenUri){
+               imagenUri = avatar
+            }
+            updatePerfil(imagenUri,idUsuario)
+
+        } else {
+            println("b != 0, actualiza imagen y datos ")
+            val imageRef: StorageReference? = mStorageRef?.child("$idUsuario/$random")
+            if (imageRef != null) {
+                imageRef.putBytes(b)
+                    .addOnSuccessListener { taskSnapshot ->
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                        taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener { uri ->
+                            updatePerfil(uri.toString(),idUsuario)
+                        }
+                    }
+                    .addOnFailureListener {
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                        Toast.makeText(this, "Upload Failed", Toast.LENGTH_SHORT).show();
+                    }
+            }
+        }
+
+
+    }
+
+    private fun pickImageFromGallery() {
+        //Intent to pick image
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, IMAGE_PICK_CODE)
+    }
+
+    //handle requested permission result
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            PERMISSION_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //permission from popup granted
+                    pickImageFromGallery()
+                } else {
+                    //permission from popup denied
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    //handle result of picked image
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == IMAGE_PICK_CODE && resultCode == Activity.RESULT_OK && data != null) {
+
+            val selectedPhotoUri = data.data
+            try {
+                selectedPhotoUri?.let {
+                    if (Build.VERSION.SDK_INT < 28) {
+                        val bitmapx = MediaStore.Images.Media.getBitmap(
+                            this.contentResolver,
+                            selectedPhotoUri
+                        )
+                        profile_image_setting.setImageBitmap(bitmapx)
+                    } else {
+                        val source = ImageDecoder.createSource(this.contentResolver, selectedPhotoUri)
+                        val bitmapx = ImageDecoder.decodeBitmap(source)
+                        bitmap = bitmapx
+                        profile_image_setting.setImageBitmap(bitmapx)
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+
+    fun updatePerfil(imagenUri: String?, idUsuario: String?){
+        service.setPreferenceKey(this, "avatar", imagenUri)
+
+        var temp = mapOf(
+            "domicilio.calle" to service.removeSpaces(calle_user.text.toString()),
+            "domicilio.numero" to calle_numero_user.text.toString(),
+            "domicilio.cp" to cp_user.text.toString(),
+            "domicilio.localidad" to service.removeSpaces(ciudad_user.text.toString()),
+            "domicilio.provincia" to service.removeSpaces(provincia_user.text.toString()),
+            "cel" to cel_user.text.toString(),
+            "tel" to tel_user.text.toString(),
+            "avatar" to imagenUri
+        )
+
+        db.collection("usuarios").document(idUsuario!!)
+            .update(temp)
+            .addOnSuccessListener {
+                hideFragment(AccountSettingsFragment())
+                Toast.makeText(this, "Perfil actualizado", Toast.LENGTH_SHORT).show();
+            }
+            .addOnCompleteListener {
+                this.recreate();
+                super.onRestart();
             }
     }
 }
